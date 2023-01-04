@@ -2,7 +2,7 @@
 
 #### Clone project
 
-`$ git clone git@github.com:FastDeliveryBer/api.git`<br/>
+`$ git clone git@github.com:FastDeliveryBer/api.git`
 `$ cd api`
 
 #### Install the dependencies
@@ -17,7 +17,7 @@ Production
 
 Development
 
-`$ npm run dev`<br/>
+`$ npm run dev`
 
 #### Environment variables
 
