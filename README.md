@@ -15,13 +15,21 @@
 
 #### Run project
 
-Production
+Test linter
 
-`$ npm start`
+`$ npm lint`
+
+Test linter et fix
+
+`$ npm lint:fix`
 
 Development
 
 `$ npm run dev`
+
+Production
+
+`$ npm start`
 
 #### Environment variables
 
