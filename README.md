@@ -9,6 +9,8 @@
 
 `$ npm i`
 
+#### Installer le formatter Prettier - https://prettier.io/
+
 #### Run project
 
 Production
