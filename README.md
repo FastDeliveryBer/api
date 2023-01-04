@@ -11,6 +11,8 @@
 
 #### Installer le formatter Prettier - https://prettier.io/
 
+#### Installer le linter ESLint - https://eslint.org/
+
 #### Run project
 
 Production
