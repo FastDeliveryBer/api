@@ -1,11 +1,11 @@
-import { Router } from "express";
-import MessageCtrl from "./message.controller";
+import { Router } from 'express'
+import DeliveryCtrl from './deliverer.controller'
 
-const router = Router();
+const router = Router()
 
-router.get("/list", MessageCtrl.getMessage); //Récupérer l'ensemble des messages
-router.get("/tour", MessageCtrl.getMessageReady); //Récupérer l'ensemble des messages prêt à être envoyés
-router.get("/:id", MessageCtrl.msgUser); //Récupérer un message pour un compte
-router.get("/list/user/:id", MessageCtrl.msgUser); //Récupérer l'ensemble des messages d'un user
+router.get('/tournee', _) //Récupérer les tournées d'un livreur
+router.get('/places', DeliveryCtrl.msgUser) //Récupérer les points de livraion sur une carte
+router.post('/photos', _) //Ajouter des photosà une livraison
+router.post('/update/langage', _) //Changer la langue enregistré pour l'application
 
-export default router;
+export default router
