@@ -3,19 +3,24 @@
 ## Clone project
 
 `$ git clone git@github.com:FastDeliveryBer/api.git`
+
 `$ cd api`
 
 ## Installation
 
-### Install the dependencies
+### Installer les dependences
 
 `$ npm i`
 
-### Installer le formatter Prettier - https://prettier.io/
+### Installer le formatter Prettier
 
-### Installer le linter ESLint - https://eslint.org/
+https://prettier.io/
 
-## Run project
+### Installer le linter ESLint
+
+https://eslint.org/
+
+## Lancer le projet
 
 Test Jest
 
@@ -33,7 +38,7 @@ Test linter et fix
 
 `$ npm lint:fix`
 
-Development
+Developpement
 
 `$ npm run dev`
 
@@ -41,7 +46,7 @@ Production
 
 `$ npm start`
 
-## Environment variables
+## Variables d'environnement
 
 - `PORT`: port on which the server will listen requests, default `8080`
 - `MONGODB_URI`: URI for MongoDB database connexion
