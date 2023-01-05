@@ -1,5 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import swaggerUI from 'swagger-ui-express'
+import docs from './index.js'
 
 dotenv.config()
 
