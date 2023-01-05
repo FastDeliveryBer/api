@@ -6,8 +6,8 @@ export default {
     description: 'FastDeliveryBer API Rest',
     contact: {
       name: 'FastDeliveryBer Contact',
-      email: 'info@esgi.fr',
-      url: 'https://esgi.fr',
+      email: 'info@fdb.fr',
+      url: 'https://fdb.fr',
     },
   },
   servers: [
