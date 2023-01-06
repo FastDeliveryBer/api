@@ -69,6 +69,11 @@ export default {
           'A link to the proof of delivery (e.g. an image of the signed receipt)',
         example: 'https://www.example.com/proof-of-delivery.png',
       },
+      price: {
+        type: 'number',
+        description: 'The price of the package based on the weight',
+        example: '10.50',
+      },
     },
   },
 }
