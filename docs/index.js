@@ -1,3 +1,5 @@
+import deliverer from './deliverer/index.js'
+
 export default {
   openapi: '3.0.1',
   info: {
@@ -16,4 +18,12 @@ export default {
       description: 'Local server',
     },
   ],
+  paths: {
+    ...deliverer.paths,
+  },
+  components: {
+    schemas: {
+      ...deliverer.schema,
+    },
+  },
 }
