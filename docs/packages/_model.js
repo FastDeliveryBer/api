@@ -12,11 +12,6 @@ export default {
         description: 'The date that the package is scheduled to be delivered',
         example: '07/07/2023',
       },
-      delivery_date: {
-        type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
-        example: '07/07/2023',
-      },
       address_expedition: {
         type: 'string',
         description: 'The address where the package is being shipped from',
@@ -38,7 +33,7 @@ export default {
         example: '10',
       },
       length: {
-        type: 'int',
+        type: 'number',
         description: 'The length of the package in inches',
         example: '15',
       },
@@ -50,12 +45,12 @@ export default {
       fragile: {
         type: 'boolean',
         description: 'Indicates whether the package is fragile',
-        example: 'true',
+        example: true,
       },
       emergency: {
         type: 'boolean',
         description: 'Indicates whether the package is an emergency delivery',
-        example: 'true',
+        example: true,
       },
       status: {
         type: 'string',

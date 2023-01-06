@@ -1,5 +1,6 @@
 import deliverer from './deliverer/index.js'
 import packages from './packages/index.js'
+import round from './round/index.js'
 
 export default {
   openapi: '3.0.1',
@@ -22,11 +23,13 @@ export default {
   paths: {
     ...deliverer.paths,
     ...packages.paths,
+    ...round.paths,
   },
   components: {
     schemas: {
       ...deliverer.schema,
       ...packages.schema,
+      ...round.schema,
     },
   },
 }
