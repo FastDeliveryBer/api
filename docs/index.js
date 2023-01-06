@@ -1,4 +1,5 @@
 import deliverer from './deliverer/index.js'
+import packages from './packages/index.js'
 
 export default {
   openapi: '3.0.1',
@@ -20,10 +21,12 @@ export default {
   ],
   paths: {
     ...deliverer.paths,
+    ...packages.paths,
   },
   components: {
     schemas: {
       ...deliverer.schema,
+      ...packages.schema,
     },
   },
 }
