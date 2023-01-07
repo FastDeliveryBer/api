@@ -3,6 +3,7 @@ import create from './create.js'
 import update from './update.js'
 import deleteRound from './delete.js'
 import get from './get.js'
+import getForDeliverer from './getForDeliverer.js'
 
 export default {
   paths: {
@@ -12,11 +13,14 @@ export default {
     '/round/update': {
       ...update,
     },
-    '/round/{id}': {
+    '/round/get/{id}': {
       ...get,
     },
     '/round/delete/{id}': {
       ...deleteRound,
+    },
+    '/round/deliverer/{id}': {
+      ...getForDeliverer,
     },
   },
   schema: {
