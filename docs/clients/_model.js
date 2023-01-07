@@ -1,7 +1,12 @@
 export default {
-  deliverer: {
+  client: {
     type: 'object',
     properties: {
+      client_id: {
+        type: 'string',
+        description: 'The unique tracking id for the client',
+        example: 'XYZ123456789',
+      },
       firstName: {
         type: 'String',
         description: 'First Name of deliverer',
@@ -22,20 +27,10 @@ export default {
         description: 'Phone of deliverer',
         example: '0123456789',
       },
-      langage: {
-        type: 'String',
-        description: 'Langage of the application choose by the deliverer',
-        example: 'FR',
-      },
-      longitude: {
-        type: 'String',
-        description: 'Langage of the application choose by the deliverer',
-        example: 'FR',
-      },
-      latitude: {
-        type: 'String',
-        description: 'Langage of the application choose by the deliverer',
-        example: 'FR',
+      amount: {
+        type: 'number',
+        description: 'The price of the client based on the weight',
+        example: '10.50',
       },
     },
   },

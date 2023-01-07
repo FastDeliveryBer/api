@@ -34,7 +34,7 @@ export default {
           'The current status of the package (e.g. "waiting", "in transit", "delivered")',
         example: 'waiting',
       },
-      deliverer: {
+      id_deliverer: {
         type: 'id',
         description: 'The current deliverer that will make the round',
         example: '123415',

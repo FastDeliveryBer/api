@@ -69,6 +69,11 @@ export default {
         description: 'The price of the package based on the weight',
         example: '10.50',
       },
+      is_payed: {
+        type: 'boolean',
+        description: 'Indicates whether the package was payed',
+        example: true,
+      },
     },
   },
 }
