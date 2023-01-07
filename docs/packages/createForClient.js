@@ -1,21 +1,21 @@
 export default {
   post: {
-    tags: ['Client'],
-    description: 'Create a client',
-    operationId: 'createClient',
+    tags: ['Package'],
+    description: 'Create a package for a client',
+    operationId: 'createPackage',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/clientCreation',
+            $ref: '#/components/schemas/packageForClient',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Client created successfully',
+        description: 'Package created successfully',
       },
       400: {
         description: 'Error',

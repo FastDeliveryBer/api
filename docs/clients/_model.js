@@ -9,28 +9,68 @@ export default {
       },
       firstName: {
         type: 'String',
-        description: 'First Name of deliverer',
+        description: 'First Name of client',
         example: 'John',
       },
       lastName: {
         type: 'String',
-        description: 'Last Name of deliverer',
+        description: 'Last Name of client',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of deliverer',
+        description: 'Mail of client, use to login',
         example: 'jdoe@myges.fr',
       },
       phone: {
         type: 'Int',
-        description: 'Phone of deliverer',
+        description: 'Phone of client',
         example: '0123456789',
       },
-      amount: {
-        type: 'number',
-        description: 'The price of the client based on the weight',
-        example: '10.50',
+    },
+  },
+  clientCreation: {
+    type: 'object',
+    properties: {
+      firstName: {
+        type: 'String',
+        description: 'First Name of client',
+        example: 'John',
+      },
+      lastName: {
+        type: 'String',
+        description: 'Last Name of client',
+        example: 'Doe',
+      },
+      email: {
+        type: 'String',
+        description: 'Mail of client',
+        example: 'jdoe@myges.fr',
+      },
+      phone: {
+        type: 'Int',
+        description: 'Phone of client',
+        example: '0123456789',
+      },
+      password: {
+        type: 'String',
+        description: 'Password of the client to login in his account',
+        example: 'FR',
+      },
+    },
+  },
+  clientLogin: {
+    type: 'object',
+    properties: {
+      email: {
+        type: 'String',
+        description: 'Mail of client',
+        example: 'jdoe@myges.fr',
+      },
+      password: {
+        type: 'String',
+        description: 'Password of the client to login in his account',
+        example: 'FR',
       },
     },
   },

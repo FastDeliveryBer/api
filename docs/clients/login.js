@@ -1,21 +1,22 @@
 export default {
   post: {
     tags: ['Client'],
-    description: 'Create a client',
-    operationId: 'createClient',
+    description: 'Login for client',
+    operationId: 'loginClient',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/clientCreation',
+            $ref: '#/components/schemas/clientLogin',
           },
+          required: true,
         },
       },
     },
     responses: {
       200: {
-        description: 'Client created successfully',
+        description: 'Login successfully',
       },
       400: {
         description: 'Error',

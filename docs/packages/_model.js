@@ -76,4 +76,55 @@ export default {
       },
     },
   },
+  packageForClient: {
+    type: 'object',
+    properties: {
+      client_id: {
+        type: 'string',
+        description:
+          'The unique tracking id for the client who create the package',
+        example: 'XYZ123456789',
+      },
+      address_expedition: {
+        type: 'string',
+        description: 'The address where the package is being shipped from',
+        example: '123 Main Street, Anytown USA',
+      },
+      address_delivery: {
+        type: 'string',
+        description: 'The address where the package is being shipped to',
+        example: '456 Maple Street, Anytown USA',
+      },
+      weight: {
+        type: 'int',
+        description: 'The weight of the package in pounds',
+        example: '5',
+      },
+      width: {
+        type: 'int',
+        description: 'The width of the package in inches',
+        example: '10',
+      },
+      length: {
+        type: 'number',
+        description: 'The length of the package in inches',
+        example: '15',
+      },
+      height: {
+        type: 'int',
+        description: 'The height of the package in inches',
+        example: '12',
+      },
+      fragile: {
+        type: 'boolean',
+        description: 'Indicates whether the package is fragile',
+        example: true,
+      },
+      emergency: {
+        type: 'boolean',
+        description: 'Indicates whether the package is an emergency delivery',
+        example: true,
+      },
+    },
+  },
 }
