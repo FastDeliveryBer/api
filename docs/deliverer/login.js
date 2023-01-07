@@ -1,21 +1,22 @@
 export default {
-  put: {
+  post: {
     tags: ['Deliverer'],
-    description: 'Update information of a deliverer',
-    operationId: 'updateDeliverer',
+    description: 'Login for deliverer',
+    operationId: 'loginDeliverer',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/deliverer',
+            $ref: '#/components/schemas/delivererLogin',
           },
+          required: true,
         },
       },
     },
     responses: {
       200: {
-        description: 'Deliverer updated successfully',
+        description: 'Login successfully',
       },
       400: {
         description: 'Error',
