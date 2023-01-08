@@ -1,14 +1,13 @@
 export default {
   post: {
     tags: ['Deliverer'],
-    description: 'Create a deliverer',
+    description: 'Create a account for a deliverer',
     operationId: 'createDeliverer',
-    parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/deliverer',
+            $ref: '#/components/schemas/delivererCreation',
           },
         },
       },

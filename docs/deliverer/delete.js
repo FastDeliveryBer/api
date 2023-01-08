@@ -1,21 +1,18 @@
 export default {
   delete: {
     tags: ['Deliverer'],
-    description: 'Update information of a deliverer',
-    operationId: 'updateDeliverer',
-    parameters: [],
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/deliverer',
-          },
-        },
+    description: 'Delete a deliverer with his ID',
+    operationId: 'deleteDeliverer',
+    parameters: [
+      {
+        name: 'deliverer_id',
+        in: 'path',
+        required: true,
       },
-    },
+    ],
     responses: {
       200: {
-        description: 'Deliverer updated successfully',
+        description: 'Deliverer deleted successfully',
       },
       400: {
         description: 'Error',

@@ -1,18 +1,23 @@
 export default {
-  delete: {
+  post: {
     tags: ['Round'],
-    description: 'Delete a round',
-    operationId: 'deleteRound',
+    description: 'Attribut a round to a deliverer',
+    operationId: 'attributRound',
     parameters: [
       {
         name: 'round_id',
         in: 'path',
         required: true,
       },
+      {
+        name: 'deliverer_id',
+        in: 'path',
+        required: true,
+      },
     ],
     responses: {
       200: {
-        description: 'Round delete successfully',
+        description: 'Round attribut successfully',
       },
       400: {
         description: 'Error',

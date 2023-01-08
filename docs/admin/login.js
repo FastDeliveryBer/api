@@ -1,21 +1,22 @@
 export default {
   post: {
-    tags: ['Package'],
-    description: 'Create a package for a client',
-    operationId: 'createPackage',
+    tags: ['Admin'],
+    description: 'Login for admin',
+    operationId: 'loginAdmin',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageCreationForClient',
+            $ref: '#/components/schemas/adminLogin',
           },
+          required: true,
         },
       },
     },
     responses: {
       200: {
-        description: 'Package created successfully',
+        description: 'Login successfully',
       },
       400: {
         description: 'Error',

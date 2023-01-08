@@ -1,15 +1,12 @@
 export default {
   get: {
     tags: ['Round'],
-    description: 'Get a round',
-    operationId: 'getRound',
+    description: 'Get a round by his deliverer ID',
+    operationId: 'getRoundByDelivererID',
     parameters: [
       {
-        name: 'id_deliverer',
+        name: 'deliverer_id',
         in: 'path',
-        /* schema: {
-          $ref: '#/components/schemas/id',
-        }, */
         required: true,
         description: 'Get a round of a deliverer',
       },

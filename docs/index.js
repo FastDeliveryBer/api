@@ -2,6 +2,7 @@ import deliverer from './deliverer/index.js'
 import packages from './packages/index.js'
 import round from './round/index.js'
 import client from './clients/index.js'
+import admin from './admin/index.js'
 
 export default {
   openapi: '3.0.1',
@@ -26,6 +27,7 @@ export default {
     ...packages.paths,
     ...round.paths,
     ...client.paths,
+    ...admin.paths,
   },
   components: {
     schemas: {
@@ -33,6 +35,7 @@ export default {
       ...packages.schema,
       ...round.schema,
       ...client.schema,
+      ...admin.schema,
     },
   },
 }

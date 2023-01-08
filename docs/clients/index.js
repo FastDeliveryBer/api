@@ -12,10 +12,13 @@ export default {
     '/client/update': {
       ...update,
     },
-    '/client/{id}': {
+    '/client/get/{id}': {
       ...get,
     },
     '/client/delete/{id}': {
+      ...deleteClient,
+    },
+    '/client/login': {
       ...deleteClient,
     },
   },

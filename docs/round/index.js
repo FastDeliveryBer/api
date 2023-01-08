@@ -4,6 +4,7 @@ import update from './update.js'
 import deleteRound from './delete.js'
 import get from './get.js'
 import getForDeliverer from './getForDeliverer.js'
+import attribut from './attributToDeliverer.js'
 
 export default {
   paths: {
@@ -21,6 +22,9 @@ export default {
     },
     '/round/deliverer/{id}': {
       ...getForDeliverer,
+    },
+    '/round/attribut/{id}': {
+      ...attribut,
     },
   },
   schema: {

@@ -1,5 +1,5 @@
 export default {
-  post: {
+  put: {
     tags: ['Client'],
     description: 'Update information of a client',
     operationId: 'updateClient',

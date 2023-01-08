@@ -3,12 +3,18 @@ export default {
     tags: ['Deliverer'],
     description: 'Update information of a deliverer',
     operationId: 'updateDeliverer',
-    parameters: [],
+    parameters: [
+      {
+        name: 'deliverer_id',
+        in: 'path',
+        required: true,
+      },
+    ],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/deliverer',
+            $ref: '#/components/schemas/delivererUpdate',
           },
         },
       },

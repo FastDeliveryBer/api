@@ -8,7 +8,7 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/round',
+            $ref: '#/components/schemas/roundCreation',
           },
         },
       },

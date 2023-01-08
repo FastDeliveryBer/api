@@ -3,7 +3,13 @@ export default {
     tags: ['Round'],
     description: 'Update information of a round',
     operationId: 'updateRound',
-    parameters: [],
+    parameters: [
+      {
+        name: 'round_id',
+        in: 'path',
+        required: true,
+      },
+    ],
     requestBody: {
       content: {
         'application/json': {
