@@ -4,6 +4,9 @@ import update from './update.js'
 import deletePackage from './delete.js'
 import get from './get.js'
 import createForClient from './createForClient.js'
+import updateByClient from './updateByClient.js'
+import getByClient from './getByClient.js'
+import deleteByClient from './deleteByClient.js'
 
 export default {
   paths: {
@@ -23,13 +26,13 @@ export default {
       ...createForClient,
     },
     '/package/client/update': {
-      ...createForClient,
+      ...updateByClient,
     },
     '/package/client/getAll': {
-      ...createForClient,
+      ...getByClient,
     },
     '/package/client/delete': {
-      ...createForClient,
+      ...deleteByClient,
     },
   },
   schema: {

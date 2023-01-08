@@ -1,21 +1,20 @@
 export default {
-  post: {
+  delete: {
     tags: ['Package'],
-    description: 'Create a package for a client',
-    operationId: 'createPackageByClient',
-    parameters: [],
+    description: 'Delete a package for a client',
+    operationId: 'deletePackageByClient',
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageCreationForClient',
+            $ref: '#/components/schemas/packageDeleteByClient',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package created successfully',
+        description: 'Package delete successfully',
       },
       400: {
         description: 'Error',

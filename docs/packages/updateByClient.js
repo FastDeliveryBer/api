@@ -1,14 +1,14 @@
 export default {
-  post: {
+  put: {
     tags: ['Package'],
-    description: 'Create a package for a client',
-    operationId: 'createPackageByClient',
+    description: 'Update a package for a client',
+    operationId: 'updatePackageByClient',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageCreationForClient',
+            $ref: '#/components/schemas/packageUpdateForClient',
           },
         },
       },

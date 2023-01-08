@@ -1,11 +1,11 @@
 export default {
-  put: {
+  get: {
     tags: ['Package'],
-    description: 'Update information of a package',
-    operationId: 'updatePackage',
+    description: 'Get a package for a client',
+    operationId: 'getPackageByClient',
     parameters: [
       {
-        name: 'tracking_id',
+        name: 'client_id',
         in: 'path',
         required: true,
       },
@@ -14,14 +14,14 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageUpdate',
+            $ref: '#/components/schemas/packageGetByClient',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package updated successfully',
+        description: 'Package get successfully',
       },
       400: {
         description: 'Error',

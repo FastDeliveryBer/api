@@ -7,11 +7,9 @@ export default {
       {
         name: 'tracking_id',
         in: 'path',
-        /* schema: {
-          $ref: '#/components/schemas/id',
-        }, */
-        required: true,
-        description: 'Get a package by his tracking_id',
+        required: false,
+        description:
+          'Get a package by his tracking_id, if empty will return all the packages',
       },
     ],
     responses: {
