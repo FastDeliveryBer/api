@@ -1,12 +1,10 @@
-/* import MongoDB from '../mogodb/mongo.connect.js' */
+import MongoDB from '../mogodb/mongo.connect.js'
 
 export default class DelivererMdl {
   static connect = async () => {
-    return ''
-    /* let db = new MongoDB()
+    let db = new MongoDB()
 
-
-    const query = { username: 'theo' }
+    const query = { username: 'theo test' }
 
     try {
       let userConnect = await db.connect('users')
@@ -16,6 +14,6 @@ export default class DelivererMdl {
     } catch (error) {
       await db.disconnect()
       throw error
-    } */
+    }
   }
 }
