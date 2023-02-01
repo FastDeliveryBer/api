@@ -24,6 +24,6 @@ jobs:
     - name: Deploy API to Heroku
       uses: heroku/deploy-action@v1
       with:
-        app_name: my-nodejs-api
+        app_name: fastdb-api
         command: run
         flags: start
