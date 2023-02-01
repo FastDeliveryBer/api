@@ -48,6 +48,6 @@ Production
 
 ## Variables d'environnement
 
-- `PORT`: port on which the server will listen requests, default `8080`
+- `PORT`: port on which the server will listen requests, default `4500`
 - `MONGODB_URI`: URI for MongoDB database connexion
 - `DB_NAME`: MongoDB database name

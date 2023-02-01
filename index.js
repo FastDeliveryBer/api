@@ -9,7 +9,7 @@ dotenv.config()
 
 const app = express()
 const HOST = process.env.HOST || 'http://localhost'
-const PORT = parseInt(process.env.PORT || '3000')
+const PORT = process.env.PORT || 4500
 
 /**
  * Middlewares
