@@ -1,0 +1,35 @@
+name: Deploy API to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  MONGODB_SECRET_URI: ${{ secrets.MONGODB_SECRET_URI }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+        
+    - name: Create .env file
+      uses: skiddph/actions-env@v1.0.2
+      with:
+        file: .env
+        prefix: 'ENV_'
+      env:
+        ENV_PORT: 4500  
+        ENV_DB_NAME: "FastDeliveryCluster" 
+        ENV_MONGODB_URI: ${{ env.MONGODB_SECRET_URI }} 
+      
+    - uses: see/heroku-deploy@master
+      with:
+        heroku_api_key: ${{env.HEROKU_API_KEY}}
+        heroku_app_name: "fastdb-api"
+        heroku_email: "nicolas.lacoste.esgi@gmail.com"
+        usedocker: true
