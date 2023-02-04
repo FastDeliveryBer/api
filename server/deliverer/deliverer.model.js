@@ -1,18 +1,15 @@
 import MongoDB from '../mogodb/mongo.connect.js'
+import { Deliverer } from './../schemas/schema.deliverer.js'
+import Model from './../models/model.js'
 
-export default class DelivererMdl {
-  static connect = async () => {
-    let db = new MongoDB()
-
-    const query = { username: 'theo test' }
+export default class DelivererMdl extends Model {
+  queryGetDeliverer = async () => {
+    const query = {}
 
     try {
-      let userConnect = await db.connect('users')
-      let data = await userConnect.findOne(query, {})
-      await db.disconnect()
-      return data
+      let deliverer = await Deliverer.find()
+      return deliverer
     } catch (error) {
-      await db.disconnect()
       throw error
     }
   }
