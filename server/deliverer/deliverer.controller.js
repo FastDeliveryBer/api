@@ -106,7 +106,6 @@ export default class DeliveryCtrl extends ClassCtrl {
         { label: 'langage', type: 'string' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
-      console.log(req.body)
       let listErrorOption = this.verifWithOption(dataOption, req.body, true)
 
       if (listError.length > 0 || listErrorOption > 0) {
@@ -143,6 +142,46 @@ export default class DeliveryCtrl extends ClassCtrl {
               response.data.push({
                 deliverer: deliverer,
               })
+              code = 200
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(400).send(error)
+        }
+      }
+    }
+    res.status(code).send(response)
+  }
+
+  static deleteDeliverer = async (req = Request, res = Response) => {
+    let code = 404
+    let response = {
+      error: true,
+      message: 'Bad request',
+      data: [],
+    }
+    if (Object.keys(req.body).length > 0) {
+      let dataIpt = [{ label: 'email', type: 'string' }]
+      let listError = this.verifSecure(dataIpt, req.body)
+
+      if (listError.length > 0) {
+        response.message = 'Erreur'
+        response.data.push(listError)
+      } else {
+        try {
+          const db = await new Database()
+          const delivererMdl = new DelivererMdl(db)
+          const { email } = req.body
+          const delivererAlreadyExist =
+            await delivererMdl.didDelivererAlreadyExiste(email)
+          response.message = "Ce livreur n'existe pas"
+          if (delivererAlreadyExist) {
+            const deliverer = await delivererMdl.queryDeleteDeliverer(email)
+            response.message = 'Impossible de supprimer le livreur'
+            if (deliverer) {
+              response.message = 'Livreur supprimé'
+              response.error = false
               code = 200
             }
           }

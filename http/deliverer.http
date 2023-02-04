@@ -27,3 +27,13 @@ Content-Type: application/json
   "firstname": "celia",
   "lastname": "lacoste"
 }
+
+
+###
+# Supprimer un livreur
+DELETE http://localhost:4500/deliverer HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test3@gmail.com"
+}
