@@ -40,10 +40,6 @@ export default class ClassCtrl {
             listError.push(`Format du champ ${key} incorrecte`)
           }
         }
-      } else if (
-        schemaData.find((item) => item.label.match(key)) === undefined
-      ) {
-        listError.push(`Champ ${key} non autorisé`)
       }
     })
     console.log(listError)
@@ -96,8 +92,8 @@ export default class ClassCtrl {
     let result = []
 
     keyData.forEach((val) => {
-      if (Object.keys(dataToVerif).includes(val)) {
-        listOption.push(val)
+      if (Object.keys(dataToVerif).includes(val.label)) {
+        listOption.push(val.label)
       }
     })
 

@@ -40,11 +40,24 @@ export default class DelivererMdl extends Model {
     }
   }
 
+  queryUpdateDeliverer = async (email, data) => {
+    try {
+      const deliverer = await Deliverer.findOneAndUpdate(
+        { email: email },
+        { $set: data },
+        { new: true }
+      )
+      return deliverer
+    } catch (error) {
+      throw error
+    }
+  }
+
   didDelivererAlreadyExiste = async (email) => {
     const query = { email: email }
 
     try {
-      let delivererExist = await Deliverer.exists(query)
+      const delivererExist = await Deliverer.exists(query)
       return delivererExist
     } catch (error) {
       throw error

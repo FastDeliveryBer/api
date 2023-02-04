@@ -20,7 +20,7 @@ export default class DeliveryCtrl extends ClassCtrl {
       if (deliverer.length > 0) {
         response.message = 'Livreur(s) récupéré'
         response.error = false
-        response.data.push(deliverer)
+        response.data = deliverer
         code = 200
       }
     } catch (error) {
@@ -86,8 +86,73 @@ export default class DeliveryCtrl extends ClassCtrl {
           res.status(400).send(error)
         }
       }
-      res.status(code).send(response)
     }
+    res.status(code).send(response)
+  }
+
+  static updateDeliverer = async (req = Request, res = Response) => {
+    let code = 404
+    let response = {
+      error: true,
+      message: 'Bad request',
+      data: [],
+    }
+    if (Object.keys(req.body).length > 0) {
+      let dataIpt = [{ label: 'email', type: 'string' }]
+      let dataOption = [
+        { label: 'lastname', type: 'string' },
+        { label: 'firstname', type: 'string' },
+        { label: 'phone', type: 'number' },
+        { label: 'langage', type: 'string' },
+      ]
+      let listError = this.verifSecure(dataIpt, req.body)
+      console.log(req.body)
+      let listErrorOption = this.verifWithOption(dataOption, req.body, true)
+
+      if (listError.length > 0 || listErrorOption > 0) {
+        response.message = 'Erreur'
+        response.data.push(listError)
+        response.data.push(listErrorOption)
+      } else {
+        try {
+          const db = await new Database()
+          const delivererMdl = new DelivererMdl(db)
+          const { email } = req.body
+          const filteredData = Object.entries(req.body).reduce(
+            (obj, [key, value]) => {
+              if (['firstname', 'lastname', 'phone', 'langage'].includes(key)) {
+                obj[key] = value
+              }
+              return obj
+            },
+            {}
+          )
+          const delivererAlreadyExist =
+            await delivererMdl.didDelivererAlreadyExiste(email)
+          response.message = "Ce livreur n'existe pas"
+          if (delivererAlreadyExist) {
+            const deliverer = await delivererMdl.queryUpdateDeliverer(
+              email,
+              filteredData
+            )
+            response.message = 'Impossible de modifier le livreur'
+            console.log(deliverer)
+            if (deliverer) {
+              response.message = 'Livreur modifié'
+              response.error = false
+              response.data.push({
+                deliverer: deliverer,
+              })
+              code = 200
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(400).send(error)
+        }
+      }
+    }
+    res.status(code).send(response)
   }
 
   static fnc = () => {
