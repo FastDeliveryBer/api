@@ -1,12 +1,12 @@
 ###
 # Création livreur
-POST http://localhost:4500/deliverer HTTP/1.1
+POST https://fastdb-api.herokuapp.com/deliverer HTTP/1.1
 Content-Type: application/json
 
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "test3@gmail.com",
+  "email": "azerty@gmail.com",
   "password": "azerty",
   "phone": 123,
   "langage": "FR"
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ###
 # Récupération des livreurs
-GET http://localhost:4500/deliverer HTTP/1.1
+GET https://fastdb-api.herokuapp.com/deliverer HTTP/1.1
 Content-Type: application/json
 
 ###

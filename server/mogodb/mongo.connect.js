@@ -13,7 +13,7 @@ export default class Database {
     mongoose.set('strictQuery', false)
     mongoose
       .connect(
-        `${process.env.MONGODB_URI}${process.env.DB_NAME}?retryWrites=true&w=majority`,
+        `${process.env.MONGODB_URI}${process.env.DB_NAME}?retryWrites=true&w=majority&wtimeout=0`,
         {
           useNewUrlParser: true,
           useUnifiedTopology: true,
