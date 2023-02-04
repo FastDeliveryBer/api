@@ -136,7 +136,7 @@ export default class DeliveryCtrl extends ClassCtrl {
               filteredData
             )
             response.message = 'Impossible de modifier le livreur'
-            console.log(deliverer)
+
             if (deliverer) {
               response.message = 'Livreur modifié'
               response.error = false
