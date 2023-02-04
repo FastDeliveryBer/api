@@ -1,0 +1,25 @@
+###
+# Connexion Admin
+POST http://localhost:4500/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "azerty"
+  
+}
+###
+# Inscription Admin
+POST http://localhost:4500/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "lastname": "test",
+    "firstname": "test",
+    "email": "test@gmail.com",
+    "password": "azerty",
+    "phone": 123,
+    "langage": "FR"
+}
+
+

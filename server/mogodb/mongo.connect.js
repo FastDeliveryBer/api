@@ -1,22 +1,29 @@
-import { MongoClient } from 'mongodb'
-import dotenv from 'dotenv'
+import mongoose from 'mongoose'
 
-dotenv.config()
-export default class MongoDB {
-  static URI = process.env.MONGODB_URI || ''
-  static DB = process.env.DB_NAME
-
+export default class Database {
   constructor() {
-    let client = new MongoClient(MongoDB.URI, { useNewUrlParser: true })
-    this.client = client
+    if (Database.instance) {
+      return Database.instance
+    }
+    this._connect()
+    Database.instance = this
   }
 
-  connect = async (collection) => {
-    await this.client.connect()
-    return this.client.db(MongoDB.DB).collection(collection)
-  }
-
-  disconnect = async () => {
-    await this.client.close()
+  _connect() {
+    mongoose.set('strictQuery', false)
+    mongoose
+      .connect(
+        `${process.env.MONGODB_URI}${process.env.DB_NAME}?retryWrites=true&w=majority`,
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        }
+      )
+      .then(() => {
+        console.log('Database connection successful')
+      })
+      .catch((err) => {
+        console.error('Database connection error')
+      })
   }
 }
