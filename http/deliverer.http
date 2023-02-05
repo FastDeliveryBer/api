@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ###
 # Modifier un livreur
-POST http://localhost:4500/deliverer/update HTTP/1.1
+PUT http://localhost:4500/deliverer HTTP/1.1
 Content-Type: application/json
 
 {

@@ -27,7 +27,7 @@ export default class ClassCtrl {
           if (typeof value === typeVal) {
             if (typeVal === 'string') {
               let reg = new RegExp(
-                '[^a-z0-9-àáâãäåòóôõöøèéêëçìíîïùúûüÿñ_s@.]+',
+                '[^a-z0-9-àáâãäåòóôõöøèéêëçìíîïùúûüÿñ_s@., ]+',
                 'gmi'
               )
               let testReg = reg.test(value)
