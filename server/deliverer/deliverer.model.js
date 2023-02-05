@@ -41,10 +41,10 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  queryUpdateDeliverer = async (email, data) => {
+  queryUpdateDeliverer = async (id, data) => {
     try {
       const deliverer = await Deliverer.findOneAndUpdate(
-        { email: email },
+        { _id: id },
         { $set: data },
         { new: true }
       )
@@ -63,8 +63,22 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  didDelivererAlreadyExiste = async (id) => {
-    const query = { _id: id }
+  didDelivererAlreadyExiste = async (label, value) => {
+    const query = { [label]: value }
+
+    try {
+      const delivererExist = await Deliverer.exists(query)
+      return delivererExist
+    } catch (error) {
+      throw error
+    }
+  }
+
+  didEmailDelivererAlreadyExiste = async (id, email) => {
+    const query = {
+      _id: { $ne: id },
+      email: email,
+    }
 
     try {
       const delivererExist = await Deliverer.exists(query)

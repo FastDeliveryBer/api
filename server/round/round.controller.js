@@ -90,7 +90,7 @@ export default class RoundCtrl extends ClassCtrl {
     let listErrorOption = []
 
     if (req.query !== '') {
-      let dataOption = [{ label: 'id', type: 'string' }]
+      let dataOption = [{ label: 'id', type: 'objectid' }]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
     if (listErrorOption > 0) {
@@ -125,8 +125,11 @@ export default class RoundCtrl extends ClassCtrl {
       message: 'Bad request',
       data: [],
     }
-    if (Object.keys(req.body).length > 0) {
-      let dataIpt = [{ label: 'id', type: 'string' }]
+    if (
+      Object.keys(req.body).length > 0 &&
+      Object.keys(req.params).length > 0
+    ) {
+      let dataIpt = [{ label: 'id', type: 'objectid' }]
       let dataOption = [{ label: 'parcels', type: 'array' }]
       let listError = this.verifSecure(dataIpt, req.params)
       let listErrorOption = this.verifWithOption(dataOption, req.body, true)
@@ -178,7 +181,7 @@ export default class RoundCtrl extends ClassCtrl {
       data: [],
     }
     if (Object.keys(req.params).length > 0) {
-      const dataIpt = [{ label: 'id', type: 'string' }]
+      const dataIpt = [{ label: 'id', type: 'objectid' }]
       const listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length > 0) {
