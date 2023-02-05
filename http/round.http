@@ -1,0 +1,45 @@
+###
+# Créer une tournée
+POST http://localhost:4500/round HTTP/1.1
+Content-Type: application/json
+
+{
+  "date": "12",
+  "deliverer_id": "13",
+  "parcels": ["2df9899a2959a6e8f4bd3d099d36ba715348a8b997ef4db551692b4308d6c1c2"]
+}
+
+###
+# Récupération des tournées
+GET http://localhost:4500/round HTTP/1.1
+Content-Type: application/json
+
+###
+# Récupération une tournée
+GET http://localhost:4500/round?id=63e00dd357fedcab8b24df02 HTTP/1.1
+Content-Type: application/json
+
+###
+# Modifier une tournée
+PATCH http://localhost:4500/round/63e00dd357fedcab8b24df02  HTTP/1.1
+Content-Type: application/json
+
+{
+  "deliverer_id": "87"
+}
+
+
+###
+# Supprimer une tournée
+DELETE http://localhost:4500/round/63dfead58d20e625429413c8 HTTP/1.1
+Content-Type: application/json
+
+
+###
+# Affecter une tournée à un livreur
+PATCH http://localhost:4500/round/63dfead58d20e625429413c8  HTTP/1.1
+Content-Type: application/json
+
+{
+  "deliverer_id": "787"
+}

@@ -26,18 +26,18 @@ Content-Type: application/json
 
 ###
 # Modifier un colis
-PUT http://localhost:4500/parcel HTTP/1.1
+PATCH http://localhost:4500/parcel HTTP/1.1
 Content-Type: application/json
 
 {
-  "tracking_id": "790a3795-3a29-4757-944f-2cfc5d189790",
+  "tracking_id": "fae5b266-374e-498f-a609-4b655ec55c40",
   "weight": "33332kg",
   "height": "666dsdsd712cm"
 }
 
 
 ###
-# Supprimer un livreur
+# Supprimer un colis
 DELETE http://localhost:4500/parcel HTTP/1.1
 Content-Type: application/json
 
