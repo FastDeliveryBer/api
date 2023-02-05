@@ -166,9 +166,9 @@ export default class DeliveryCtrl extends ClassCtrl {
       message: 'Bad request',
       data: [],
     }
-    if (Object.keys(req.body).length > 0) {
-      let dataIpt = [{ label: 'email', type: 'string' }]
-      let listError = this.verifSecure(dataIpt, req.body)
+    if (Object.keys(req.params).length > 0) {
+      let dataIpt = [{ label: 'id', type: 'string' }]
+      let listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length > 0) {
         response.message = 'Erreur'
@@ -177,12 +177,12 @@ export default class DeliveryCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)
-          const { email } = req.body
+          const { id } = req.params
           const delivererAlreadyExist =
-            await delivererMdl.didDelivererAlreadyExiste(email)
-          response.message = "Ce livreur n'existe pas"
+            await delivererMdl.didDelivererAlreadyExiste(id)
+          response.message = 'Livreur inconnu'
           if (delivererAlreadyExist) {
-            const deliverer = await delivererMdl.queryDeleteDeliverer(email)
+            const deliverer = await delivererMdl.queryDeleteDeliverer(id)
             response.message = 'Impossible de supprimer le livreur'
             if (deliverer) {
               response.message = 'Livreur supprimé'

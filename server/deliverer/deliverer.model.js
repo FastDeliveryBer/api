@@ -54,17 +54,17 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  queryDeleteDeliverer = async (email) => {
+  queryDeleteDeliverer = async (id) => {
     try {
-      const deliverer = await Deliverer.findOneAndDelete({ email: email })
+      const deliverer = await Deliverer.findOneAndDelete({ _id: id })
       return deliverer
     } catch (error) {
       throw error
     }
   }
 
-  didDelivererAlreadyExiste = async (email) => {
-    const query = { email: email }
+  didDelivererAlreadyExiste = async (id) => {
+    const query = { _id: id }
 
     try {
       const delivererExist = await Deliverer.exists(query)
