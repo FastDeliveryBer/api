@@ -1,6 +1,7 @@
 import { Parcel } from '../schemas/schema.parcel.js'
 import Model from '../models/model.js'
 import { v4 as uuidv4 } from 'uuid'
+import { compareSync } from 'bcrypt'
 
 export default class ParcelMdl extends Model {
   generateTrackingID = () => {

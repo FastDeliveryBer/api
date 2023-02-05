@@ -62,4 +62,4 @@ const parcel = new mongoose.Schema({
 
 const Parcel = mongoose.model('parcel', parcel)
 
-export { Parcel }
+export { Parcel, parcel }

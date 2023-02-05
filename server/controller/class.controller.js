@@ -24,26 +24,29 @@ export default class ClassCtrl {
         if (!value || value === '') {
           listError.push(`Champ ${key} vide`)
         } else {
-          if (typeof value === typeVal) {
-            if (typeVal === 'string') {
-              let reg = new RegExp(
-                '[^a-z0-9-àáâãäåòóôõöøèéêëçìíîïùúûüÿñ_s@., ]+',
-                'gmi'
-              )
-              let testReg = reg.test(value)
-              if (testReg) {
-                console.log(typeVal)
-                listError.push(`Format du champ ${key} incorrecte`)
-              }
+          if (Array.isArray(value)) {
+            if (typeVal !== 'array') {
+              listError.push(`Format du champ ${key} incorrecte`)
             }
           } else {
-            listError.push(`Format du champ ${key} incorrecte`)
+            if (typeof value === typeVal) {
+              if (typeVal === 'string') {
+                let reg = new RegExp(
+                  '[^a-z0-9-àáâãäåòóôõöøèéêëçìíîïùúûüÿñ_s@., ]+',
+                  'gmi'
+                )
+                let testReg = reg.test(value)
+                if (testReg) {
+                  listError.push(`Format du champ ${key} incorrecte`)
+                }
+              }
+            } else {
+              listError.push(`Format du champ ${key} incorrecte`)
+            }
           }
         }
       }
     })
-    console.log(listError)
-
     return listError
   }
 
