@@ -29,11 +29,12 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  queryGetDeliverer = async () => {
-    const query = {}
+  queryGetDeliverer = async (id) => {
+    let query = {}
+    if (id !== undefined) query = { _id: id }
 
     try {
-      let deliverer = await Deliverer.find()
+      let deliverer = await Deliverer.find(query)
       return deliverer
     } catch (error) {
       throw error

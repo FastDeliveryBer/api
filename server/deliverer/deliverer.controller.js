@@ -5,32 +5,7 @@ import ClassCtrl from '../controller/class.controller.js'
 
 const { Request, Response } = express
 export default class DeliveryCtrl extends ClassCtrl {
-  static getDeliverer = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
-    try {
-      const db = await new Database()
-      const delivererMdl = new DelivererMdl(db)
-      const deliverer = await delivererMdl.queryGetDeliverer()
-      response.message = 'Aucun livreur'
-      if (deliverer.length > 0) {
-        response.message = 'Livreur(s) récupéré'
-        response.error = false
-        response.data = deliverer
-        code = 200
-      }
-    } catch (error) {
-      console.log(error)
-      res.status(400).send(error)
-    }
-    res.status(code).send(response)
-  }
-
-  static createDeliverer = async (req = Request, res = Response) => {
+  static create = async (req = Request, res = Response) => {
     let code = 404
     let response = {
       error: true,
@@ -75,9 +50,7 @@ export default class DeliveryCtrl extends ClassCtrl {
               const { password, ...delivererWithoutPassword } = deliverer._doc
               response.message = 'Livreur créé'
               response.error = false
-              response.data.push({
-                deliverer: delivererWithoutPassword,
-              })
+              response.data.push(delivererWithoutPassword)
               code = 200
             }
           }
@@ -86,6 +59,38 @@ export default class DeliveryCtrl extends ClassCtrl {
           res.status(400).send(error)
         }
       }
+    }
+    res.status(code).send(response)
+  }
+
+  static get = async (req = Request, res = Response) => {
+    let code = 404
+    let response = {
+      error: true,
+      message: 'Bad request',
+      data: [],
+    }
+    let listErrorOption = []
+
+    if (req.query !== '') {
+      let dataOption = [{ label: '_id', type: 'string' }]
+      listErrorOption = this.verifWithOption(dataOption, req.query, true)
+    }
+    try {
+      const db = await new Database()
+      const delivererMdl = new DelivererMdl(db)
+      const { _id } = req.query ?? ''
+      const deliverer = await delivererMdl.queryGetDeliverer(_id)
+      response.message = 'Aucun livreur'
+      if (deliverer.length > 0) {
+        response.message = 'Livreur(s) récupéré(s)'
+        response.error = false
+        response.data = deliverer
+        code = 200
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(400).send(error)
     }
     res.status(code).send(response)
   }
