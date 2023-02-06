@@ -12,7 +12,7 @@ const parcel = new mongoose.Schema({
   }, */
   customer_id: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   address_expedition: {
@@ -63,12 +63,12 @@ const parcel = new mongoose.Schema({
   },
   amount: {
     type: String,
-    required: true,
+    required: false,
   },
   preuve_livraison: [
     {
       type: Buffer,
-      required: true,
+      required: false,
     },
   ],
 })

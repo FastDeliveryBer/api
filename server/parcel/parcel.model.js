@@ -36,10 +36,10 @@ export default class ParcelMdl extends Model {
     try {
       const tracking_id = this.generateTrackingID()
 
-      const imageUrl =
+      /* const imageUrl =
         'https://pbs.twimg.com/profile_images/1526507008505126912/KLpm9_UY_400x400.jpg'
       const imageData = await this.getImageAndConvertToBinary(imageUrl)
-
+ */
       let parcel = new Parcel({
         tracking_id: tracking_id,
         /* delivery_date: delivery_date, */
@@ -51,7 +51,7 @@ export default class ParcelMdl extends Model {
         height: height,
         fragile: fragile,
         emergency: emergency,
-        preuve_livraison: [imageData],
+        //preuve_livraison: [imageData],
       })
 
       await parcel.save()
