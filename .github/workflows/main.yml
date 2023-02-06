@@ -36,26 +36,6 @@ jobs:
         usedocker: true
         
     - name: Notify Discord
-      uses: curlimages/curl@v2
-      env:
-        DISCORD_WEBHOOK_URL: ${{ env.DISCORD_WEBHOOK_URL }}
-      with:
-        args: |
-          -X POST
-          -H "Content-Type: application/json"
-          -d '{
-            "content": "",
-            "embeds": [
-              {
-                "title": "Résultat du build",
-                "description": "Build réussi les fuckboys !",
-                "color": 65280
-              }
-            ]
-          }'
-          ${{ env.DISCORD_WEBHOOK_URL }}
-          
-    - name: Send Discord notification
       uses: stegzilla/discord-notify@v2
       with:
           webhook_url: ${{ env.DISCORD_WEBHOOK_URL }}
