@@ -1,21 +1,21 @@
 export default {
   post: {
-    tags: ['Package'],
-    description: 'Create a package for a client',
-    operationId: 'createPackageByClient',
+    tags: ['Parcel'],
+    description: 'Create a parcel for a client',
+    operationId: 'createParcelByClient',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageCreationForClient',
+            $ref: '#/components/schemas/parcelCreationForClient',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package created successfully',
+        description: 'Parcel created successfully',
       },
       400: {
         description: 'Error',

@@ -1,21 +1,20 @@
 export default {
   delete: {
-    tags: ['Package'],
-    description: 'Update information of a package',
-    operationId: 'updatePackage',
-    parameters: [],
+    tags: ['Parcel'],
+    description: 'Delete a parcel for a client',
+    operationId: 'deleteParcelByClient',
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/package',
+            $ref: '#/components/schemas/parcelDeleteByClient',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package updated successfully',
+        description: 'Parcel delete successfully',
       },
       400: {
         description: 'Error',

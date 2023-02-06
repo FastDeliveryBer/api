@@ -1,15 +1,21 @@
 import deliverer from './deliverer/index.js'
-import packages from './packages/index.js'
+import parcel from './parcel/index.js'
 import round from './round/index.js'
 import client from './clients/index.js'
-import admin from './admin/index.js'
+import captain from './captain/index.js'
+
+const HOST = process.env.HOST || 'http://localhost'
+const PORT = process.env.PORT || 4500
 
 export default {
   openapi: '3.0.1',
   info: {
     version: '1.0.0',
     title: 'FastDeliveryBer API',
-    description: 'FastDeliveryBer API Rest',
+    description: `FastDeliveryBer API Rest
+    Some useful links:
+    - [Github source code](https://github.com/FastDeliveryBer/api)
+    `,
     contact: {
       name: 'FastDeliveryBer Contact',
       email: 'info@fdb.fr',
@@ -18,24 +24,24 @@ export default {
   },
   servers: [
     {
-      url: 'http://localhost:8080',
-      description: 'Local server',
+      url: `${HOST}:${PORT}`,
+      description: 'Server',
     },
   ],
   paths: {
     ...deliverer.paths,
-    ...packages.paths,
+    ...parcel.paths,
     ...round.paths,
     ...client.paths,
-    ...admin.paths,
+    ...captain.paths,
   },
   components: {
     schemas: {
       ...deliverer.schema,
-      ...packages.schema,
+      ...parcel.schema,
       ...round.schema,
       ...client.schema,
-      ...admin.schema,
+      ...captain.schema,
     },
   },
 }

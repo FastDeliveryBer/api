@@ -1,5 +1,5 @@
 export default {
-  put: {
+  patch: {
     tags: ['Deliverer'],
     description: 'Update information of a deliverer',
     operationId: 'updateDeliverer',

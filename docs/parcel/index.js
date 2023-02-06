@@ -1,7 +1,7 @@
 import schema from './_model.js'
 import create from './create.js'
 import update from './update.js'
-import deletePackage from './delete.js'
+import deleteParcel from './delete.js'
 import get from './get.js'
 import createForClient from './createForClient.js'
 import updateByClient from './updateByClient.js'
@@ -10,28 +10,24 @@ import deleteByClient from './deleteByClient.js'
 
 export default {
   paths: {
-    '/package/create': {
+    '/parcel': {
       ...create,
-    },
-    '/package/update': {
       ...update,
-    },
-    '/package/get/{id}': {
       ...get,
     },
-    '/package/delete/{id}': {
-      ...deletePackage,
+    '/parcel/{id}': {
+      ...deleteParcel,
     },
-    '/package/client/create': {
+    '/parcel/client/create': {
       ...createForClient,
     },
-    '/package/client/update': {
+    '/parcel/client/update': {
       ...updateByClient,
     },
-    '/package/client/getAll': {
+    '/parcel/client/getAll': {
       ...getByClient,
     },
-    '/package/client/delete': {
+    '/parcel/client/delete': {
       ...deleteByClient,
     },
   },

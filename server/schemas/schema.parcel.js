@@ -10,6 +10,11 @@ const parcel = new mongoose.Schema({
     type: Date,
     required: true,
   }, */
+  customer_id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   address_expedition: {
     type: String,
     required: true,
@@ -38,7 +43,7 @@ const parcel = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  emergency: {
+  is_emergency: {
     type: Boolean,
     required: true,
     default: false,
@@ -55,6 +60,10 @@ const parcel = new mongoose.Schema({
   latitude: {
     type: String,
     required: false,
+  },
+  amount: {
+    type: String,
+    required: true,
   },
   preuve_livraison: [
     {

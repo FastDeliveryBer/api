@@ -8,16 +8,12 @@ import attribut from './attributToDeliverer.js'
 
 export default {
   paths: {
-    '/round/create': {
+    '/round': {
       ...create,
-    },
-    '/round/update': {
       ...update,
-    },
-    '/round/get/{id}': {
       ...get,
     },
-    '/round/delete/{id}': {
+    '/round/{id}': {
       ...deleteRound,
     },
     '/round/deliverer/{id}': {

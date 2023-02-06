@@ -1,6 +1,6 @@
 ###
 # Créer un colis
-POST http://localhost:4500/parcel HTTP/1.1
+POST http://localhost:4545/parcel HTTP/1.1
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 # Récupération des colis
-GET http://localhost:4500/parcel HTTP/1.1
+GET http://localhost:4545/parcel HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -45,3 +45,13 @@ Content-Type: application/json
 # Supprimer un colis
 DELETE http://localhost:4500/parcel/63e042aaa64dd1779001e18a HTTP/1.1
 Content-Type: application/json
+
+
+###
+# Ajout d'une preuve à un colis
+PATCH http://localhost:4500/parcel HTTP/1.1
+Content-Type: application/json
+
+{
+  "preuve_livraison": 
+}

@@ -1,24 +1,27 @@
 export default {
-  put: {
-    tags: ['Package'],
-    description: 'Update a package for a client',
-    operationId: 'updatePackageByClient',
+  post: {
+    tags: ['Parcel'],
+    description: 'Create a parcel',
+    operationId: 'createParcel',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageUpdateForClient',
+            $ref: '#/components/schemas/parcel',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package created successfully',
+        description: 'Parcel created successfully',
       },
       400: {
         description: 'Error',
+      },
+      404: {
+        description: 'Parcel unknow',
       },
     },
   },

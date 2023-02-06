@@ -2,36 +2,41 @@ export default {
   round: {
     type: 'object',
     properties: {
-      id: {
+      _id: {
         type: 'string',
-        description: 'The unique tracking id for the package',
+        description: 'The unique id for the parcel',
+        example: 'XYZ123456789',
+      },
+      tracking_id: {
+        type: 'string',
+        description: 'The unique tracking id for the parcel',
         example: 'XYZ123456789',
       },
       schelude_date: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
       date_started: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
       date_ending: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
-      packages: {
+      parcel: {
         type: 'array',
         items: {
-          $ref: '../packages/components/schemas/package',
+          $ref: '../parcel/components/schemas/parcel',
         },
       },
       status: {
         type: 'string',
         description:
-          'The current status of the package (e.g. "waiting", "in transit", "delivered")',
+          'The current status of the parcel (e.g. "waiting", "in transit", "delivered")',
         example: 'waiting',
       },
       deliverer_id: {
@@ -46,23 +51,23 @@ export default {
     properties: {
       schelude_date: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
       date_started: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
       date_ending: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
-      packages: {
+      parcel: {
         type: 'array of object',
         additionalProperties: {
-          $ref: '#/components/schemas/package/properties',
+          $ref: '#/components/schemas/parcel/properties',
         },
       },
       id_deliverer: {
@@ -77,23 +82,23 @@ export default {
     properties: {
       schelude_date: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
       date_started: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
       date_ending: {
         type: 'string',
-        description: 'The date that the package is scheduled to be delivered',
+        description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
-      packages: {
+      parcel: {
         type: 'array of object',
         additionalProperties: {
-          $ref: '#/components/schemas/package/properties',
+          $ref: '#/components/schemas/parcel/properties',
         },
       },
       id_deliverer: {

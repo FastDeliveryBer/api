@@ -1,22 +1,21 @@
 export default {
-  post: {
-    tags: ['Admin'],
-    description: 'Login for admin',
-    operationId: 'loginAdmin',
+  put: {
+    tags: ['Parcel'],
+    description: 'Update a parcel for a client',
+    operationId: 'updateParcelByClient',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/adminLogin',
+            $ref: '#/components/schemas/parcelUpdateForClient',
           },
-          required: true,
         },
       },
     },
     responses: {
       200: {
-        description: 'Login successfully',
+        description: 'Parcel created successfully',
       },
       400: {
         description: 'Error',

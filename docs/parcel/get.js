@@ -1,24 +1,24 @@
 export default {
   get: {
-    tags: ['Package'],
-    description: 'Get a package',
-    operationId: 'getPackage',
+    tags: ['Parcel'],
+    description: 'Get a parcel',
+    operationId: 'getParcel',
     parameters: [
       {
         name: 'tracking_id',
         in: 'path',
         required: false,
         description:
-          'Get a package by his tracking_id, if empty will return all the packages',
+          'Get a parcel by his tracking_id, if empty will return all the parcel',
       },
     ],
     responses: {
       200: {
-        description: 'Package get successfully',
+        description: 'Parcel get successfully',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/package',
+              $ref: '#/components/schemas/parcel',
             },
           },
         },
