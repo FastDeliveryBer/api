@@ -101,7 +101,10 @@ export default class RoundCtrl extends ClassCtrl {
     let listErrorOption = []
 
     if (req.query !== '') {
-      let dataOption = [{ label: 'id', type: 'objectid' }]
+      let dataOption = [
+        { label: '_id', type: 'objectid' },
+        { label: 'deliverer_id', type: 'objectid' },
+      ]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
     if (listErrorOption > 0) {
@@ -112,8 +115,16 @@ export default class RoundCtrl extends ClassCtrl {
       try {
         const db = await new Database()
         const roundMdl = new RoundMdl(db)
-        const { id } = req.query ?? ''
-        const round = await roundMdl.queryGetRound(id)
+        const filteredData = Object.entries(req.query).reduce(
+          (obj, [key, value]) => {
+            if (['_id', 'deliverer_id'].includes(key)) {
+              obj[key] = value
+            }
+            return obj
+          },
+          {}
+        )
+        const round = await roundMdl.queryGetRound(filteredData)
         response.message = 'Aucune tournée'
         if (round.length > 0) {
           response.message = 'Tournée(s) récupéré(s)'
@@ -167,7 +178,7 @@ export default class RoundCtrl extends ClassCtrl {
             {}
           )
           const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(id)
-          response.message = 'Tournée inconnu'
+          response.message = 'Tournée inconnue'
           if (roundAlreadyExist) {
             const round = await roundMdl.queryUpdateRound(id, filteredData)
             response.message = 'Impossible de modifier la tournée'

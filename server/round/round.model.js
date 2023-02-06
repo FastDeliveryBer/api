@@ -16,9 +16,8 @@ export default class RoundMdl extends Model {
     }
   }
 
-  queryGetRound = async (id) => {
-    let query = {}
-    if (id !== undefined) query = { _id: id }
+  queryGetRound = async (filteredData) => {
+    const query = filteredData
     try {
       let round = await Round.find(query)
       return round
