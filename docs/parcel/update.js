@@ -1,8 +1,8 @@
 export default {
-  put: {
-    tags: ['Package'],
-    description: 'Update information of a package',
-    operationId: 'updatePackage',
+  patch: {
+    tags: ['Parcel'],
+    description: 'Update information of a parcel',
+    operationId: 'updateParcel',
     parameters: [
       {
         name: 'tracking_id',
@@ -14,14 +14,14 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageUpdate',
+            $ref: '#/components/schemas/parcelUpdate',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package updated successfully',
+        description: 'Parcel updated successfully',
       },
       400: {
         description: 'Error',

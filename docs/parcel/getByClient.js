@@ -1,8 +1,8 @@
 export default {
   get: {
-    tags: ['Package'],
-    description: 'Get a package for a client',
-    operationId: 'getPackageByClient',
+    tags: ['Parcel'],
+    description: 'Get a parcel for a client',
+    operationId: 'getParcelByClient',
     parameters: [
       {
         name: 'client_id',
@@ -14,17 +14,20 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/packageGetByClient',
+            $ref: '#/components/schemas/parcelGetByClient',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Package get successfully',
+        description: 'Parcel get successfully',
       },
       400: {
         description: 'Error',
+      },
+      404: {
+        description: 'Not found',
       },
     },
   },

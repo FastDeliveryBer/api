@@ -5,7 +5,7 @@ export default {
       id: {
         type: 'string',
         description:
-          'The unique tracking id for the client who create the package, can be null if not created by a client',
+          'The unique tracking id for the client who create the parcel, can be null if not created by a client',
         example: 'XYZ123456789',
       },
       firstName: {

@@ -1,5 +1,5 @@
 export default {
-  put: {
+  patch: {
     tags: ['Round'],
     description: 'Update information of a round',
     operationId: 'updateRound',
@@ -25,6 +25,9 @@ export default {
       },
       400: {
         description: 'Error',
+      },
+      404: {
+        description: 'Not found',
       },
     },
   },

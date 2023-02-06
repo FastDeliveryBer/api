@@ -7,14 +7,12 @@ import login from './login.js'
 
 export default {
   paths: {
-    '/deliverer/create': {
+    '/deliverer': {
       ...create,
+      ...get,
     },
     '/deliverer/update/{id}': {
       ...update,
-    },
-    '/deliverer/get/{id}': {
-      ...get,
     },
     '/deliverer/delete/{id}': {
       ...deleteDeliverer,
