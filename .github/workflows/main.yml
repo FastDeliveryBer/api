@@ -40,7 +40,7 @@ jobs:
       with:
           webhook_url: ${{ env.DISCORD_WEBHOOK_URL }}
           title: Je suis entrain de mettre à jours l'API !
-          message: "**Creator:** ${{ github.event.push.user.login }}\n${{ github.event.push.html_url }}"
+          message: "**Creator:** ${{ github.event.author.name }}\n https://fastdb-api.herokuapp.com/"
           include_image: true
           avatar_url: https://phantom-marca.unidadeditorial.es/f66122513dceb8500602ef9806776ed5/resize/1320/f/jpg/assets/multimedia/imagenes/2022/12/30/16723620780107.jpg
           username: FuckBoy
