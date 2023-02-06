@@ -33,7 +33,7 @@ const user = new mongoose.Schema({
   },
 })
 
-const admin = new mongoose.Schema({
+const captain = new mongoose.Schema({
   first_name: {
     type: String,
     required: true,
@@ -61,6 +61,6 @@ const admin = new mongoose.Schema({
 })
 
 const User = mongoose.model('users', user)
-const Admin = mongoose.model('admin', admin)
+const Captain = mongoose.model('captain', captain)
 
-export { User, Admin }
+export { User, Captain }

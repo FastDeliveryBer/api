@@ -11,10 +11,10 @@ export default {
       ...create,
       ...get,
     },
-    '/deliverer/update/{id}': {
+    '/deliverer/{id}': {
       ...update,
     },
-    '/deliverer/delete/{id}': {
+    '/deliverer/{id}': {
       ...deleteDeliverer,
     },
     '/deliverer/login': {

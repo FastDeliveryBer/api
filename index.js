@@ -5,6 +5,7 @@ import docs from './docs/index.js'
 import configlog from './log/log.js'
 import authMiddleware from './server/middleware/auth.js'
 import authRoute from './server/auth/auth.routes.js'
+import captain from './server/captain/captain.routes.js'
 import deliverer from './server/deliverer/deliverer.routes.js'
 import parcel from './server/parcel/parcel.routes.js'
 import round from './server/round/round.routes.js'
@@ -28,6 +29,7 @@ app.use('/swagger', swaggerUI.serve, swaggerUI.setup(docs))
  */
 app.use('/auth', authRoute)
 //app.use(authMiddleware)
+app.use('/captain', captain)
 app.use('/deliverer', deliverer)
 app.use('/parcel', parcel)
 app.use('/round', round)

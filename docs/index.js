@@ -2,7 +2,7 @@ import deliverer from './deliverer/index.js'
 import parcel from './parcel/index.js'
 import round from './round/index.js'
 import client from './clients/index.js'
-import admin from './admin/index.js'
+import captain from './captain/index.js'
 
 const HOST = process.env.HOST || 'http://localhost'
 const PORT = process.env.PORT || 4500
@@ -33,7 +33,7 @@ export default {
     ...parcel.paths,
     ...round.paths,
     ...client.paths,
-    ...admin.paths,
+    ...captain.paths,
   },
   components: {
     schemas: {
@@ -41,7 +41,7 @@ export default {
       ...parcel.schema,
       ...round.schema,
       ...client.schema,
-      ...admin.schema,
+      ...captain.schema,
     },
   },
 }
