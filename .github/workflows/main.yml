@@ -8,6 +8,7 @@ on:
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   MONGODB_SECRET_URI: ${{ secrets.MONGODB_SECRET_URI }}
+  DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
 jobs:
   deploy:
@@ -33,3 +34,23 @@ jobs:
         heroku_app_name: "fastdb-api"
         heroku_email: "nicolas.lacoste.esgi@gmail.com"
         usedocker: true
+        
+    - name: Notify Discord
+      uses: curlimages/curl@v2
+      env:
+        DISCORD_WEBHOOK_URL: ${{ env.DISCORD_WEBHOOK_URL }}
+      with:
+        args: |
+          -X POST
+          -H "Content-Type: application/json"
+          -d '{
+            "content": "Je suis entrain de mettre à jours l'API !",
+            "embeds": [
+              {
+                "title": "Résultat du build",
+                "description": "Build réussi les fuckboys !",
+                "color": 65280
+              }
+            ]
+          }'
+          ${{ env.DISCORD_WEBHOOK_URL }}
