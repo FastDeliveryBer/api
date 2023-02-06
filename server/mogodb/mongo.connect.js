@@ -11,6 +11,7 @@ export default class Database {
 
   _connect() {
     mongoose.set('strictQuery', false)
+    console.log(`${process.env.MONGODB_URI}${process.env.DB_NAME}`)
     mongoose
       .connect(
         `${process.env.MONGODB_URI}${process.env.DB_NAME}?retryWrites=true&w=majority&wtimeout=0`,
