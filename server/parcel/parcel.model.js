@@ -73,8 +73,8 @@ export default class ParcelMdl extends Model {
     }
   }
 
-  didParcelAlreadyExiste = async (tracking_id) => {
-    const query = { tracking_id: tracking_id }
+  didParcelAlreadyExiste = async (label, value) => {
+    const query = { [label]: value }
 
     try {
       const parcelExist = await Parcel.exists(query)

@@ -74,6 +74,17 @@ export default class DelivererMdl extends Model {
     }
   }
 
+  didDelivererIsFree = async (deliverer_id, date) => {
+    const query = { deliverer_id: deliverer_id, date: date }
+
+    try {
+      const delivererExist = await Deliverer.exists(query)
+      return delivererExist
+    } catch (error) {
+      throw error
+    }
+  }
+
   didEmailDelivererAlreadyExiste = async (id, email) => {
     const query = {
       _id: { $ne: id },

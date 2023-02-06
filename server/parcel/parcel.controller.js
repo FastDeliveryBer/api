@@ -164,6 +164,7 @@ export default class ParcelCtrl extends ClassCtrl {
             {}
           )
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
+            'tracking_id',
             tracking_id
           )
           response.message = "Ce colis n'existe pas"
@@ -210,6 +211,7 @@ export default class ParcelCtrl extends ClassCtrl {
           const parcelMdl = new ParcelMdl(db)
           const { tracking_id } = req.body
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
+            'tracking_id',
             tracking_id
           )
           response.message = 'Colis inexistant'
