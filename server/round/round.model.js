@@ -3,7 +3,6 @@ import Model from '../models/model.js'
 
 export default class RoundMdl extends Model {
   queryCreateRound = async (deliverer_id, date, arrayTrackinId) => {
-    console.log(...arrayTrackinId)
     try {
       let round = new Round({
         deliverer_id: deliverer_id,
@@ -17,9 +16,8 @@ export default class RoundMdl extends Model {
     }
   }
 
-  queryGetRound = async (id) => {
-    let query = {}
-    if (id !== undefined) query = { _id: id }
+  queryGetRound = async (filteredData) => {
+    const query = filteredData
     try {
       let round = await Round.find(query)
       return round
@@ -33,6 +31,24 @@ export default class RoundMdl extends Model {
       const round = await Round.findOneAndUpdate(
         { _id: id },
         { $set: data },
+        { new: true }
+      )
+      return round
+    } catch (error) {
+      throw error
+    }
+  }
+
+  queryAffectDelivererToRound = async (id, deliverer_id, date) => {
+    try {
+      const round = await Round.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            deliverer_id: deliverer_id,
+            date: date,
+          },
+        },
         { new: true }
       )
       return round

@@ -4,9 +4,9 @@ POST http://localhost:4500/round HTTP/1.1
 Content-Type: application/json
 
 {
-  "date": "12",
-  "deliverer_id": "13",
-  "parcels": ["2df9899a2959a6e8f4bd3d099d36ba715348a8b997ef4db551692b4308d6c1c2"]
+  "date": "13",
+  "deliverer_id": "63e018295d1719e427da79d4",
+  "parcels": ["63e05fb699452fe3df806f56"]
 }
 
 ###
@@ -16,30 +16,38 @@ Content-Type: application/json
 
 ###
 # Récupération une tournée
-GET http://localhost:4500/round?id=63e00dd357fedcab8b24df02 HTTP/1.1
+GET http://localhost:4500/round?_id=63e06275a8f1bf0305d86ba3 HTTP/1.1
 Content-Type: application/json
 
 ###
 # Modifier une tournée
-PATCH http://localhost:4500/round/63e00dd357fedcab8b24df02  HTTP/1.1
+PATCH http://localhost:4500/round/63e06525d2851a8bb53f4bbc  HTTP/1.1
 Content-Type: application/json
 
 {
-  "deliverer_id": "87"
+  "deliverer_id": "63e01da4cf04b679ee43bbb2"
 }
 
 
 ###
 # Supprimer une tournée
-DELETE http://localhost:4500/round/63dfead58d20e625429413c8 HTTP/1.1
+DELETE http://localhost:4500/round/63e061bfa8f1bf0305d86b8b HTTP/1.1
 Content-Type: application/json
 
 
 ###
-# Affecter une tournée à un livreur
-PATCH http://localhost:4500/round/63dfead58d20e625429413c8  HTTP/1.1
+# Affecter une tournée à un livreur à une date
+POST http://localhost:4500/round/affect HTTP/1.1
 Content-Type: application/json
 
 {
-  "deliverer_id": "787"
+  "id": "63e02b365a091bf6218e892a",
+  "date": "12",
+  "deliverer_id": "63e018295d1719e427da79d4"
 }
+
+
+###
+# Récupération des tournées d'un livreur
+GET http://localhost:4500/round?deliverer_id=63e01da4cf04b679ee43bbb2 HTTP/1.1
+Content-Type: application/json

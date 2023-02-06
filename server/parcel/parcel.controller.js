@@ -84,7 +84,10 @@ export default class ParcelCtrl extends ClassCtrl {
     let listErrorOption = []
 
     if (req.query !== '') {
-      let dataOption = [{ label: 'tracking_id', type: 'string' }]
+      let dataOption = [
+        { label: '_id', type: 'objectid' },
+        { label: 'tracking_id', type: 'string' },
+      ]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
     if (listErrorOption > 0) {
@@ -95,8 +98,16 @@ export default class ParcelCtrl extends ClassCtrl {
       try {
         const db = await new Database()
         const parcelMdl = new ParcelMdl(db)
-        const { tracking_id } = req.query ?? ''
-        const parcel = await parcelMdl.queryGetParcel(tracking_id)
+        const filteredData = Object.entries(req.query).reduce(
+          (obj, [key, value]) => {
+            if (['_id', 'tracking_id'].includes(key)) {
+              obj[key] = value
+            }
+            return obj
+          },
+          {}
+        )
+        const parcel = await parcelMdl.queryGetParcel(filteredData)
         response.message = 'Aucun colis'
         if (parcel.length > 0) {
           response.message = 'Colis récupéré(s)'
@@ -164,6 +175,7 @@ export default class ParcelCtrl extends ClassCtrl {
             {}
           )
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
+            'tracking_id',
             tracking_id
           )
           response.message = "Ce colis n'existe pas"
@@ -197,8 +209,8 @@ export default class ParcelCtrl extends ClassCtrl {
       message: 'Bad request',
       data: [],
     }
-    if (Object.keys(req.body).length > 0) {
-      const dataIpt = [{ label: 'tracking_id', type: 'string' }]
+    if (Object.keys(req.params).length > 0) {
+      const dataIpt = [{ label: '_id', type: 'objectid' }]
       const listError = this.verifSecure(dataIpt, req.body)
 
       if (listError.length > 0) {
@@ -208,13 +220,14 @@ export default class ParcelCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const parcelMdl = new ParcelMdl(db)
-          const { tracking_id } = req.body
+          const { _id } = req.body
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
-            tracking_id
+            '_id',
+            _id
           )
           response.message = 'Colis inexistant'
           if (parcelAlreadyExist) {
-            const parcel = await parcelMdl.queryDeleteParcel(tracking_id)
+            const parcel = await parcelMdl.queryDeleteParcel(_id)
             response.message = 'Impossible de supprimer le colis'
             if (parcel) {
               response.message = 'Colis supprimé'

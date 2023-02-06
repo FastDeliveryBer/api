@@ -48,16 +48,20 @@ const parcel = new mongoose.Schema({
     required: false,
     default: 'to attribute',
   },
-  /*  preuve_livraison: {
-    tracking_id: {
-      type: String,
+  longitude: {
+    type: String,
+    required: false,
+  },
+  latitude: {
+    type: String,
+    required: false,
+  },
+  preuve_livraison: [
+    {
+      type: Buffer,
       required: true,
     },
-    photo_url: {
-      type: String,
-      required: true,
-    },
-  }, */
+  ],
 })
 
 const Parcel = mongoose.model('parcel', parcel)

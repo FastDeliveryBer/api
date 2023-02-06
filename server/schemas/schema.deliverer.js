@@ -18,10 +18,10 @@ const deliverer = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  language: {
+  langage: {
     type: String,
     required: true,
-    default: 'en',
+    default: 'FR',
   },
 })
 

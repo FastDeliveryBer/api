@@ -29,21 +29,22 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  queryGetDeliverer = async () => {
-    const query = {}
+  queryGetDeliverer = async (id) => {
+    let query = {}
+    if (id !== undefined) query = { _id: id }
 
     try {
-      let deliverer = await Deliverer.find()
+      let deliverer = await Deliverer.find(query)
       return deliverer
     } catch (error) {
       throw error
     }
   }
 
-  queryUpdateDeliverer = async (email, data) => {
+  queryUpdateDeliverer = async (id, data) => {
     try {
       const deliverer = await Deliverer.findOneAndUpdate(
-        { email: email },
+        { _id: id },
         { $set: data },
         { new: true }
       )
@@ -53,17 +54,42 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  queryDeleteDeliverer = async (email) => {
+  queryDeleteDeliverer = async (id) => {
     try {
-      const deliverer = await Deliverer.findOneAndDelete({ email: email })
+      const deliverer = await Deliverer.findOneAndDelete({ _id: id })
       return deliverer
     } catch (error) {
       throw error
     }
   }
 
-  didDelivererAlreadyExiste = async (email) => {
-    const query = { email: email }
+  didDelivererAlreadyExiste = async (label, value) => {
+    const query = { [label]: value }
+
+    try {
+      const delivererExist = await Deliverer.exists(query)
+      return delivererExist
+    } catch (error) {
+      throw error
+    }
+  }
+
+  didDelivererIsFree = async (deliverer_id, date) => {
+    const query = { deliverer_id: deliverer_id, date: date }
+
+    try {
+      const delivererExist = await Deliverer.exists(query)
+      return delivererExist
+    } catch (error) {
+      throw error
+    }
+  }
+
+  didEmailDelivererAlreadyExiste = async (id, email) => {
+    const query = {
+      _id: { $ne: id },
+      email: email,
+    }
 
     try {
       const delivererExist = await Deliverer.exists(query)

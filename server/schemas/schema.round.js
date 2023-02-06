@@ -1,14 +1,8 @@
 import mongoose from 'mongoose'
 
 const round = new mongoose.Schema({
-  deliverer_id: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
+  deliverer_id: { type: mongoose.Schema.Types.ObjectId, required: true },
+  date: { type: String, required: true },
   status: {
     type: String,
     required: false,
@@ -16,7 +10,7 @@ const round = new mongoose.Schema({
   },
   parcels: [
     {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: true,
     },
