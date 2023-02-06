@@ -21,11 +21,11 @@ Content-Type: application/json
 
 ###
 # Modifier une tournée
-PATCH http://localhost:4500/round/63e02b365a091bf6218e892a  HTTP/1.1
+PATCH http://localhost:4500/round/63e06525d2851a8bb53f4bbc  HTTP/1.1
 Content-Type: application/json
 
 {
-  "deliverer_id": "87"
+  "deliverer_id": "63e01da4cf04b679ee43bbb2"
 }
 
 

@@ -1,11 +1,25 @@
 import { Parcel } from '../schemas/schema.parcel.js'
 import Model from '../models/model.js'
 import { v4 as uuidv4 } from 'uuid'
-import { compareSync } from 'bcrypt'
+import axios from 'axios'
 
 export default class ParcelMdl extends Model {
   generateTrackingID = () => {
     return uuidv4()
+  }
+
+  getImageAndConvertToBinary = async (imageUrl) => {
+    try {
+      const response = await axios.get(imageUrl, {
+        responseType: 'arraybuffer',
+      })
+      const imageData = new Buffer.from(response.data, 'binary').toString(
+        'base64'
+      )
+      return imageData
+    } catch (error) {
+      throw error
+    }
   }
 
   queryCreateParcel = async (
@@ -21,6 +35,11 @@ export default class ParcelMdl extends Model {
   ) => {
     try {
       const tracking_id = this.generateTrackingID()
+
+      const imageUrl =
+        'https://pbs.twimg.com/profile_images/1526507008505126912/KLpm9_UY_400x400.jpg'
+      const imageData = await this.getImageAndConvertToBinary(imageUrl)
+
       let parcel = new Parcel({
         tracking_id: tracking_id,
         /* delivery_date: delivery_date, */
@@ -32,7 +51,9 @@ export default class ParcelMdl extends Model {
         height: height,
         fragile: fragile,
         emergency: emergency,
+        preuve_livraison: [imageData],
       })
+
       await parcel.save()
       return parcel
     } catch (error) {
@@ -40,9 +61,8 @@ export default class ParcelMdl extends Model {
     }
   }
 
-  queryGetParcel = async (tracking_id) => {
-    let query = {}
-    if (tracking_id !== undefined) query = { tracking_id: tracking_id }
+  queryGetParcel = async (filteredData) => {
+    let query = filteredData
     try {
       let parcel = await Parcel.find(query)
       return parcel

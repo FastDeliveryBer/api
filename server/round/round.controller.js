@@ -154,7 +154,8 @@ export default class RoundCtrl extends ClassCtrl {
       let dataIpt = [{ label: 'id', type: 'objectid' }]
       let dataOption = [
         { label: 'parcels', type: 'array' },
-        { label: 'deliverer', type: 'objectid' },
+        { label: 'date', type: 'string' },
+        { label: 'deliverer_id', type: 'objectid' },
       ]
       let listError = this.verifSecure(dataIpt, req.params)
       let listErrorOption = this.verifWithOption(dataOption, req.body, true)
@@ -170,7 +171,7 @@ export default class RoundCtrl extends ClassCtrl {
           const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
-              if (['parcels', 'deliverer'].includes(key)) {
+              if (['parcels', 'deliverer_id', 'date'].includes(key)) {
                 obj[key] = value
               }
               return obj
@@ -183,7 +184,7 @@ export default class RoundCtrl extends ClassCtrl {
             const round = await roundMdl.queryUpdateRound(id, filteredData)
             response.message = 'Impossible de modifier la tournée'
             if (round) {
-              response.message = 'Tournée modifié'
+              response.message = 'Tournée modifiée'
               response.error = false
               response.data.push(round)
               code = 200
