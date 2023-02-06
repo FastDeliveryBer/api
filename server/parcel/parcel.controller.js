@@ -243,8 +243,4 @@ export default class ParcelCtrl extends ClassCtrl {
     }
     res.status(code).send(response)
   }
-
-  static fnc = () => {
-    res.status(200).send('Hello')
-  }
 }
