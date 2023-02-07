@@ -24,7 +24,7 @@ export default {
   },
   servers: [
     {
-      url: `${HOST}:${PORT}`,
+      url: `https://fastdb-api.herokuapp.com/`,
       description: 'Server',
     },
   ],
