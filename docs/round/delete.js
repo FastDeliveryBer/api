@@ -5,7 +5,7 @@ export default {
     operationId: 'deleteRound',
     parameters: [
       {
-        name: 'round_id',
+        name: '_id',
         in: 'path',
         required: true,
       },
@@ -16,6 +16,9 @@ export default {
       },
       400: {
         description: 'Error',
+      },
+      404: {
+        description: 'Not found',
       },
     },
   },

@@ -5,9 +5,9 @@ export default {
     operationId: 'getDeliverer',
     parameters: [
       {
-        name: 'deliverer_id',
+        name: '_id',
         in: 'path',
-        required: true,
+        required: false,
       },
     ],
     responses: {

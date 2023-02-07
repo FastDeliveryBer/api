@@ -1,7 +1,7 @@
 import deliverer from './deliverer/index.js'
 import parcel from './parcel/index.js'
 import round from './round/index.js'
-import client from './clients/index.js'
+import customer from './customer/index.js'
 import admin from './admin/index.js'
 
 const HOST = process.env.HOST || 'http://localhost'
@@ -32,7 +32,7 @@ export default {
     ...deliverer.paths,
     ...parcel.paths,
     ...round.paths,
-    ...client.paths,
+    ...customer.paths,
     ...admin.paths,
   },
   components: {
@@ -40,7 +40,7 @@ export default {
       ...deliverer.schema,
       ...parcel.schema,
       ...round.schema,
-      ...client.schema,
+      ...customer.schema,
       ...admin.schema,
     },
   },

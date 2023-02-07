@@ -1,11 +1,11 @@
 export default {
-  get: {
-    tags: ['Parcel'],
-    description: 'Get a parcel for a client',
-    operationId: 'getParcelByClient',
+  patch: {
+    tags: ['Customer'],
+    description: 'Update information of a client',
+    operationId: 'updateClient',
     parameters: [
       {
-        name: 'client_id',
+        name: '_id',
         in: 'path',
         required: true,
       },
@@ -14,20 +14,17 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/parcelGetByClient',
+            $ref: '#/components/schemas/client',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Parcel get successfully',
+        description: 'Client updated successfully',
       },
       400: {
         description: 'Error',
-      },
-      404: {
-        description: 'Not found',
       },
     },
   },

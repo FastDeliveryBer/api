@@ -1,20 +1,21 @@
 export default {
-  delete: {
-    tags: ['Parcel'],
-    description: 'Delete a parcel for a client',
-    operationId: 'deleteParcelByClient',
+  post: {
+    tags: ['Customer'],
+    description: 'Create a customer',
+    operationId: 'createCustomer',
+    parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/parcelDeleteByClient',
+            $ref: '#/components/schemas/customerCreation',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Parcel delete successfully',
+        description: 'Customer created successfully',
       },
       400: {
         description: 'Error',

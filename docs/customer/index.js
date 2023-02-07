@@ -1,25 +1,21 @@
 import schema from './_model.js'
 import create from './create.js'
 import update from './update.js'
-import deleteClient from './delete.js'
+import deleteCustomer from './delete.js'
 import get from './get.js'
 
 export default {
   paths: {
-    '/client/create': {
+    '/customer': {
       ...create,
-    },
-    '/client/update': {
-      ...update,
-    },
-    '/client/get/{id}': {
       ...get,
     },
-    '/client/delete/{id}': {
-      ...deleteClient,
+    '/customer/{id}': {
+      ...update,
+      ...deleteCustomer,
     },
-    '/client/login': {
-      ...deleteClient,
+    '/customer/login': {
+      ...deleteCustomer,
     },
   },
   schema: {

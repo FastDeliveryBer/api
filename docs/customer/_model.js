@@ -1,140 +1,135 @@
 export default {
-  client: {
+  customer: {
     type: 'object',
     properties: {
-      client_id: {
+      _id: {
         type: 'string',
-        description: 'The unique tracking id for the client',
+        description: 'The unique tracking id for the customer',
         example: 'XYZ123456789',
       },
-      firstName: {
+      firstname: {
         type: 'String',
-        description: 'First Name of client',
+        description: 'First Name of customer',
         example: 'John',
       },
-      lastName: {
+      lastname: {
         type: 'String',
-        description: 'Last Name of client',
+        description: 'Last Name of customer',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of client, use to login',
+        description: 'Mail of customer, use to login',
         example: 'jdoe@myges.fr',
       },
       phone: {
         type: 'Int',
-        description: 'Phone of client',
+        description: 'Phone of customer',
         example: '0123456789',
       },
       password: {
         type: 'String',
-        description: 'Password of the client to login in his account',
+        description: 'Password of the customer to login in his account',
         example: 'FR',
       },
     },
   },
-  clientGet: {
+  customerGet: {
     type: 'object',
     properties: {
-      client_id: {
+      _id: {
         type: 'string',
-        description: 'The unique tracking id for the client',
+        description: 'The unique tracking id for the customer',
         example: 'XYZ123456789',
       },
-      firstName: {
+      firstname: {
         type: 'String',
-        description: 'First Name of client',
+        description: 'First Name of customer',
         example: 'John',
       },
-      lastName: {
+      lastname: {
         type: 'String',
-        description: 'Last Name of client',
+        description: 'Last Name of customer',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of client',
+        description: 'Mail of customer',
         example: 'jdoe@myges.fr',
       },
       phone: {
-        type: 'Int',
-        description: 'Phone of client',
+        type: 'String',
+        description: 'Phone of customer',
         example: '0123456789',
       },
     },
   },
-  clientCreation: {
+  customerCreation: {
     type: 'object',
     properties: {
-      firstName: {
+      firstname: {
         type: 'String',
-        description: 'First Name of client',
+        description: 'First Name of customer',
         example: 'John',
       },
-      lastName: {
+      lastname: {
         type: 'String',
-        description: 'Last Name of client',
+        description: 'Last Name of customer',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of client',
+        description: 'Mail of customer',
         example: 'jdoe@myges.fr',
       },
       phone: {
-        type: 'Int',
-        description: 'Phone of client',
+        type: 'String',
+        description: 'Phone of customer',
         example: '0123456789',
       },
       password: {
         type: 'String',
-        description: 'Password of the client to login in his account',
-        example: 'FR',
+        description: 'Password of the customer to login in his account',
+        example: 'Azerty',
       },
     },
   },
-  clientUpdate: {
+  customerUpdate: {
     type: 'object',
     properties: {
-      firstName: {
+      firstname: {
         type: 'String',
-        description: 'First Name of client',
+        description: 'First Name of customer',
         example: 'John',
       },
-      lastName: {
+      lastname: {
         type: 'String',
-        description: 'Last Name of client',
+        description: 'Last Name of customer',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of client, use to login',
+        description: 'Mail of customer, use to login',
         example: 'jdoe@myges.fr',
       },
       phone: {
-        type: 'Int',
-        description: 'Phone of client',
-        example: '0123456789',
-      },
-      password: {
         type: 'String',
-        description: 'Password of the client to login in his account',
-        example: 'FR',
+        description: 'Phone of customer',
+        example: '0123456789',
       },
     },
   },
-  clientLogin: {
+  customerLogin: {
     type: 'object',
     properties: {
       email: {
         type: 'String',
-        description: 'Mail of client',
+        description: 'Mail of customer',
         example: 'jdoe@myges.fr',
       },
       password: {
         type: 'String',
-        description: 'Password of the client to login in his account',
+        description: 'Password of the customer to login in his account',
         example: 'FR',
       },
     },

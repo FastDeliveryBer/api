@@ -1,14 +1,14 @@
 export default {
   post: {
-    tags: ['Client'],
-    description: 'Login for client',
-    operationId: 'loginClient',
+    tags: ['Customer'],
+    description: 'Login for customer',
+    operationId: 'loginCustomer',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/clientLogin',
+            $ref: '#/components/schemas/customerLogin',
           },
           required: true,
         },

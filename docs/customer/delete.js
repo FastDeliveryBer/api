@@ -1,8 +1,8 @@
 export default {
-  patch: {
-    tags: ['Round'],
-    description: 'Update information of a round',
-    operationId: 'updateRound',
+  delete: {
+    tags: ['Customer'],
+    description: 'Delete information of a customer',
+    operationId: 'deleteCustomer',
     parameters: [
       {
         name: '_id',
@@ -14,20 +14,17 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/round',
+            $ref: '#/components/schemas/customer',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Round updated successfully',
+        description: 'Customer delete successfully',
       },
       400: {
         description: 'Error',
-      },
-      404: {
-        description: 'Not found',
       },
     },
   },

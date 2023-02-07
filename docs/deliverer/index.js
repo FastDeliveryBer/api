@@ -13,8 +13,6 @@ export default {
     },
     '/deliverer/{id}': {
       ...update,
-    },
-    '/deliverer/{id}': {
       ...deleteDeliverer,
     },
     '/deliverer/login': {

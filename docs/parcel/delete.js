@@ -3,7 +3,13 @@ export default {
     tags: ['Parcel'],
     description: 'Delete a parcel',
     operationId: 'deleteParcel',
-    parameters: [],
+    parameters: [
+      {
+        name: '_id',
+        in: 'path',
+        required: true,
+      },
+    ],
     requestBody: {
       content: {
         'application/json': {
