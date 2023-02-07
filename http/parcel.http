@@ -11,7 +11,9 @@ Content-Type: application/json
   "length": "20cm",
   "height": "12cm",
   "fragile": "true",
-  "emergency": "false"
+  "emergency": "false",
+  "delivery_date": "false",
+  "customer_id": "63e2390a6fbf120931a73a53"
 }
 
 ###

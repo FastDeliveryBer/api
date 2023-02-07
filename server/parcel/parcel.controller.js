@@ -1,6 +1,7 @@
 import express from 'express'
 import Database from '../mogodb/mongo.connect.js'
 import ParcelMdl from './parcel.model.js'
+import CustomerMdl from '../customer/customer.model.js'
 import ClassCtrl from '../controller/class.controller.js'
 
 const { Request, Response } = express
@@ -15,16 +16,16 @@ export default class ParcelCtrl extends ClassCtrl {
     }
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
-        /* { label: 'delivery_date', type: 'string' }, */
+        { label: 'customer_id', type: 'objectid' },
+        { label: 'delivery_date', type: 'string' },
         { label: 'address_expedition', type: 'string' },
         { label: 'address_delivery', type: 'string' },
         { label: 'weight', type: 'string' },
         { label: 'width', type: 'string' },
         { label: 'length', type: 'string' },
         { label: 'height', type: 'string' },
-        { label: 'fragile', type: 'string' },
+        { label: 'fragile', type: 'boolean' },
         { label: 'emergency', type: 'string' },
-        /* { label: 'status', type: 'string' }, */
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
@@ -35,8 +36,10 @@ export default class ParcelCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const parcelMdl = new ParcelMdl(db)
+          const customerMdl = new CustomerMdl(db)
           const {
-            /* delivery_date, */
+            customer_id,
+            delivery_date,
             address_expedition,
             address_delivery,
             weight,
@@ -47,23 +50,30 @@ export default class ParcelCtrl extends ClassCtrl {
             emergency,
           } = req.body
 
-          const parcel = await parcelMdl.queryCreateParcel(
-            /* delivery_date, */
-            address_expedition,
-            address_delivery,
-            weight,
-            width,
-            length,
-            height,
-            fragile,
-            emergency
-          )
-          response.message = 'Impossible de créer le colis'
-          if (parcel) {
-            response.message = 'Colis créé'
-            response.error = false
-            response.data.push(parcel)
-            code = 200
+          const customerAlreadyExist =
+            await customerMdl.didCustomerAlreadyExiste('_id', customer_id)
+          response.message = 'Client inconnu'
+
+          if (customerAlreadyExist) {
+            const parcel = await parcelMdl.queryCreateParcel(
+              customer_id,
+              delivery_date,
+              address_expedition,
+              address_delivery,
+              weight,
+              width,
+              length,
+              height,
+              fragile,
+              emergency
+            )
+            response.message = 'Impossible de créer le colis'
+            if (parcel) {
+              response.message = 'Colis créé'
+              response.error = false
+              response.data.push(parcel)
+              code = 200
+            }
           }
         } catch (error) {
           console.log(error)

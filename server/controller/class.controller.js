@@ -65,6 +65,7 @@ export default class ClassCtrl {
                 listError.push(`Format du champ ${key} incorrecte`)
               }
             }
+          } else if (typeof value === 'boolean') {
           } else {
             listError.push(`Format du champ ${key} incorrecte`)
           }

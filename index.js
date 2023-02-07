@@ -7,6 +7,7 @@ import authMiddleware from './server/middleware/auth.js'
 import authRoute from './server/auth/auth.routes.js'
 import admin from './server/admin/admin.routes.js'
 import deliverer from './server/deliverer/deliverer.routes.js'
+import customer from './server/customer/customer.routes.js'
 import parcel from './server/parcel/parcel.routes.js'
 import round from './server/round/round.routes.js'
 
@@ -31,6 +32,7 @@ app.use('/auth', authRoute)
 //app.use(authMiddleware)
 app.use('/admin', admin)
 app.use('/deliverer', deliverer)
+app.use('/customer', customer)
 app.use('/parcel', parcel)
 app.use('/round', round)
 

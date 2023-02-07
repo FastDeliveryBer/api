@@ -106,7 +106,7 @@ export default class DeliveryCtrl extends ClassCtrl {
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      let dataIpt = [{ label: 'id', type: 'objectid' }]
+      let dataIpt = [{ label: '_id', type: 'objectid' }]
       let dataOption = [
         { label: 'email', type: 'email' },
         { label: 'lastname', type: 'string' },
@@ -125,7 +125,7 @@ export default class DeliveryCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)
-          const { id } = req.params
+          const { _id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (
@@ -140,7 +140,7 @@ export default class DeliveryCtrl extends ClassCtrl {
             {}
           )
           const delivererAlreadyExist =
-            await delivererMdl.didDelivererAlreadyExiste('_id', id)
+            await delivererMdl.didDelivererAlreadyExiste('_id', _id)
           let emailDelivererAlreadyExistForAnother = false
           if (filteredData['email']) {
             emailDelivererAlreadyExistForAnother =

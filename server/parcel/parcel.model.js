@@ -23,7 +23,8 @@ export default class ParcelMdl extends Model {
   }
 
   queryCreateParcel = async (
-    /* delivery_date, */
+    customer_id,
+    delivery_date,
     address_expedition,
     address_delivery,
     weight,
@@ -42,7 +43,8 @@ export default class ParcelMdl extends Model {
  */
       let parcel = new Parcel({
         tracking_id: tracking_id,
-        /* delivery_date: delivery_date, */
+        customer_id: customer_id,
+        delivery_date: delivery_date,
         address_expedition: address_expedition,
         address_delivery: address_delivery,
         weight: weight,

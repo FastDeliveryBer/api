@@ -6,14 +6,13 @@ const parcel = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  /* delivery_date: {
-    type: Date,
+  delivery_date: {
+    type: String,
     required: true,
-  }, */
+  },
   customer_id: {
     type: String,
-    required: false,
-    unique: true,
+    required: true,
   },
   address_expedition: {
     type: String,
