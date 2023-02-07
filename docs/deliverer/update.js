@@ -1,11 +1,12 @@
 export default {
   patch: {
     tags: ['Deliverer'],
-    description: 'Update information of a deliverer',
+    description:
+      "Modifier les informations d'un livreur, le corprs de la requêtes doit regrouper une ou plusieurs informations l'ensemble des informations autorisées sont affiché dans le schéma",
     operationId: 'updateDeliverer',
     parameters: [
       {
-        name: 'deliverer_id',
+        name: '_id',
         in: 'path',
         required: true,
       },
@@ -21,10 +22,20 @@ export default {
     },
     responses: {
       200: {
-        description: 'Deliverer updated successfully',
+        description: 'Livreur modifié',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/delivererUpdate',
+            },
+          },
+        },
       },
       400: {
-        description: 'Error',
+        description: 'Erreur',
+      },
+      404: {
+        description: 'Livreur inconnu',
       },
     },
   },

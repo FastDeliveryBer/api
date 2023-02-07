@@ -90,22 +90,22 @@ export default {
     properties: {
       firstname: {
         type: 'String',
-        description: 'First Name of deliverer',
+        description: 'First Name of the deliverer',
         example: 'John',
       },
       lastname: {
         type: 'String',
-        description: 'Last Name of deliverer',
+        description: 'Last Name of the deliverer',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of deliverer',
+        description: 'Mail of the deliverer',
         example: 'jdoe@myges.fr',
       },
       phone: {
         type: 'Int',
-        description: 'Phone of deliverer',
+        description: 'Phone of the deliverer',
         example: '0123456789',
       },
       langage: {

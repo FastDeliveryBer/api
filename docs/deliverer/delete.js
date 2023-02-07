@@ -1,21 +1,21 @@
 export default {
   delete: {
     tags: ['Deliverer'],
-    description: 'Delete a deliverer with his ID',
+    description: 'Supprimer un livreur en passant en paramètre son _id',
     operationId: 'deleteDeliverer',
     parameters: [
       {
-        name: 'deliverer_id',
+        name: '_id',
         in: 'path',
         required: true,
       },
     ],
     responses: {
-      200: {
-        description: 'Deliverer deleted successfully',
+      204: {
+        description: 'Livreur supprimé',
       },
       400: {
-        description: 'Error',
+        description: 'Erreur',
       },
     },
   },

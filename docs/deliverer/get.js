@@ -1,7 +1,8 @@
 export default {
   get: {
     tags: ['Deliverer'],
-    description: 'Get a deliverer with his ID',
+    description:
+      "Récupérer l'ensemble des comptes livreur ou seulement un en particulier",
     operationId: 'getDeliverer',
     parameters: [
       {
@@ -12,7 +13,7 @@ export default {
     ],
     responses: {
       200: {
-        description: 'Deliverer get successfully',
+        description: 'Livreur(s) récupéré(s)',
         content: {
           'application/json': {
             schema: {
@@ -22,7 +23,7 @@ export default {
         },
       },
       400: {
-        description: 'Error',
+        description: 'Erreur',
       },
     },
   },

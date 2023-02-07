@@ -1,7 +1,7 @@
 export default {
   post: {
     tags: ['Deliverer'],
-    description: 'Create a account for a deliverer',
+    description: 'Créer un compte pour un livreur',
     operationId: 'createDeliverer',
     requestBody: {
       content: {
@@ -13,11 +13,18 @@ export default {
       },
     },
     responses: {
-      200: {
-        description: 'Deliverer created successfully',
+      201: {
+        description: 'Livreur créé',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/delivererUpdate',
+            },
+          },
+        },
       },
       400: {
-        description: 'Error',
+        description: 'Erreur',
       },
     },
   },
