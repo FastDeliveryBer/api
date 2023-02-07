@@ -287,7 +287,7 @@ export default class RoundCtrl extends ClassCtrl {
           const roundMdl = new RoundMdl(db)
           const { id } = req.params
           const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(id)
-          response.message = 'Tournée inexistant'
+          response.message = 'Tournée inexistante'
           if (roundAlreadyExist) {
             const round = await roundMdl.queryDeleteRound(id)
             response.message = 'Impossible de supprimer la tournée'

@@ -1,5 +1,5 @@
 export default {
-  captain: {
+  admin: {
     type: 'object',
     properties: {
       id: {
@@ -10,42 +10,42 @@ export default {
       },
       firstName: {
         type: 'String',
-        description: 'First Name of captain',
+        description: 'First Name of admin',
         example: 'John',
       },
       lastName: {
         type: 'String',
-        description: 'Last Name of captain',
+        description: 'Last Name of admin',
         example: 'Doe',
       },
       email: {
         type: 'String',
-        description: 'Mail of captain',
+        description: 'Mail of admin',
         example: 'jdoe@myges.fr',
       },
       password: {
         type: 'String',
-        description: 'Password of the captain to login in his account',
+        description: 'Password of the admin to login in his account',
         example: 'FR',
       },
       phone: {
         type: 'Int',
-        description: 'Phone of captain',
+        description: 'Phone of admin',
         example: '0123456789',
       },
     },
   },
-  captainLogin: {
+  adminLogin: {
     type: 'object',
     properties: {
       email: {
         type: 'String',
-        description: 'Mail of captain',
+        description: 'Mail of admin',
         example: 'jdoe@myges.fr',
       },
       password: {
         type: 'String',
-        description: 'Password of the captain to login in his account',
+        description: 'Password of the admin to login in his account',
         example: 'FR',
       },
     },

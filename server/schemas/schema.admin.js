@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const captain = new mongoose.Schema({
+const admin = new mongoose.Schema({
   firstname: {
     type: String,
     required: true,
@@ -20,6 +20,6 @@ const captain = new mongoose.Schema({
   },
 })
 
-const Captain = mongoose.model('captain', captain)
+const Admin = mongoose.model('admin', admin)
 
-export { Captain }
+export { Admin }

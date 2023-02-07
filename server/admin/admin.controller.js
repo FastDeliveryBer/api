@@ -1,10 +1,10 @@
 import express from 'express'
 import Database from '../mogodb/mongo.connect.js'
-import CaptainMdl from './captain.model.js'
+import AdminMdl from './admin.model.js'
 import ClassCtrl from '../controller/class.controller.js'
 
 const { Request, Response } = express
-export default class CaptainCtrl extends ClassCtrl {
+export default class AdminCtrl extends ClassCtrl {
   static create = async (req = Request, res = Response) => {
     let code = 404
     let response = {
@@ -28,28 +28,28 @@ export default class CaptainCtrl extends ClassCtrl {
       } else {
         try {
           const db = await new Database()
-          const captainMdl = new CaptainMdl(db)
+          const adminMdl = new AdminMdl(db)
           const { firstname, lastname, email, password, phone } = req.body
 
-          const captainAlreadyExist = await captainMdl.didCaptainAlreadyExiste(
+          const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
             'email',
             email
           )
           response.message = 'Email déjà utilisée'
-          if (!captainAlreadyExist) {
-            const captain = await captainMdl.queryCreateCaptain(
+          if (!adminAlreadyExist) {
+            const admin = await adminMdl.queryCreateAdmin(
               firstname,
               lastname,
               email,
               password,
               phone
             )
-            response.message = 'Impossible de créer le comtpe captain'
-            if (captain) {
-              const { password, ...captainWithoutPassword } = captain._doc
-              response.message = 'Compte captain créé'
+            response.message = 'Impossible de créer le comtpe admin'
+            if (admin) {
+              const { password, ...adminWithoutPassword } = admin._doc
+              response.message = 'Compte admin créé'
               response.error = false
-              response.data.push(captainWithoutPassword)
+              response.data.push(adminWithoutPassword)
               code = 200
             }
           }
@@ -77,14 +77,14 @@ export default class CaptainCtrl extends ClassCtrl {
     }
     try {
       const db = await new Database()
-      const captainMdl = new CaptainMdl(db)
+      const adminMdl = new AdminMdl(db)
       const { _id } = req.query ?? ''
-      const captain = await captainMdl.queryGetCaptain(_id)
-      response.message = 'Aucun captain'
-      if (captain.length > 0) {
-        response.message = 'Captain(s) récupéré(s)'
+      const admin = await adminMdl.queryGetAdmin(_id)
+      response.message = 'Aucun admin'
+      if (admin.length > 0) {
+        response.message = 'Admin(s) récupéré(s)'
         response.error = false
-        response.data = captain
+        response.data = admin
         code = 200
       }
     } catch (error) {
@@ -122,7 +122,7 @@ export default class CaptainCtrl extends ClassCtrl {
       } else {
         try {
           const db = await new Database()
-          const captainMdl = new CaptainMdl(db)
+          const adminMdl = new AdminMdl(db)
           const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
@@ -133,35 +133,29 @@ export default class CaptainCtrl extends ClassCtrl {
             },
             {}
           )
-          const captainAlreadyExist = await captainMdl.didCaptainAlreadyExiste(
+          const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
             '_id',
             id
           )
-          let emailCaptainAlreadyExistForAnother = false
+          let emailAdminAlreadyExistForAnother = false
           if (filteredData['email']) {
-            emailCaptainAlreadyExistForAnother =
-              await captainMdl.didEmailCaptainAlreadyExiste(
+            emailAdminAlreadyExistForAnother =
+              await adminMdl.didEmailAdminAlreadyExiste(
                 id,
                 filteredData['email']
               )
           }
-          if (captainAlreadyExist && !emailCaptainAlreadyExistForAnother) {
-            const captain = await captainMdl.queryUpdateCaptain(
-              id,
-              filteredData
-            )
-            response.message = 'Impossible de modifier le compte captain'
+          if (adminAlreadyExist && !emailAdminAlreadyExistForAnother) {
+            const admin = await adminMdl.queryUpdateAdmin(id, filteredData)
+            response.message = 'Impossible de modifier le compte admin'
 
-            if (captain) {
+            if (admin) {
               response.message = 'Compte modifié'
               response.error = false
-              response.data.push(captain)
+              response.data.push(admin)
               code = 200
             }
-          } else if (
-            captainAlreadyExist &&
-            emailCaptainAlreadyExistForAnother
-          ) {
+          } else if (adminAlreadyExist && emailAdminAlreadyExistForAnother) {
             response.message = 'Email déjà utilisée par un autre compte'
           } else {
             response.message = "Ce comtpe n'existe pas"
@@ -192,18 +186,18 @@ export default class CaptainCtrl extends ClassCtrl {
       } else {
         try {
           const db = await new Database()
-          const captainMdl = new CaptainMdl(db)
+          const adminMdl = new AdminMdl(db)
           const { _id } = req.params
-          const captainAlreadyExist = await captainMdl.didCaptainAlreadyExiste(
+          const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
             '_id',
             id
           )
-          response.message = 'Compte captain inconnu'
-          if (captainAlreadyExist) {
-            const captain = await captainMdl.queryDeleteCaptain(id)
-            response.message = "Impossible de supprimer l'captain"
-            if (captain) {
-              response.message = 'Captain supprimé'
+          response.message = 'Compte admin inconnu'
+          if (adminAlreadyExist) {
+            const admin = await adminMdl.queryDeleteAdmin(id)
+            response.message = "Impossible de supprimer l'admin"
+            if (admin) {
+              response.message = 'Admin supprimé'
               response.error = false
               code = 200
             }

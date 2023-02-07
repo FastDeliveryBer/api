@@ -1,14 +1,14 @@
 export default {
   post: {
-    tags: ['Captain'],
-    description: 'Login for captain',
-    operationId: 'loginCaptain',
+    tags: ['Admin'],
+    description: 'Login for admin',
+    operationId: 'loginAdmin',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/captainLogin',
+            $ref: '#/components/schemas/adminLogin',
           },
           required: true,
         },
