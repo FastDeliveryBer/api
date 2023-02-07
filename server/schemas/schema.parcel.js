@@ -13,6 +13,7 @@ const parcel = new mongoose.Schema({
   customer_id: {
     type: String,
     required: true,
+    unique: false,
   },
   address_expedition: {
     type: String,

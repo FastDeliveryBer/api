@@ -221,7 +221,7 @@ export default class ParcelCtrl extends ClassCtrl {
     }
     if (Object.keys(req.params).length > 0) {
       const dataIpt = [{ label: '_id', type: 'objectid' }]
-      const listError = this.verifSecure(dataIpt, req.body)
+      const listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length > 0) {
         response.message = 'Erreur'
@@ -230,7 +230,7 @@ export default class ParcelCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const parcelMdl = new ParcelMdl(db)
-          const { _id } = req.body
+          const { _id } = req.params
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
             '_id',
             _id

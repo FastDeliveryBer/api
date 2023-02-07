@@ -86,9 +86,9 @@ export default class ParcelMdl extends Model {
     }
   }
 
-  queryDeleteParcel = async (tracking_id) => {
+  queryDeleteParcel = async (_id) => {
     try {
-      const parcel = await Parcel.findOneAndDelete({ tracking_id: tracking_id })
+      const parcel = await Parcel.findOneAndDelete({ _id: _id })
       return parcel
     } catch (error) {
       throw error
