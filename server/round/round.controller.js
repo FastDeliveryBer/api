@@ -10,10 +10,7 @@ const { Request, Response } = express
 export default class RoundCtrl extends ClassCtrl {
   static create = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'deliverer_id', type: 'objectid' },
@@ -22,17 +19,14 @@ export default class RoundCtrl extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-      } else {
+      if (listError.length === 0) {
         try {
           const db = await new Database()
           const roundMdl = new RoundMdl(db)
           const parcelMdl = new ParcelMdl(db)
           const delivererMdl = new DelivererMdl(db)
           const { deliverer_id, schelude_date, parcels } = req.body
-          let result = []
+          let parcelsToSave = []
 
           const parcelPromises = parcels.map(async (id) => {
             const isOK = await parcelMdl.didParcelAlreadyExiste('_id', id)
@@ -41,42 +35,32 @@ export default class RoundCtrl extends ClassCtrl {
               deliverer_id
             )
 
-            if (isOK && isDelivererOK) {
+            if (isOK) {
               const parcelAlreadyExistForThisRound =
                 await roundMdl.didParcelAlreadyExisteForARound(id)
               if (!parcelAlreadyExistForThisRound) {
-                result.push(id)
+                parcelsToSave.push(id)
               } else {
-                listError.push(`Colis ${id} déjà affecté à une tournée`)
+                listError.push(`Le colis ${id} est déjà affecté à une tournée`)
               }
-            }
-            if (!isOK) {
+            } else {
               listError.push(
                 `Colis ${id} inconnu, impossible de l'ajouter à la tournée`
-              )
-            }
-            if (!isDelivererOK) {
-              listError.push(
-                `Livreur ${deliverer_id} inconnu, impossible de lui affecter la tournée`
               )
             }
           })
 
           await Promise.all(parcelPromises)
 
-          if (listError.length > 0) {
-            response.message = 'Erreur'
-            response.data.push(...listError)
-          } else {
+          if (listError.length === 0) {
+            code = 400
             const round = await roundMdl.queryCreateRound(
               deliverer_id,
               schelude_date,
-              result
+              parcelsToSave
             )
-            response.message = 'Impossible de créer la tournée'
             if (round) {
-              response.message = 'Tournée créé'
-              response.data.push(round)
+              response = round
               code = 201
             }
           }
@@ -91,24 +75,21 @@ export default class RoundCtrl extends ClassCtrl {
 
   static get = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      message: 'Bad request',
-      data: [],
-    }
+    let response = {}
     let listErrorOption = []
 
-    if (req.query !== '') {
+    if (
+      req.query['_id'] !== undefined ||
+      req.query['deliverer_id'] !== undefined
+    ) {
       let dataOption = [
         { label: '_id', type: 'objectid' },
         { label: 'deliverer_id', type: 'objectid' },
       ]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
-    if (listErrorOption > 0) {
-      response.message = 'Erreur'
-      response.data.push(...listErrorOption)
-    }
-    {
+
+    if (listErrorOption.length === 0) {
       try {
         code = 404
         const db = await new Database()
@@ -123,10 +104,8 @@ export default class RoundCtrl extends ClassCtrl {
           {}
         )
         const round = await roundMdl.queryGetRound(filteredData)
-        response.message = 'Aucune tournée'
         if (round.length > 0) {
-          response.message = 'Tournée(s) récupéré(s)'
-          response.data = round
+          response = round
           code = 200
         }
       } catch (error) {
@@ -139,10 +118,8 @@ export default class RoundCtrl extends ClassCtrl {
 
   static update = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      message: 'Bad request',
-      data: [],
-    }
+    let response
+
     if (
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
@@ -156,11 +133,7 @@ export default class RoundCtrl extends ClassCtrl {
       const listError = this.verifSecure(dataIpt, req.params)
       const listErrorOption = this.verifWithOption(dataOption, req.body, true)
 
-      if (listError.length > 0 || listErrorOption > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-        response.data.push(...listErrorOption)
-      } else {
+      if (listError.length === 0 || listErrorOption === 0) {
         try {
           code = 404
           const db = await new Database()
@@ -176,19 +149,15 @@ export default class RoundCtrl extends ClassCtrl {
             {}
           )
           const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(_id)
-          response.message = 'Tournée inconnue'
           if (roundAlreadyExist) {
             let round = await roundMdl.queryUpdateRound(_id, filteredData)
-            response.message = 'Impossible de modifier la tournée'
             if (round) {
-              response.message = 'Tournée modifiée'
-              response.data.push(round)
+              response = round
               code = 200
             }
 
             if (round.parcels.length == 0) {
               round = await roundMdl.queryDeleteRound(_id)
-              response.data = []
               code = 204
             }
           }
@@ -203,10 +172,7 @@ export default class RoundCtrl extends ClassCtrl {
 
   static affectDeliverer = async (req = Request, res = Response) => {
     let code = 404
-    let response = {
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'id', type: 'objectid' },
@@ -215,10 +181,7 @@ export default class RoundCtrl extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(listError)
-      } else {
+      if (listError.length === 0) {
         try {
           const db = await new Database()
           const roundMdl = new RoundMdl(db)
@@ -249,10 +212,8 @@ export default class RoundCtrl extends ClassCtrl {
                   deliverer_id,
                   date
                 )
-                response.message = 'Erreur lors de laffectation du livreur'
                 if (round) {
-                  response.message = `Tournée ${id} affecté au livreur ${deliverer_id}`
-                  response.data.push(round)
+                  response = round
                   code = 200
                 }
               }
@@ -269,30 +230,21 @@ export default class RoundCtrl extends ClassCtrl {
 
   static delete = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (Object.keys(req.params).length > 0) {
       const dataIpt = [{ label: '_id', type: 'objectid' }]
       const listError = this.verifSecure(dataIpt, req.params)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-      } else {
+      if (listError.length === 0) {
         try {
           code = 404
           const db = await new Database()
           const roundMdl = new RoundMdl(db)
           const { _id } = req.params
           const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(_id)
-          response.message = 'Tournée inexistante'
           if (roundAlreadyExist) {
             const round = await roundMdl.queryDeleteRound(_id)
-            response.message = 'Impossible de supprimer la tournée'
             if (round) {
-              response.message = 'Tournée supprimée'
               code = 204
             }
           }

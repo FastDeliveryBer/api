@@ -71,7 +71,7 @@ export default class AdminCtrl extends ClassCtrl {
     }
     let listErrorOption = []
 
-    if (req.query !== '') {
+    if (req.query['_id'] !== undefined) {
       let dataOption = [{ label: '_id', type: 'objectid' }]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }

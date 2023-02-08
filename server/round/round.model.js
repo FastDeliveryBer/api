@@ -6,7 +6,7 @@ export default class RoundMdl extends Model {
     try {
       let round = new Round({
         deliverer_id: deliverer_id,
-        date: date,
+        schelude_date: date,
         parcels: arrayTrackinId,
       })
       await round.save()
