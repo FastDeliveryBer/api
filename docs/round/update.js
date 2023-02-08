@@ -1,7 +1,7 @@
 export default {
   patch: {
     tags: ['Round'],
-    description: 'Update information of a round',
+    description: "Modifier les informations d'une tournée",
     operationId: 'updateRound',
     parameters: [
       {
@@ -24,10 +24,10 @@ export default {
         description: 'Round updated successfully',
       },
       400: {
-        description: 'Error',
+        description: 'Impossible de modifier la tournée',
       },
       404: {
-        description: 'Not found',
+        description: 'Tournée inconnue',
       },
     },
   },

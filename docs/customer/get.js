@@ -1,7 +1,7 @@
 export default {
   get: {
     tags: ['Customer'],
-    description: 'Get a customer',
+    description: 'Récupérer un ou plusieur compte client',
     operationId: 'getCustomer',
     parameters: [
       {
@@ -23,6 +23,9 @@ export default {
       },
       400: {
         description: 'Error',
+      },
+      404: {
+        description: 'Not Found',
       },
     },
   },

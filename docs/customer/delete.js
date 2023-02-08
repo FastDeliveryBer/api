@@ -1,7 +1,7 @@
 export default {
   delete: {
     tags: ['Customer'],
-    description: 'Delete information of a customer',
+    description: 'Supprimer un compte client',
     operationId: 'deleteCustomer',
     parameters: [
       {
@@ -10,21 +10,15 @@ export default {
         required: true,
       },
     ],
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/customer',
-          },
-        },
-      },
-    },
     responses: {
-      200: {
-        description: 'Customer delete successfully',
+      204: {
+        description: 'Compte client supprimé',
       },
       400: {
         description: 'Error',
+      },
+      404: {
+        description: 'Not Found',
       },
     },
   },

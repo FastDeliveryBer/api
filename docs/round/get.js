@@ -1,18 +1,18 @@
 export default {
   get: {
     tags: ['Round'],
-    description: 'Get a round by his ID',
+    description: 'Récupérer une ou plusieur tournée',
     operationId: 'getRound',
     parameters: [
       {
-        name: 'round_id',
+        name: '_id',
         in: 'path',
         required: true,
       },
     ],
     responses: {
       200: {
-        description: 'Round get successfully',
+        description: 'Tournée(s) récupérée(s)',
         content: {
           'application/json': {
             schema: {
@@ -22,7 +22,10 @@ export default {
         },
       },
       400: {
-        description: 'Error',
+        description: 'Erreur',
+      },
+      404: {
+        description: 'Not found',
       },
     },
   },

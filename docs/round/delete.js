@@ -1,7 +1,7 @@
 export default {
   delete: {
     tags: ['Round'],
-    description: 'Delete a round',
+    description: 'Supprimer une tournée en précisant son _id',
     operationId: 'deleteRound',
     parameters: [
       {
@@ -11,14 +11,14 @@ export default {
       },
     ],
     responses: {
-      200: {
-        description: 'Round delete successfully',
+      204: {
+        description: 'Tournée supprimée',
       },
       400: {
-        description: 'Error',
+        description: 'Impossible de supprimer la tournée',
       },
       404: {
-        description: 'Not found',
+        description: 'Tournée inconnue',
       },
     },
   },

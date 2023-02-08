@@ -7,9 +7,8 @@ const { Request, Response } = express
 
 export default class CustomerCtrl extends ClassCtrl {
   static create = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
-      error: true,
       message: 'Bad request',
       data: [],
     }
@@ -18,14 +17,14 @@ export default class CustomerCtrl extends ClassCtrl {
         { label: 'lastname', type: 'string' },
         { label: 'firstname', type: 'string' },
         { label: 'email', type: 'email' },
-        { label: 'phone', type: 'number' },
+        { label: 'phone', type: 'phone' },
         { label: 'password', type: 'string' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
       if (listError.length > 0) {
         response.message = 'Erreur'
-        response.data.push(listError)
+        response.data.push(...listError)
       } else {
         try {
           const { firstname, lastname, email, password, phone } = req.body
@@ -46,9 +45,8 @@ export default class CustomerCtrl extends ClassCtrl {
             response.message = 'Impossible de créer le client'
             if (customer) {
               response.message = 'Client créé'
-              response.error = false
               response.data.push(customer)
-              code = 200
+              code = 201
             }
           }
         } catch (error) {
@@ -61,9 +59,8 @@ export default class CustomerCtrl extends ClassCtrl {
   }
 
   static get = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
-      error: true,
       message: 'Bad request',
       data: [],
     }
@@ -79,6 +76,7 @@ export default class CustomerCtrl extends ClassCtrl {
     }
     {
       try {
+        code = 404
         const db = await new Database()
         const customerMdl = new CustomerMdl(db)
         const filteredData = Object.entries(req.query).reduce(
@@ -94,7 +92,6 @@ export default class CustomerCtrl extends ClassCtrl {
         response.message = 'Aucun client'
         if (customer.length > 0) {
           response.message = 'Client récupéré(s)'
-          response.error = false
           response.data = customer
           code = 200
         }
@@ -107,9 +104,8 @@ export default class CustomerCtrl extends ClassCtrl {
   }
 
   static update = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
-      error: true,
       message: 'Bad request',
       data: [],
     }
@@ -122,7 +118,7 @@ export default class CustomerCtrl extends ClassCtrl {
         { label: 'email', type: 'email' },
         { label: 'lastname', type: 'string' },
         { label: 'firstname', type: 'string' },
-        { label: 'phone', type: 'number' },
+        { label: 'phone', type: 'phone' },
       ]
       let listError = this.verifSecure(dataIpt, req.params)
       let listErrorOption = this.verifWithOption(dataOption, req.body, true)
@@ -133,6 +129,7 @@ export default class CustomerCtrl extends ClassCtrl {
         response.data.push(listErrorOption)
       } else {
         try {
+          code = 404
           const db = await new Database()
           const customerMdl = new CustomerMdl(db)
           const { _id } = req.params
@@ -161,7 +158,6 @@ export default class CustomerCtrl extends ClassCtrl {
 
             if (customer) {
               response.message = 'Client modifié'
-              response.error = false
               response.data.push(customer)
               code = 200
             }
@@ -176,9 +172,8 @@ export default class CustomerCtrl extends ClassCtrl {
   }
 
   static delete = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
-      error: true,
       message: 'Bad request',
       data: [],
     }
@@ -188,9 +183,10 @@ export default class CustomerCtrl extends ClassCtrl {
 
       if (listError.length > 0) {
         response.message = 'Erreur'
-        response.data.push(listError)
+        response.data.push(...listError)
       } else {
         try {
+          code = 404
           const db = await new Database()
           const customerMdl = new CustomerMdl(db)
           const { _id } = req.params
@@ -202,8 +198,7 @@ export default class CustomerCtrl extends ClassCtrl {
             response.message = 'Impossible de supprimer le client'
             if (customer) {
               response.message = 'Client supprimé'
-              response.error = false
-              code = 200
+              code = 204
             }
           }
         } catch (error) {

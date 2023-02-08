@@ -45,6 +45,12 @@ export default class ClassCtrl {
               if (!testReg) {
                 listError.push(`Format du champ ${key} incorrecte`)
               }
+            } else if (typeVal === 'phone') {
+              let reg = /^[0-9]{10}$/
+              let testReg = reg.test(value)
+              if (!testReg) {
+                listError.push(`Format du champ ${key} incorrecte`)
+              }
             } else if (typeVal === 'string') {
               let reg = new RegExp(
                 '[^a-z0-9-àáâãäåòóôõöøèéêëçìíîïùúûüÿñ_s@., ]+',

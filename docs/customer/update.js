@@ -1,7 +1,7 @@
 export default {
   patch: {
     tags: ['Customer'],
-    description: 'Update information of a client',
+    description: "Modifier les informations d'un client",
     operationId: 'updateClient',
     parameters: [
       {
@@ -14,17 +14,24 @@ export default {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/client',
+            $ref: '#/components/schemas/customerUpdate',
           },
         },
       },
     },
     responses: {
       200: {
-        description: 'Client updated successfully',
+        description: 'Compte client modifié',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/customerGet',
+            },
+          },
+        },
       },
       400: {
-        description: 'Error',
+        description: 'Erreur',
       },
     },
   },

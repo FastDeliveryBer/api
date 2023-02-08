@@ -1,7 +1,7 @@
 export default {
   post: {
     tags: ['Round'],
-    description: 'Create a round',
+    description: 'Créer une tournée',
     operationId: 'createRound',
     parameters: [],
     requestBody: {
@@ -14,8 +14,15 @@ export default {
       },
     },
     responses: {
-      200: {
-        description: 'Round created successfully',
+      201: {
+        description: 'Tournée créé',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/round',
+            },
+          },
+        },
       },
       400: {
         description: 'Error',

@@ -7,27 +7,12 @@ export default {
         description: 'The unique id for the parcel',
         example: 'XYZ123456789',
       },
-      tracking_id: {
-        type: 'string',
-        description: 'The unique tracking id for the parcel',
-        example: 'XYZ123456789',
-      },
       schelude_date: {
         type: 'string',
         description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
-      date_started: {
-        type: 'string',
-        description: 'The date that the parcel is scheduled to be delivered',
-        example: '07/07/2023',
-      },
-      date_ending: {
-        type: 'string',
-        description: 'The date that the parcel is scheduled to be delivered',
-        example: '07/07/2023',
-      },
-      parcel: {
+      parcels: {
         type: 'array',
         items: {
           $ref: '../parcel/components/schemas/parcel',
@@ -54,23 +39,13 @@ export default {
         description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
       },
-      date_started: {
-        type: 'string',
-        description: 'The date that the parcel is scheduled to be delivered',
-        example: '07/07/2023',
-      },
-      date_ending: {
-        type: 'string',
-        description: 'The date that the parcel is scheduled to be delivered',
-        example: '07/07/2023',
-      },
       parcel: {
         type: 'array of object',
         additionalProperties: {
           $ref: '#/components/schemas/parcel/properties',
         },
       },
-      id_deliverer: {
+      deliverer_id: {
         type: 'id',
         description: 'The current deliverer that will make the round',
         example: '123415',
@@ -81,16 +56,6 @@ export default {
     type: 'object',
     properties: {
       schelude_date: {
-        type: 'string',
-        description: 'The date that the parcel is scheduled to be delivered',
-        example: '07/07/2023',
-      },
-      date_started: {
-        type: 'string',
-        description: 'The date that the parcel is scheduled to be delivered',
-        example: '07/07/2023',
-      },
-      date_ending: {
         type: 'string',
         description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
