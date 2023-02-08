@@ -6,12 +6,8 @@ import ClassCtrl from '../controller/class.controller.js'
 const { Request, Response } = express
 export default class AdminCtrl extends ClassCtrl {
   static create = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let code = 400
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'lastname', type: 'string' },
@@ -22,10 +18,7 @@ export default class AdminCtrl extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-      } else {
+      if (listError.length === 0) {
         try {
           const db = await new Database()
           const adminMdl = new AdminMdl(db)
@@ -35,7 +28,6 @@ export default class AdminCtrl extends ClassCtrl {
             'email',
             email
           )
-          response.message = 'Email déjà utilisée'
           if (!adminAlreadyExist) {
             const admin = await adminMdl.queryCreateAdmin(
               firstname,
@@ -44,13 +36,10 @@ export default class AdminCtrl extends ClassCtrl {
               password,
               phone
             )
-            response.message = 'Impossible de créer le comtpe admin'
             if (admin) {
               const { password, ...adminWithoutPassword } = admin._doc
-              response.message = 'Compte admin créé'
-              response.error = false
-              response.data.push(adminWithoutPassword)
-              code = 200
+              response = adminWithoutPassword
+              code = 201
             }
           }
         } catch (error) {
@@ -63,12 +52,8 @@ export default class AdminCtrl extends ClassCtrl {
   }
 
   static get = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let code = 400
+    let response = {}
     let listErrorOption = []
 
     if (req.query['_id'] !== undefined) {
@@ -80,11 +65,8 @@ export default class AdminCtrl extends ClassCtrl {
       const adminMdl = new AdminMdl(db)
       const { _id } = req.query ?? ''
       const admin = await adminMdl.queryGetAdmin(_id)
-      response.message = 'Aucun admin'
       if (admin.length > 0) {
-        response.message = 'Admin(s) récupéré(s)'
-        response.error = false
-        response.data = admin
+        response = { ...admin }
         code = 200
       }
     } catch (error) {
@@ -95,17 +77,13 @@ export default class AdminCtrl extends ClassCtrl {
   }
 
   static update = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let code = 400
+    let response
     if (
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      let dataIpt = [{ label: 'id', type: 'objectid' }]
+      let dataIpt = [{ label: '_id', type: 'objectid' }]
       let dataOption = [
         { label: 'email', type: 'email' },
         { label: 'lastname', type: 'string' },
@@ -115,15 +93,11 @@ export default class AdminCtrl extends ClassCtrl {
       let listError = this.verifSecure(dataIpt, req.params)
       let listErrorOption = this.verifWithOption(dataOption, req.body, true)
 
-      if (listError.length > 0 || listErrorOption.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-        response.data.push(...listErrorOption)
-      } else {
+      if (listError.length === 0 && listErrorOption.length === 0) {
         try {
           const db = await new Database()
           const adminMdl = new AdminMdl(db)
-          const { id } = req.params
+          const { _id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (['firstname', 'lastname', 'phone', 'email'].includes(key)) {
@@ -135,30 +109,26 @@ export default class AdminCtrl extends ClassCtrl {
           )
           const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
             '_id',
-            id
+            _id
           )
           let emailAdminAlreadyExistForAnother = false
           if (filteredData['email']) {
             emailAdminAlreadyExistForAnother =
               await adminMdl.didEmailAdminAlreadyExiste(
-                id,
+                _id,
                 filteredData['email']
               )
           }
           if (adminAlreadyExist && !emailAdminAlreadyExistForAnother) {
             const admin = await adminMdl.queryUpdateAdmin(id, filteredData)
-            response.message = 'Impossible de modifier le compte admin'
-
             if (admin) {
-              response.message = 'Compte modifié'
-              response.error = false
-              response.data.push(admin)
+              response = { ...admin }
               code = 200
             }
           } else if (adminAlreadyExist && emailAdminAlreadyExistForAnother) {
-            response.message = 'Email déjà utilisée par un autre compte'
+            code = 400
           } else {
-            response.message = "Ce comtpe n'existe pas"
+            code = 404
           }
         } catch (error) {
           console.log(error)
@@ -170,36 +140,25 @@ export default class AdminCtrl extends ClassCtrl {
   }
 
   static delete = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let code = 400
+    let response
     if (Object.keys(req.params).length > 0) {
       let dataIpt = [{ label: '_id', type: 'objectid' }]
       let listError = this.verifSecure(dataIpt, req.params)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(listError)
-      } else {
+      if (listError.length === 0) {
         try {
           const db = await new Database()
           const adminMdl = new AdminMdl(db)
           const { _id } = req.params
           const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
             '_id',
-            id
+            _id
           )
-          response.message = 'Compte admin inconnu'
           if (adminAlreadyExist) {
             const admin = await adminMdl.queryDeleteAdmin(id)
-            response.message = "Impossible de supprimer l'admin"
             if (admin) {
-              response.message = 'Admin supprimé'
-              response.error = false
-              code = 200
+              code = 204
             }
           }
         } catch (error) {
