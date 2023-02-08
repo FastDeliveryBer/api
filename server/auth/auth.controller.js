@@ -9,12 +9,8 @@ const { Request, Response } = express
 
 export default class AuthController extends ClassCtrl {
   static login = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let code = 400
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'email', type: 'string' },
@@ -22,28 +18,22 @@ export default class AuthController extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(listError)
-      } else {
+      if (listError.length === 0) {
         try {
+          code = 404
           const db = await new Database()
           const userMdl = new UserMdl(db)
           const { email, password } = req.body
           const user = await userMdl.queryGetUserByEmail(email, password)
-          response.message = 'Utilisateur inconnu'
+
           if (user) {
             let isSamePassword = await bcrypt.compare(password, user.password)
-            response.message = 'Mot de passe incorrect'
             if (isSamePassword) {
+              code = 400
               const { password, ...userWithoutPassword } = user._doc
               const token = Authentication.generateToken({ email: email })
-              response.message = 'Utilisateur connecté'
-              response.error = false
               res.header('x-auth-token', token)
-              response.data.push({
-                user: userWithoutPassword,
-              })
+              response = userWithoutPassword
               code = 200
             }
           }
@@ -57,12 +47,8 @@ export default class AuthController extends ClassCtrl {
   }
 
   static register = async (req = Request, res = Response) => {
-    let code = 404
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let code = 400
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'lastname', type: 'string' },
@@ -74,10 +60,7 @@ export default class AuthController extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(listError)
-      } else {
+      if (listError.length === 0) {
         try {
           const db = await new Database()
           const userMdl = new UserMdl(db)
@@ -95,17 +78,12 @@ export default class AuthController extends ClassCtrl {
               phone,
               langage
             )
-            response.message = 'Impossible de créer un compte'
             if (user) {
               const token = Authentication.generateToken({ email: email })
               const { password, ...userWithoutPassword } = user._doc
-              response.message = 'Utilisateur créé'
-              response.error = false
-              response.data.push({
-                user: userWithoutPassword,
-              })
+              response = userWithoutPassword
               res.header('x-auth-token', token)
-              code = 200
+              code = 201
             }
           }
         } catch (error) {
@@ -119,11 +97,7 @@ export default class AuthController extends ClassCtrl {
 
   static disconnect = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'mail', type: 'string' },
@@ -131,28 +105,17 @@ export default class AuthController extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      //Vérification si des erreurs ont été trouvée précédement
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(listError)
-      } else {
+      if (listError.length === 0) {
         try {
           let { mail, role } = req.body
           let data = await UtilisateurMdl.queryGetUserByRole(mail, role)
-          let message = 'Utilisateur inexistant'
           if (data instanceof Utilisateur) {
             try {
               data = await UtilisateurMdl.queryDisconnectUser(data)
-              if (data instanceof Utilisateur) {
-                message = 'Utilisateur déconnecté'
-                response.error = false
-              }
             } catch (error) {
               console.log(error)
             }
           }
-          response.message = message
-          response.data = []
           code = 200
         } catch (error) {
           console.log(error)
