@@ -105,7 +105,7 @@ export default class RoundCtrl extends ClassCtrl {
         )
         const round = await roundMdl.queryGetRound(filteredData)
         if (round.length > 0) {
-          response = round
+          response = { ...round }
           code = 200
         }
       } catch (error) {

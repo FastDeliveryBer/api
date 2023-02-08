@@ -7,11 +7,7 @@ const { Request, Response } = express
 export default class DeliveryCtrl extends ClassCtrl {
   static create = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'lastname', type: 'string' },
@@ -23,10 +19,7 @@ export default class DeliveryCtrl extends ClassCtrl {
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-      } else {
+      if (listError.length === 0) {
         try {
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)
@@ -35,8 +28,9 @@ export default class DeliveryCtrl extends ClassCtrl {
 
           const delivererAlreadyExist =
             await delivererMdl.didDelivererAlreadyExiste('email', email)
-          response.message = 'Ce livreur existe déjà'
+          code = 404
           if (!delivererAlreadyExist) {
+            code = 400
             const deliverer = await delivererMdl.queryCreateDeliverer(
               firstname,
               lastname,
@@ -45,12 +39,9 @@ export default class DeliveryCtrl extends ClassCtrl {
               phone,
               langage
             )
-            response.message = 'Impossible de créer le livreur'
             if (deliverer) {
               const { password, ...delivererWithoutPassword } = deliverer._doc
-              response.message = 'Livreur créé'
-              response.error = false
-              response.data.push(delivererWithoutPassword)
+              response = delivererWithoutPassword
               code = 201
             }
           }
@@ -65,11 +56,7 @@ export default class DeliveryCtrl extends ClassCtrl {
 
   static get = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let response = {}
     let listErrorOption = []
 
     if (req.query['_id'] !== undefined) {
@@ -77,20 +64,15 @@ export default class DeliveryCtrl extends ClassCtrl {
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
 
-    if (listErrorOption.length > 0) {
-      response.message = 'Erreur'
-      response.data.push(...listErrorOption)
-    } else {
+    if (listErrorOption.length === 0) {
       try {
+        code = 404
         const db = await new Database()
         const delivererMdl = new DelivererMdl(db)
         const { _id } = req.query ?? ''
         const deliverer = await delivererMdl.queryGetDeliverer(_id)
-        response.message = 'Aucun livreur'
         if (deliverer.length > 0) {
-          response.message = 'Livreur(s) récupéré(s)'
-          response.error = false
-          response.data = deliverer
+          response = { ...deliverer }
           code = 200
         }
       } catch (error) {
@@ -104,11 +86,7 @@ export default class DeliveryCtrl extends ClassCtrl {
 
   static updateDeliverer = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
@@ -162,21 +140,17 @@ export default class DeliveryCtrl extends ClassCtrl {
               _id,
               filteredData
             )
-            response.message = 'Impossible de modifier le livreur'
-
             if (deliverer) {
-              response.message = 'Livreur modifié'
-              response.error = false
-              response.data.push(deliverer)
+              response = deliverer
               code = 200
             }
           } else if (
             delivererAlreadyExist &&
             emailDelivererAlreadyExistForAnother
           ) {
-            response.message = 'Email déjà utilisée par un autre livreur'
+            code = 400
           } else {
-            response.message = "Ce livreur n'existe pas"
+            code = 404
           }
         } catch (error) {
           console.log(error)
@@ -189,32 +163,22 @@ export default class DeliveryCtrl extends ClassCtrl {
 
   static deleteDeliverer = async (req = Request, res = Response) => {
     let code = 400
-    let response = {
-      error: true,
-      message: 'Bad request',
-      data: [],
-    }
+    let response
     if (Object.keys(req.params).length > 0) {
       let dataIpt = [{ label: '_id', type: 'objectid' }]
       let listError = this.verifSecure(dataIpt, req.params)
 
-      if (listError.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(listError)
-      } else {
+      if (listError.length === 0) {
         try {
+          code = 404
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)
           const { _id } = req.params
           const delivererAlreadyExist =
             await delivererMdl.didDelivererAlreadyExiste('_id', _id)
-          response.message = "Ce livreur n'existe pas"
           if (delivererAlreadyExist) {
             const deliverer = await delivererMdl.queryDeleteDeliverer(_id)
-            response.message = 'Impossible de supprimer le livreur'
             if (deliverer) {
-              response.message = 'Livreur supprimé'
-              response.error = false
               code = 204
             }
           }
