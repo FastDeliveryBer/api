@@ -1,20 +1,24 @@
 export default {
   get: {
     tags: ['Parcel'],
-    description: 'Get a parcel',
+    description:
+      "Récupération un ou plusieurs colis, la récupération d'un colis si vide retournera l'ensemble des colis, sinon peut se faire via son _id ou alors son tracking_id",
     operationId: 'getParcel',
     parameters: [
       {
         name: 'tracking_id',
         in: 'path',
         required: false,
-        description:
-          'Get a parcel by his tracking_id, if empty will return all the parcel',
+      },
+      {
+        name: '_id',
+        in: 'path',
+        required: false,
       },
     ],
     responses: {
       200: {
-        description: 'Parcel get successfully',
+        description: 'Colis récupéré(s)',
         content: {
           'application/json': {
             schema: {

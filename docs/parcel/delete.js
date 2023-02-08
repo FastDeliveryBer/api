@@ -1,7 +1,7 @@
 export default {
   delete: {
     tags: ['Parcel'],
-    description: 'Delete a parcel',
+    description: 'Supprimer un colis',
     operationId: 'deleteParcel',
     parameters: [
       {
@@ -21,10 +21,10 @@ export default {
     },
     responses: {
       200: {
-        description: 'Parcel delete successfully',
+        description: 'Colis supprimée',
       },
       400: {
-        description: 'Error',
+        description: 'Impossible de supprimer le colis',
       },
     },
   },

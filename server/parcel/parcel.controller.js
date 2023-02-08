@@ -8,7 +8,7 @@ const { Request, Response } = express
 
 export default class ParcelCtrl extends ClassCtrl {
   static create = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
       error: true,
       message: 'Bad request',
@@ -20,12 +20,13 @@ export default class ParcelCtrl extends ClassCtrl {
         { label: 'delivery_date', type: 'string' },
         { label: 'address_expedition', type: 'string' },
         { label: 'address_delivery', type: 'string' },
-        { label: 'weight', type: 'string' },
-        { label: 'width', type: 'string' },
-        { label: 'length', type: 'string' },
-        { label: 'height', type: 'string' },
-        { label: 'fragile', type: 'boolean' },
-        { label: 'emergency', type: 'string' },
+        { label: 'weight', type: 'number' },
+        { label: 'width', type: 'number' },
+        { label: 'length', type: 'number' },
+        { label: 'height', type: 'number' },
+        { label: 'price', type: 'number' },
+        { label: 'is_fragile', type: 'boolean' },
+        { label: 'is_emergency', type: 'boolean' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
 
@@ -46,8 +47,9 @@ export default class ParcelCtrl extends ClassCtrl {
             width,
             length,
             height,
-            fragile,
-            emergency,
+            price,
+            is_fragile,
+            is_emergency,
           } = req.body
 
           const customerAlreadyExist =
@@ -64,15 +66,16 @@ export default class ParcelCtrl extends ClassCtrl {
               width,
               length,
               height,
-              fragile,
-              emergency
+              price,
+              is_fragile,
+              is_emergency
             )
             response.message = 'Impossible de créer le colis'
             if (parcel) {
               response.message = 'Colis créé'
               response.error = false
               response.data.push(parcel)
-              code = 200
+              code = 201
             }
           }
         } catch (error) {
@@ -85,7 +88,7 @@ export default class ParcelCtrl extends ClassCtrl {
   }
 
   static get = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
       error: true,
       message: 'Bad request',
@@ -106,6 +109,7 @@ export default class ParcelCtrl extends ClassCtrl {
     }
     {
       try {
+        code = 404
         const db = await new Database()
         const parcelMdl = new ParcelMdl(db)
         const filteredData = Object.entries(req.query).reduce(
@@ -134,48 +138,53 @@ export default class ParcelCtrl extends ClassCtrl {
   }
 
   static update = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
       error: true,
       message: 'Bad request',
       data: [],
     }
-    if (Object.keys(req.body).length > 0) {
-      let dataIpt = [{ label: 'tracking_id', type: 'string' }]
+    if (
+      Object.keys(req.body).length > 0 &&
+      Object.keys(req.params).length > 0
+    ) {
+      let dataIpt = [{ label: '_id', type: 'string' }]
       let dataOption = [
+        { label: 'delivery_date', type: 'string' },
         { label: 'address_expedition', type: 'string' },
         { label: 'address_delivery', type: 'string' },
         { label: 'weight', type: 'string' },
         { label: 'width', type: 'string' },
         { label: 'length', type: 'string' },
         { label: 'height', type: 'string' },
-        { label: 'fragile', type: 'string' },
-        { label: 'emergency', type: 'string' },
+        { label: 'is_fragile', type: 'boolean' },
+        { label: 'is_emergency', type: 'boolean' },
       ]
-      let listError = this.verifSecure(dataIpt, req.body)
+      let listError = this.verifSecure(dataIpt, req.params)
       let listErrorOption = this.verifWithOption(dataOption, req.body, true)
 
       if (listError.length > 0 || listErrorOption > 0) {
         response.message = 'Erreur'
-        response.data.push(listError)
-        response.data.push(listErrorOption)
+        response.data.push(...listError)
+        response.data.push(...listErrorOption)
       } else {
         try {
           const db = await new Database()
           const parcelMdl = new ParcelMdl(db)
-          const { tracking_id } = req.body
+          const { _id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (
                 [
+                  'delivery_date',
                   'address_expedition',
                   'address_delivery',
                   'weight',
                   'width',
                   'length',
                   'height',
-                  'fragile',
-                  'emergency',
+                  'is_fragile',
+                  'is_emergency',
                 ].includes(key)
               ) {
                 obj[key] = value
@@ -185,15 +194,12 @@ export default class ParcelCtrl extends ClassCtrl {
             {}
           )
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
-            'tracking_id',
-            tracking_id
+            '_id',
+            _id
           )
           response.message = "Ce colis n'existe pas"
           if (parcelAlreadyExist) {
-            const parcel = await parcelMdl.queryUpdateParcel(
-              tracking_id,
-              filteredData
-            )
+            const parcel = await parcelMdl.queryUpdateParcel(_id, filteredData)
             response.message = 'Impossible de modifier le colis'
 
             if (parcel) {
@@ -213,7 +219,7 @@ export default class ParcelCtrl extends ClassCtrl {
   }
 
   static delete = async (req = Request, res = Response) => {
-    let code = 404
+    let code = 400
     let response = {
       error: true,
       message: 'Bad request',
@@ -242,7 +248,7 @@ export default class ParcelCtrl extends ClassCtrl {
             if (parcel) {
               response.message = 'Colis supprimé'
               response.error = false
-              code = 200
+              code = 204
             }
           }
         } catch (error) {

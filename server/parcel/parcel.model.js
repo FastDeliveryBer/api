@@ -31,8 +31,9 @@ export default class ParcelMdl extends Model {
     width,
     length,
     height,
-    fragile,
-    emergency
+    price,
+    is_fragile,
+    is_emergency
   ) => {
     try {
       const tracking_id = this.generateTrackingID()
@@ -51,9 +52,9 @@ export default class ParcelMdl extends Model {
         width: width,
         length: length,
         height: height,
-        fragile: fragile,
-        emergency: emergency,
-        //preuve_livraison: [imageData],
+        price: price,
+        is_fragile: is_fragile,
+        is_emergency: is_emergency,
       })
 
       await parcel.save()
@@ -73,10 +74,10 @@ export default class ParcelMdl extends Model {
     }
   }
 
-  queryUpdateParcel = async (tracking_id, data) => {
+  queryUpdateParcel = async (_id, data) => {
     try {
       const parcel = await Parcel.findOneAndUpdate(
-        { tracking_id: tracking_id },
+        { _id: _id },
         { $set: data },
         { new: true }
       )

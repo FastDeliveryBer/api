@@ -1,11 +1,11 @@
 export default {
   patch: {
     tags: ['Parcel'],
-    description: 'Update information of a parcel',
+    description: "Modifier les informations d'un colis",
     operationId: 'updateParcel',
     parameters: [
       {
-        name: 'tracking_id',
+        name: '_id',
         in: 'path',
         required: true,
       },
@@ -21,7 +21,14 @@ export default {
     },
     responses: {
       200: {
-        description: 'Parcel updated successfully',
+        description: 'Colis modifié',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/parcel',
+            },
+          },
+        },
       },
       400: {
         description: 'Error',

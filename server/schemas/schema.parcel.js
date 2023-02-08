@@ -6,14 +6,14 @@ const parcel = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  delivery_date: {
-    type: String,
-    required: true,
-  },
   customer_id: {
     type: String,
     required: true,
     unique: false,
+  },
+  delivery_date: {
+    type: String,
+    required: true,
   },
   address_expedition: {
     type: String,
@@ -24,29 +24,28 @@ const parcel = new mongoose.Schema({
     required: true,
   },
   weight: {
-    type: String,
+    type: Number,
     required: true,
   },
   width: {
-    type: String,
+    type: Number,
     required: true,
   },
   length: {
-    type: String,
+    type: Number,
     required: true,
   },
   height: {
-    type: String,
+    type: Number,
     required: true,
   },
-  fragile: {
+  is_fragile: {
     type: Boolean,
     required: true,
   },
   is_emergency: {
     type: Boolean,
     required: true,
-    default: false,
   },
   status: {
     type: String,
@@ -61,11 +60,11 @@ const parcel = new mongoose.Schema({
     type: String,
     required: false,
   },
-  amount: {
-    type: String,
-    required: false,
+  price: {
+    type: Number,
+    required: true,
   },
-  preuve_livraison: [
+  proof_of_delivery: [
     {
       type: Buffer,
       required: false,

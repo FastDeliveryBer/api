@@ -6,13 +6,14 @@ Content-Type: application/json
 {
   "address_expedition": "123 Main Street, Anytown USA",
   "address_delivery": "456 Elm Street, Anytown USA",
-  "weight": "12kg",
-  "width": "15cm",
-  "length": "20cm",
-  "height": "12cm",
-  "fragile": "true",
-  "emergency": "false",
+  "weight": 12,
+  "width": 15,
+  "length": 20,
+  "height": 12,
+  "is_fragile": true,
+  "is_emergency": false,
   "delivery_date": "false",
+  "price": 120,
   "customer_id": "63e2390a6fbf120931a73a53"
 }
 
@@ -23,37 +24,37 @@ Content-Type: application/json
 
 ###
 # Récupération d'un colis avec l'id
-GET http://localhost:4545/parcel?_id=63e042aaa64dd1779001e18a HTTP/1.1
+GET http://localhost:4545/parcel?_id=63e24eb9059c0066b55bb4f0 HTTP/1.1
 Content-Type: application/json
 
 ###
 # Récupération d'un colis avec le tracking_id
-GET http://localhost:4545/parcel?tracking_id=648e6cab-be71-4c7a-bb83-a8fa831302b2 HTTP/1.1
+GET http://localhost:4545/parcel?tracking_id=ee5d1dbb-122a-4495-b855-b9ddbfd851 HTTP/1.1
 Content-Type: application/json
 
 ###
 # Modifier un colis
-PATCH http://localhost:4545/parcel HTTP/1.1
+PATCH http://localhost:4545/parcel/63e24eb8059c0066b55bb4ed HTTP/1.1
 Content-Type: application/json
 
 {
-  "tracking_id": "fae5b266-374e-498f-a609-4b655ec55c40",
-  "weight": "33332kg",
-  "height": "666dsdsd712cm"
+  "tracking_id": "648e6cab-be71-4c7a-bb83-a8fa831302b3",
+  "weight": "3",
+  "height": "666dsdm"
 }
 
 
 ###
 # Supprimer un colis
-DELETE http://localhost:4545/parcel/63e21ab460b1abf17866445e HTTP/1.1
+DELETE http://localhost:4545/parcel/63e24eb8059c0066b55bb4ed HTTP/1.1
 Content-Type: application/json
 
 
 ###
 # Ajout d'une preuve à un colis
-PATCH http://localhost:4500/parcel HTTP/1.1
+PATCH http://localhost:4545/parcel/63e24eb8059c0066b55bb4ed HTTP/1.1
 Content-Type: application/json
 
 {
-  "preuve_livraison": 
+  "proof_of_delivery": ""
 }

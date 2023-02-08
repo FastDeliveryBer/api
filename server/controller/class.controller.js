@@ -22,7 +22,7 @@ export default class ClassCtrl {
       if (schemaData.find((item) => item.label.match(key))) {
         let typeVal = schemaData.find((item) => item.label.match(key)).type
 
-        if (!value || value === '') {
+        if (value === '') {
           listError.push(`Champ ${key} vide`)
         } else {
           if (Array.isArray(value)) {
@@ -64,6 +64,8 @@ export default class ClassCtrl {
               if (value !== 'FR' && value !== 'EN' && value !== 'ES') {
                 listError.push(`Format du champ ${key} incorrecte`)
               }
+            } else {
+              listError.push(`Format du champ ${key} incorrecte`)
             }
           } else if (typeof value === 'boolean') {
           } else {

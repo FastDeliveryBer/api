@@ -1,27 +1,31 @@
 export default {
   post: {
     tags: ['Parcel'],
-    description: 'Create a parcel',
+    description: 'Créer un colis',
     operationId: 'createParcel',
     parameters: [],
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/parcel',
+            $ref: '#/components/schemas/parcelCreation',
           },
         },
       },
     },
     responses: {
-      200: {
-        description: 'Parcel created successfully',
+      201: {
+        description: 'Colis créé',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/parcel',
+            },
+          },
+        },
       },
       400: {
-        description: 'Error',
-      },
-      404: {
-        description: 'Parcel unknow',
+        description: 'Impossible de créer le colis',
       },
     },
   },

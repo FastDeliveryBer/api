@@ -14,8 +14,7 @@ export default {
       },
       customer_id: {
         type: 'string',
-        description:
-          'The unique tracking id for the client who create the parcel, can be null if not created by a client',
+        description: 'The unique tracking id for the client',
         example: 'XYZ123456789',
       },
       delivery_date: {
@@ -53,12 +52,12 @@ export default {
         description: 'The height of the parcel in inches',
         example: '12',
       },
-      fragile: {
+      is_fragile: {
         type: 'boolean',
         description: 'Indicates whether the parcel is fragile',
         example: true,
       },
-      emergency: {
+      is_emergency: {
         type: 'boolean',
         description: 'Indicates whether the parcel is an emergency delivery',
         example: true,
@@ -85,6 +84,11 @@ export default {
   parcelCreation: {
     type: 'object',
     properties: {
+      customer_id: {
+        type: 'string',
+        description: 'The unique tracking id for the client',
+        example: 'XYZ123456789',
+      },
       address_expedition: {
         type: 'string',
         description: 'The address where the parcel is being shipped from',
@@ -115,12 +119,17 @@ export default {
         description: 'The height of the parcel in inches',
         example: '12',
       },
-      fragile: {
+      price: {
+        type: 'number',
+        description: 'The price of the parcel based on the weight',
+        example: '10.50',
+      },
+      is_fragile: {
         type: 'boolean',
         description: 'Indicates whether the parcel is fragile',
         example: true,
       },
-      emergency: {
+      is_emergency: {
         type: 'boolean',
         description: 'Indicates whether the parcel is an emergency delivery',
         example: true,
