@@ -66,7 +66,7 @@ export default class AdminCtrl extends ClassCtrl {
       const { id } = req.query ?? ''
       const admin = await adminMdl.queryGetAdmin(id)
       if (admin.length > 0) {
-        response = { ...admin }
+        response = [...admin]
         code = 200
       }
     } catch (error) {

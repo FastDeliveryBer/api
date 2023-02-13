@@ -63,7 +63,7 @@ export default class ParcelCtrl extends ClassCtrl {
               is_emergency
             )
             if (parcel) {
-              response.data.push(parcel)
+              response = parcel
               code = 201
             } else {
               code = 400
@@ -110,7 +110,7 @@ export default class ParcelCtrl extends ClassCtrl {
         )
         const parcel = await parcelMdl.queryGetParcel(filteredData)
         if (parcel.length > 0) {
-          response = { ...parcel }
+          response = [...parcel]
           code = 200
         }
       } catch (error) {

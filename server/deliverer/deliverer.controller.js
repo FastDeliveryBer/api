@@ -72,7 +72,7 @@ export default class DeliveryCtrl extends ClassCtrl {
         const { id } = req.query ?? ''
         const deliverer = await delivererMdl.queryGetDeliverer(id)
         if (deliverer.length > 0) {
-          response = { ...deliverer }
+          response = [...deliverer]
           code = 200
         }
       } catch (error) {
@@ -102,11 +102,7 @@ export default class DeliveryCtrl extends ClassCtrl {
       const listError = this.verifSecure(dataIpt, req.params)
       const listErrorOption = this.verifWithOption(dataOption, req.body, true)
 
-      if (listError.length > 0 || listErrorOption.length > 0) {
-        response.message = 'Erreur'
-        response.data.push(...listError)
-        response.data.push(...listErrorOption)
-      } else {
+      if (listError.length === 0 && listErrorOption.length === 0) {
         try {
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)

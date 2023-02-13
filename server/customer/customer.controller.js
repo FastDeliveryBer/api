@@ -18,7 +18,7 @@ export default class CustomerCtrl extends ClassCtrl {
         { label: 'password', type: 'string' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
-
+      console.log(listError)
       if (listError.length === 0) {
         try {
           const { firstname, lastname, email, password, phone } = req.body
@@ -74,7 +74,7 @@ export default class CustomerCtrl extends ClassCtrl {
         )
         const customer = await customerMdl.queryGetCustomer(filteredData)
         if (customer.length > 0) {
-          response = { ...customer }
+          response = [...customer]
           code = 200
         }
       } catch (error) {
