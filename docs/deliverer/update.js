@@ -6,7 +6,7 @@ export default {
     operationId: 'updateDeliverer',
     parameters: [
       {
-        name: '_id',
+        name: 'id',
         in: 'path',
         required: true,
       },

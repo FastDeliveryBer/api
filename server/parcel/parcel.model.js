@@ -2,6 +2,7 @@ import { Parcel } from '../schemas/schema.parcel.js'
 import Model from '../models/model.js'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
+import { ObjectId } from 'mongodb'
 
 export default class ParcelMdl extends Model {
   generateTrackingID = () => {
@@ -23,7 +24,7 @@ export default class ParcelMdl extends Model {
   }
 
   queryCreateParcel = async (
-    customer_id,
+    customerid,
     delivery_date,
     address_expedition,
     address_delivery,
@@ -36,15 +37,17 @@ export default class ParcelMdl extends Model {
     is_emergency
   ) => {
     try {
-      const tracking_id = this.generateTrackingID()
+      const trackingid = this.generateTrackingID()
 
       /* const imageUrl =
         'https://pbs.twimg.com/profile_images/1526507008505126912/KLpm9_UY_400x400.jpg'
       const imageData = await this.getImageAndConvertToBinary(imageUrl)
  */
+      const ID = new ObjectId()
       let parcel = new Parcel({
-        tracking_id: tracking_id,
-        customer_id: customer_id,
+        id: ID,
+        trackingid: trackingid,
+        customerid: customerid,
         delivery_date: delivery_date,
         address_expedition: address_expedition,
         address_delivery: address_delivery,
@@ -74,10 +77,10 @@ export default class ParcelMdl extends Model {
     }
   }
 
-  queryUpdateParcel = async (_id, data) => {
+  queryUpdateParcel = async (id, data) => {
     try {
       const parcel = await Parcel.findOneAndUpdate(
-        { _id: _id },
+        { id: id },
         { $set: data },
         { new: true }
       )
@@ -87,9 +90,9 @@ export default class ParcelMdl extends Model {
     }
   }
 
-  queryDeleteParcel = async (_id) => {
+  queryDeleteParcel = async (id) => {
     try {
-      const parcel = await Parcel.findOneAndDelete({ _id: _id })
+      const parcel = await Parcel.findOneAndDelete({ id: id })
       return parcel
     } catch (error) {
       throw error

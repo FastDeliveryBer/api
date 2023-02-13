@@ -13,7 +13,7 @@ export default class RoundCtrl extends ClassCtrl {
     let response
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
-        { label: 'deliverer_id', type: 'objectid' },
+        { label: 'delivererid', type: 'objectid' },
         { label: 'schelude_date', type: 'string' },
         { label: 'parcels', type: 'array' },
       ]
@@ -25,14 +25,14 @@ export default class RoundCtrl extends ClassCtrl {
           const roundMdl = new RoundMdl(db)
           const parcelMdl = new ParcelMdl(db)
           const delivererMdl = new DelivererMdl(db)
-          const { deliverer_id, schelude_date, parcels } = req.body
+          const { delivererid, schelude_date, parcels } = req.body
           let parcelsToSave = []
 
           const parcelPromises = parcels.map(async (id) => {
-            const isOK = await parcelMdl.didParcelAlreadyExiste('_id', id)
+            const isOK = await parcelMdl.didParcelAlreadyExiste('id', id)
             const isDelivererOK = await delivererMdl.didDelivererAlreadyExiste(
-              '_id',
-              deliverer_id
+              'id',
+              delivererid
             )
 
             if (isOK) {
@@ -55,7 +55,7 @@ export default class RoundCtrl extends ClassCtrl {
           if (listError.length === 0) {
             code = 400
             const round = await roundMdl.queryCreateRound(
-              deliverer_id,
+              delivererid,
               schelude_date,
               parcelsToSave
             )
@@ -79,12 +79,12 @@ export default class RoundCtrl extends ClassCtrl {
     let listErrorOption = []
 
     if (
-      req.query['_id'] !== undefined ||
-      req.query['deliverer_id'] !== undefined
+      req.query['id'] !== undefined ||
+      req.query['delivererid'] !== undefined
     ) {
       let dataOption = [
-        { label: '_id', type: 'objectid' },
-        { label: 'deliverer_id', type: 'objectid' },
+        { label: 'id', type: 'objectid' },
+        { label: 'delivererid', type: 'objectid' },
       ]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
@@ -96,7 +96,7 @@ export default class RoundCtrl extends ClassCtrl {
         const roundMdl = new RoundMdl(db)
         const filteredData = Object.entries(req.query).reduce(
           (obj, [key, value]) => {
-            if (['_id', 'deliverer_id'].includes(key)) {
+            if (['id', 'delivererid'].includes(key)) {
               obj[key] = value
             }
             return obj
@@ -124,11 +124,11 @@ export default class RoundCtrl extends ClassCtrl {
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      const dataIpt = [{ label: '_id', type: 'objectid' }]
+      const dataIpt = [{ label: 'id', type: 'objectid' }]
       const dataOption = [
         { label: 'parcels', type: 'array' },
         { label: 'date', type: 'string' },
-        { label: 'deliverer_id', type: 'objectid' },
+        { label: 'delivererid', type: 'objectid' },
       ]
       const listError = this.verifSecure(dataIpt, req.params)
       const listErrorOption = this.verifWithOption(dataOption, req.body, true)
@@ -138,26 +138,26 @@ export default class RoundCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const roundMdl = new RoundMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
-              if (['parcels', 'deliverer_id', 'date'].includes(key)) {
+              if (['parcels', 'delivererid', 'date'].includes(key)) {
                 obj[key] = value
               }
               return obj
             },
             {}
           )
-          const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(_id)
+          const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(id)
           if (roundAlreadyExist) {
-            let round = await roundMdl.queryUpdateRound(_id, filteredData)
+            let round = await roundMdl.queryUpdateRound(id, filteredData)
             if (round) {
               response = round
               code = 200
             }
 
             if (round.parcels.length == 0) {
-              round = await roundMdl.queryDeleteRound(_id)
+              round = await roundMdl.queryDeleteRound(id)
               code = 204
             }
           }
@@ -176,7 +176,7 @@ export default class RoundCtrl extends ClassCtrl {
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'id', type: 'objectid' },
-        { label: 'deliverer_id', type: 'objectid' },
+        { label: 'delivererid', type: 'objectid' },
         { label: 'date', type: 'string' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
@@ -186,30 +186,30 @@ export default class RoundCtrl extends ClassCtrl {
           const db = await new Database()
           const roundMdl = new RoundMdl(db)
           const delivererMdl = new DelivererMdl(db)
-          const { id, deliverer_id, date } = req.body
+          const { id, delivererid, date } = req.body
 
           const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(id)
 
           response.message = 'Tournée inconnu'
           if (roundAlreadyExist) {
             let isDelivererOK = await delivererMdl.didDelivererAlreadyExiste(
-              '_id',
-              deliverer_id
+              'id',
+              delivererid
             )
 
             response.message = 'Livreur inconnu'
             if (isDelivererOK) {
               let isDelivererOK = true
               /* await didDelivererIsFree.didDelivererAlreadyExiste(
-                  deliverer_id,
+                  delivererid,
                   date
                 ) */
 
-              response.message = `Le livreur ${deliverer_id} ne peut pas être affecté à la tournée ${id}, vérifiez la date`
+              response.message = `Le livreur ${delivererid} ne peut pas être affecté à la tournée ${id}, vérifiez la date`
               if (isDelivererOK) {
                 const round = await roundMdl.queryAffectDelivererToRound(
                   id,
-                  deliverer_id,
+                  delivererid,
                   date
                 )
                 if (round) {
@@ -232,7 +232,7 @@ export default class RoundCtrl extends ClassCtrl {
     let code = 400
     let response
     if (Object.keys(req.params).length > 0) {
-      const dataIpt = [{ label: '_id', type: 'objectid' }]
+      const dataIpt = [{ label: 'id', type: 'objectid' }]
       const listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length === 0) {
@@ -240,10 +240,10 @@ export default class RoundCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const roundMdl = new RoundMdl(db)
-          const { _id } = req.params
-          const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(_id)
+          const { id } = req.params
+          const roundAlreadyExist = await roundMdl.didRoundAlreadyExiste(id)
           if (roundAlreadyExist) {
-            const round = await roundMdl.queryDeleteRound(_id)
+            const round = await roundMdl.queryDeleteRound(id)
             if (round) {
               code = 204
             }

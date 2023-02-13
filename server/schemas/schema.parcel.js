@@ -1,12 +1,18 @@
+import { ObjectId } from 'mongodb'
 import mongoose from 'mongoose'
 
 const parcel = new mongoose.Schema({
-  tracking_id: {
+  id: {
+    type: ObjectId,
+    required: true,
+    unique: true,
+  },
+  trackingid: {
     type: String,
     required: true,
     unique: true,
   },
-  customer_id: {
+  customerid: {
     type: String,
     required: true,
     unique: false,

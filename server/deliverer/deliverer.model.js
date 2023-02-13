@@ -2,6 +2,7 @@ import MongoDB from '../mogodb/mongo.connect.js'
 import { Deliverer } from './../schemas/schema.deliverer.js'
 import Model from './../models/model.js'
 import bcrypt from 'bcrypt'
+import { ObjectId } from 'mongodb'
 
 export default class DelivererMdl extends Model {
   queryCreateDeliverer = async (
@@ -14,7 +15,9 @@ export default class DelivererMdl extends Model {
   ) => {
     try {
       const hashedPassword = await bcrypt.hash(password, 10)
+      const ID = new ObjectId()
       let deliverer = new Deliverer({
+        id: ID,
         firstname: firstname,
         lastname: lastname,
         email: email,
@@ -31,7 +34,7 @@ export default class DelivererMdl extends Model {
 
   queryGetDeliverer = async (id) => {
     let query = {}
-    if (id !== undefined) query = { _id: id }
+    if (id !== undefined) query = { id: id }
 
     try {
       let deliverer = await Deliverer.find(query)
@@ -44,7 +47,7 @@ export default class DelivererMdl extends Model {
   queryUpdateDeliverer = async (id, data) => {
     try {
       const deliverer = await Deliverer.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         { $set: data },
         { new: true }
       )
@@ -56,7 +59,7 @@ export default class DelivererMdl extends Model {
 
   queryDeleteDeliverer = async (id) => {
     try {
-      const deliverer = await Deliverer.findOneAndDelete({ _id: id })
+      const deliverer = await Deliverer.findOneAndDelete({ id: id })
       return deliverer
     } catch (error) {
       throw error
@@ -74,8 +77,8 @@ export default class DelivererMdl extends Model {
     }
   }
 
-  didDelivererIsFree = async (deliverer_id, date) => {
-    const query = { deliverer_id: deliverer_id, date: date }
+  didDelivererIsFree = async (delivererid, date) => {
+    const query = { delivererid: delivererid, date: date }
 
     try {
       const delivererExist = await Deliverer.exists(query)
@@ -87,7 +90,7 @@ export default class DelivererMdl extends Model {
 
   didEmailDelivererAlreadyExiste = async (id, email) => {
     const query = {
-      _id: { $ne: id },
+      id: { $ne: id },
       email: email,
     }
 

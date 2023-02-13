@@ -2,7 +2,7 @@ export default {
   deliverer: {
     type: 'object',
     properties: {
-      _id: {
+      id: {
         type: 'string',
         description:
           'The unique tracking id for the client who create the parcel, can be null if not created by a client',

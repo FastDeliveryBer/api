@@ -59,8 +59,8 @@ export default class DeliveryCtrl extends ClassCtrl {
     let response = {}
     let listErrorOption = []
 
-    if (req.query['_id'] !== undefined) {
-      let dataOption = [{ label: '_id', type: 'objectid' }]
+    if (req.query['id'] !== undefined) {
+      let dataOption = [{ label: 'id', type: 'objectid' }]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
 
@@ -69,8 +69,8 @@ export default class DeliveryCtrl extends ClassCtrl {
         code = 404
         const db = await new Database()
         const delivererMdl = new DelivererMdl(db)
-        const { _id } = req.query ?? ''
-        const deliverer = await delivererMdl.queryGetDeliverer(_id)
+        const { id } = req.query ?? ''
+        const deliverer = await delivererMdl.queryGetDeliverer(id)
         if (deliverer.length > 0) {
           response = { ...deliverer }
           code = 200
@@ -91,7 +91,7 @@ export default class DeliveryCtrl extends ClassCtrl {
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      const dataIpt = [{ label: '_id', type: 'objectid' }]
+      const dataIpt = [{ label: 'id', type: 'objectid' }]
       const dataOption = [
         { label: 'email', type: 'email' },
         { label: 'lastname', type: 'string' },
@@ -110,7 +110,7 @@ export default class DeliveryCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (
@@ -125,19 +125,19 @@ export default class DeliveryCtrl extends ClassCtrl {
             {}
           )
           const delivererAlreadyExist =
-            await delivererMdl.didDelivererAlreadyExiste('_id', _id)
+            await delivererMdl.didDelivererAlreadyExiste('id', id)
           let emailDelivererAlreadyExistForAnother = false
           if (filteredData['email']) {
             emailDelivererAlreadyExistForAnother =
               await delivererMdl.didEmailDelivererAlreadyExiste(
-                _id,
+                id,
                 filteredData['email']
               )
           }
 
           if (delivererAlreadyExist && !emailDelivererAlreadyExistForAnother) {
             const deliverer = await delivererMdl.queryUpdateDeliverer(
-              _id,
+              id,
               filteredData
             )
             if (deliverer) {
@@ -165,7 +165,7 @@ export default class DeliveryCtrl extends ClassCtrl {
     let code = 400
     let response
     if (Object.keys(req.params).length > 0) {
-      let dataIpt = [{ label: '_id', type: 'objectid' }]
+      let dataIpt = [{ label: 'id', type: 'objectid' }]
       let listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length === 0) {
@@ -173,11 +173,11 @@ export default class DeliveryCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const delivererMdl = new DelivererMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const delivererAlreadyExist =
-            await delivererMdl.didDelivererAlreadyExiste('_id', _id)
+            await delivererMdl.didDelivererAlreadyExiste('id', id)
           if (delivererAlreadyExist) {
-            const deliverer = await delivererMdl.queryDeleteDeliverer(_id)
+            const deliverer = await delivererMdl.queryDeleteDeliverer(id)
             if (deliverer) {
               code = 204
             }

@@ -54,8 +54,8 @@ export default class CustomerCtrl extends ClassCtrl {
     let response = {}
     let listErrorOption = []
 
-    if (req.query['_id'] !== undefined) {
-      let dataOption = [{ label: '_id', type: 'objectid' }]
+    if (req.query['id'] !== undefined) {
+      let dataOption = [{ label: 'id', type: 'objectid' }]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
     if (listErrorOption === 0) {
@@ -65,7 +65,7 @@ export default class CustomerCtrl extends ClassCtrl {
         const customerMdl = new CustomerMdl(db)
         const filteredData = Object.entries(req.query).reduce(
           (obj, [key, value]) => {
-            if (['_id'].includes(key)) {
+            if (['id'].includes(key)) {
               obj[key] = value
             }
             return obj
@@ -92,7 +92,7 @@ export default class CustomerCtrl extends ClassCtrl {
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      let dataIpt = [{ label: '_id', type: 'string' }]
+      let dataIpt = [{ label: 'id', type: 'string' }]
       let dataOption = [
         { label: 'email', type: 'email' },
         { label: 'lastname', type: 'string' },
@@ -107,7 +107,7 @@ export default class CustomerCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const customerMdl = new CustomerMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (
@@ -122,10 +122,10 @@ export default class CustomerCtrl extends ClassCtrl {
             {}
           )
           const customerAlreadyExist =
-            await customerMdl.didCustomerAlreadyExiste('_id', _id)
+            await customerMdl.didCustomerAlreadyExiste('id', id)
           if (customerAlreadyExist) {
             const customer = await customerMdl.queryUpdateCustomer(
-              _id,
+              id,
               filteredData
             )
             code = 400
@@ -147,7 +147,7 @@ export default class CustomerCtrl extends ClassCtrl {
     let code = 400
     let response
     if (Object.keys(req.params).length > 0) {
-      const dataIpt = [{ label: '_id', type: 'objectid' }]
+      const dataIpt = [{ label: 'id', type: 'objectid' }]
       const listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length === 0) {
@@ -155,12 +155,12 @@ export default class CustomerCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const customerMdl = new CustomerMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const customerAlreadyExist =
-            await customerMdl.didCustomerAlreadyExiste('_id', _id)
+            await customerMdl.didCustomerAlreadyExiste('id', id)
           if (customerAlreadyExist) {
             code = 400
-            const customer = await customerMdl.queryDeleteCustomer(_id)
+            const customer = await customerMdl.queryDeleteCustomer(id)
             if (customer) {
               code = 204
             }

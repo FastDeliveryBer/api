@@ -5,7 +5,7 @@ export default {
     operationId: 'getCustomer',
     parameters: [
       {
-        name: '_id',
+        name: 'id',
         in: 'path',
         required: true,
       },

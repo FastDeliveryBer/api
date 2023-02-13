@@ -3,6 +3,7 @@ import database from './../mogodb/mongo.connect.js'
 import Model from './../models/model.js'
 import { User } from './user.js'
 import bcrypt from 'bcrypt'
+import { ObjectId } from 'mongodb'
 
 export default class UserModel extends Model {
   queryGetUser = async () => {
@@ -49,7 +50,9 @@ export default class UserModel extends Model {
   ) => {
     try {
       const hashedPassword = await bcrypt.hash(password, 10)
+      const ID = new ObjectId()
       let user = new User({
+        id: ID,
         firstname: firstname,
         lastname: lastname,
         email: email,

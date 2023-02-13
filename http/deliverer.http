@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ###
 # Récupération d'un livreur
-GET http://localhost:4545/deliverer?_id=63e017835d1719e427da79cf HTTP/1.1
+GET http://localhost:4545/deliverer?id=63e017835d1719e427da79cf HTTP/1.1
 Content-Type: application/json
 
 ###

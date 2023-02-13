@@ -1,11 +1,11 @@
 export default {
   delete: {
     tags: ['Round'],
-    description: 'Supprimer une tournée en précisant son _id',
+    description: 'Supprimer une tournée en précisant son id',
     operationId: 'deleteRound',
     parameters: [
       {
-        name: '_id',
+        name: 'id',
         in: 'path',
         required: true,
       },

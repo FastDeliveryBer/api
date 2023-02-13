@@ -1,12 +1,12 @@
 ###
 # Création livreur
-POST http://localhost:4500/admin HTTP/1.1
+POST http://localhost:4545/admin HTTP/1.1
 Content-Type: application/json
 
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "az@mail.com",
+  "email": "aze@mail.com",
   "password": "azerty",
   "phone": 123
 }
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 # Récupération d'un admin
-GET http://localhost:4545/admin?_id=63e017835d1719e427da79cf HTTP/1.1
+GET http://localhost:4545/admin?id=63ea647abfc21390062c1518 HTTP/1.1
 Content-Type: application/json
 
 ###

@@ -2,7 +2,7 @@ export default {
   customer: {
     type: 'object',
     properties: {
-      _id: {
+      id: {
         type: 'string',
         description: 'The unique tracking id for the customer',
         example: 'XYZ123456789',
@@ -37,7 +37,7 @@ export default {
   customerGet: {
     type: 'object',
     properties: {
-      _id: {
+      id: {
         type: 'string',
         description: 'The unique tracking id for the customer',
         example: 'XYZ123456789',

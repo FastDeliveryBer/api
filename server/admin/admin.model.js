@@ -1,12 +1,15 @@
 import { Admin } from '../schemas/schema.admin.js'
 import Model from '../models/model.js'
 import bcrypt from 'bcrypt'
+import { ObjectId } from 'mongodb'
 
 export default class AdminMdl extends Model {
   queryCreateAdmin = async (firstname, lastname, email, password, phone) => {
     try {
       const hashedPassword = await bcrypt.hash(password, 10)
+      const ID = new ObjectId()
       let admin = new Admin({
+        id: ID,
         firstname: firstname,
         lastname: lastname,
         email: email,
@@ -22,7 +25,7 @@ export default class AdminMdl extends Model {
 
   queryGetAdmin = async (id) => {
     let query = {}
-    if (id !== undefined) query = { _id: id }
+    if (id !== undefined) query = { id: id }
 
     try {
       let admin = await Admin.find(query)
@@ -35,7 +38,7 @@ export default class AdminMdl extends Model {
   queryUpdateAdmin = async (id, data) => {
     try {
       const admin = await Admin.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         { $set: data },
         { new: true }
       )
@@ -47,7 +50,7 @@ export default class AdminMdl extends Model {
 
   queryDeleteAdmin = async (id) => {
     try {
-      const admin = await Admin.findOneAndDelete({ _id: id })
+      const admin = await Admin.findOneAndDelete({ id: id })
       return admin
     } catch (error) {
       throw error
@@ -65,8 +68,8 @@ export default class AdminMdl extends Model {
     }
   }
 
-  didAdminIsFree = async (admin_id, date) => {
-    const query = { admin_id: admin_id, date: date }
+  didAdminIsFree = async (adminid, date) => {
+    const query = { adminid: adminid, date: date }
 
     try {
       const adminExist = await Admin.exists(query)
@@ -78,7 +81,7 @@ export default class AdminMdl extends Model {
 
   didEmailAdminAlreadyExiste = async (id, email) => {
     const query = {
-      _id: { $ne: id },
+      id: { $ne: id },
       email: email,
     }
 

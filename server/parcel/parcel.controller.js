@@ -12,7 +12,7 @@ export default class ParcelCtrl extends ClassCtrl {
     let response = {}
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
-        { label: 'customer_id', type: 'objectid' },
+        { label: 'customerid', type: 'objectid' },
         { label: 'delivery_date', type: 'string' },
         { label: 'address_expedition', type: 'string' },
         { label: 'address_delivery', type: 'string' },
@@ -32,7 +32,7 @@ export default class ParcelCtrl extends ClassCtrl {
           const parcelMdl = new ParcelMdl(db)
           const customerMdl = new CustomerMdl(db)
           const {
-            customer_id,
+            customerid,
             delivery_date,
             address_expedition,
             address_delivery,
@@ -46,11 +46,11 @@ export default class ParcelCtrl extends ClassCtrl {
           } = req.body
 
           const customerAlreadyExist =
-            await customerMdl.didCustomerAlreadyExiste('_id', customer_id)
+            await customerMdl.didCustomerAlreadyExiste('id', customerid)
 
           if (customerAlreadyExist) {
             const parcel = await parcelMdl.queryCreateParcel(
-              customer_id,
+              customerid,
               delivery_date,
               address_expedition,
               address_delivery,
@@ -84,12 +84,12 @@ export default class ParcelCtrl extends ClassCtrl {
     let listErrorOption = []
 
     if (
-      req.query['_id'] !== undefined ||
-      req.query['tracking_id'] !== undefined
+      req.query['id'] !== undefined ||
+      req.query['trackingid'] !== undefined
     ) {
       let dataOption = [
-        { label: '_id', type: 'objectid' },
-        { label: 'tracking_id', type: 'string' },
+        { label: 'id', type: 'objectid' },
+        { label: 'trackingid', type: 'string' },
       ]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
@@ -101,7 +101,7 @@ export default class ParcelCtrl extends ClassCtrl {
         const parcelMdl = new ParcelMdl(db)
         const filteredData = Object.entries(req.query).reduce(
           (obj, [key, value]) => {
-            if (['_id', 'tracking_id'].includes(key)) {
+            if (['id', 'trackingid'].includes(key)) {
               obj[key] = value
             }
             return obj
@@ -129,7 +129,7 @@ export default class ParcelCtrl extends ClassCtrl {
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      let dataIpt = [{ label: '_id', type: 'string' }]
+      let dataIpt = [{ label: 'id', type: 'string' }]
       let dataOption = [
         { label: 'delivery_date', type: 'string' },
         { label: 'address_expedition', type: 'string' },
@@ -149,7 +149,7 @@ export default class ParcelCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const parcelMdl = new ParcelMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (
@@ -172,11 +172,11 @@ export default class ParcelCtrl extends ClassCtrl {
             {}
           )
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
-            '_id',
-            _id
+            'id',
+            id
           )
           if (parcelAlreadyExist) {
-            const parcel = await parcelMdl.queryUpdateParcel(_id, filteredData)
+            const parcel = await parcelMdl.queryUpdateParcel(id, filteredData)
             if (parcel) {
               response = parcel
               code = 200
@@ -198,7 +198,7 @@ export default class ParcelCtrl extends ClassCtrl {
     let response
 
     if (Object.keys(req.params).length > 0) {
-      const dataIpt = [{ label: '_id', type: 'objectid' }]
+      const dataIpt = [{ label: 'id', type: 'objectid' }]
       const listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length === 0) {
@@ -206,13 +206,13 @@ export default class ParcelCtrl extends ClassCtrl {
           code = 404
           const db = await new Database()
           const parcelMdl = new ParcelMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const parcelAlreadyExist = await parcelMdl.didParcelAlreadyExiste(
-            '_id',
-            _id
+            'id',
+            id
           )
           if (parcelAlreadyExist) {
-            const parcel = await parcelMdl.queryDeleteParcel(_id)
+            const parcel = await parcelMdl.queryDeleteParcel(id)
             if (parcel) code = 204
             else code = 400
           }

@@ -56,15 +56,15 @@ export default class AdminCtrl extends ClassCtrl {
     let response = {}
     let listErrorOption = []
 
-    if (req.query['_id'] !== undefined) {
-      let dataOption = [{ label: '_id', type: 'objectid' }]
+    if (req.query['id'] !== undefined) {
+      let dataOption = [{ label: 'id', type: 'objectid' }]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
     try {
       const db = await new Database()
       const adminMdl = new AdminMdl(db)
-      const { _id } = req.query ?? ''
-      const admin = await adminMdl.queryGetAdmin(_id)
+      const { id } = req.query ?? ''
+      const admin = await adminMdl.queryGetAdmin(id)
       if (admin.length > 0) {
         response = { ...admin }
         code = 200
@@ -83,7 +83,7 @@ export default class AdminCtrl extends ClassCtrl {
       Object.keys(req.body).length > 0 &&
       Object.keys(req.params).length > 0
     ) {
-      let dataIpt = [{ label: '_id', type: 'objectid' }]
+      let dataIpt = [{ label: 'id', type: 'objectid' }]
       let dataOption = [
         { label: 'email', type: 'email' },
         { label: 'lastname', type: 'string' },
@@ -97,7 +97,7 @@ export default class AdminCtrl extends ClassCtrl {
         try {
           const db = await new Database()
           const adminMdl = new AdminMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
               if (['firstname', 'lastname', 'phone', 'email'].includes(key)) {
@@ -108,14 +108,14 @@ export default class AdminCtrl extends ClassCtrl {
             {}
           )
           const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
-            '_id',
-            _id
+            'id',
+            id
           )
           let emailAdminAlreadyExistForAnother = false
           if (filteredData['email']) {
             emailAdminAlreadyExistForAnother =
               await adminMdl.didEmailAdminAlreadyExiste(
-                _id,
+                id,
                 filteredData['email']
               )
           }
@@ -143,17 +143,17 @@ export default class AdminCtrl extends ClassCtrl {
     let code = 400
     let response
     if (Object.keys(req.params).length > 0) {
-      let dataIpt = [{ label: '_id', type: 'objectid' }]
+      let dataIpt = [{ label: 'id', type: 'objectid' }]
       let listError = this.verifSecure(dataIpt, req.params)
 
       if (listError.length === 0) {
         try {
           const db = await new Database()
           const adminMdl = new AdminMdl(db)
-          const { _id } = req.params
+          const { id } = req.params
           const adminAlreadyExist = await adminMdl.didAdminAlreadyExiste(
-            '_id',
-            _id
+            'id',
+            id
           )
           if (adminAlreadyExist) {
             const admin = await adminMdl.queryDeleteAdmin(id)

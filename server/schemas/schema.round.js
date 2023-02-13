@@ -1,7 +1,13 @@
+import { ObjectId } from 'mongodb'
 import mongoose from 'mongoose'
 
 const round = new mongoose.Schema({
-  deliverer_id: { type: mongoose.Schema.Types.ObjectId, required: true },
+  id: {
+    type: ObjectId,
+    required: true,
+    unique: true,
+  },
+  delivererid: { type: mongoose.Schema.Types.ObjectId, required: true },
   schelude_date: { type: String, required: true },
   status: {
     type: String,

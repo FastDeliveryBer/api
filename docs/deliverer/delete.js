@@ -1,11 +1,11 @@
 export default {
   delete: {
     tags: ['Deliverer'],
-    description: 'Supprimer un livreur en passant en paramètre son _id',
+    description: 'Supprimer un livreur en passant en paramètre son id',
     operationId: 'deleteDeliverer',
     parameters: [
       {
-        name: '_id',
+        name: 'id',
         in: 'path',
         required: true,
       },

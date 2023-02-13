@@ -1,11 +1,14 @@
 import { Round } from '../schemas/schema.round.js'
 import Model from '../models/model.js'
+import { ObjectId } from 'mongodb'
 
 export default class RoundMdl extends Model {
-  queryCreateRound = async (deliverer_id, date, arrayTrackinId) => {
+  queryCreateRound = async (delivererid, date, arrayTrackinId) => {
     try {
+      const ID = new ObjectId()
       let round = new Round({
-        deliverer_id: deliverer_id,
+        id: ID,
+        delivererid: delivererid,
         schelude_date: date,
         parcels: arrayTrackinId,
       })
@@ -29,7 +32,7 @@ export default class RoundMdl extends Model {
   queryUpdateRound = async (id, data) => {
     try {
       const round = await Round.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         { $set: data },
         { new: true }
       )
@@ -39,13 +42,13 @@ export default class RoundMdl extends Model {
     }
   }
 
-  queryAffectDelivererToRound = async (id, deliverer_id, date) => {
+  queryAffectDelivererToRound = async (id, delivererid, date) => {
     try {
       const round = await Round.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         {
           $set: {
-            deliverer_id: deliverer_id,
+            delivererid: delivererid,
             date: date,
           },
         },
@@ -59,7 +62,7 @@ export default class RoundMdl extends Model {
 
   queryDeleteRound = async (id) => {
     try {
-      const round = await Round.findOneAndDelete({ _id: id })
+      const round = await Round.findOneAndDelete({ id: id })
       return round
     } catch (error) {
       throw error
@@ -67,7 +70,7 @@ export default class RoundMdl extends Model {
   }
 
   didRoundAlreadyExiste = async (id) => {
-    const query = { _id: id }
+    const query = { id: id }
 
     try {
       const roundExist = await Round.exists(query)

@@ -2,17 +2,17 @@ export default {
   parcel: {
     type: 'object',
     properties: {
-      _id: {
+      id: {
         type: 'string',
         description: 'The unique id for the parcel',
         example: 'XYZ123456789',
       },
-      tracking_id: {
+      trackingid: {
         type: 'string',
         description: 'The unique tracking id for the parcel',
         example: 'XYZ12345678-sdsdsd9-2VDG362B_2426GS6',
       },
-      customer_id: {
+      customerid: {
         type: 'string',
         description: 'The unique tracking id for the client',
         example: 'XYZ123456789',
@@ -84,7 +84,7 @@ export default {
   parcelCreation: {
     type: 'object',
     properties: {
-      customer_id: {
+      customerid: {
         type: 'string',
         description: 'The unique tracking id for the client',
         example: 'XYZ123456789',
@@ -139,7 +139,7 @@ export default {
   parcelUpdate: {
     type: 'object',
     properties: {
-      customer_id: {
+      customerid: {
         type: 'string',
         description:
           'The unique tracking id for the client who create the parcel, can be null if not created by a client',

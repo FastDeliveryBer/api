@@ -5,7 +5,7 @@ export default {
     operationId: 'updateRound',
     parameters: [
       {
-        name: '_id',
+        name: 'id',
         in: 'path',
         required: true,
       },

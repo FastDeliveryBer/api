@@ -1,12 +1,15 @@
 import { Customer } from '../schemas/schema.customer.js'
 import Model from '../models/model.js'
 import bcrypt from 'bcrypt'
+import { ObjectId } from 'mongodb'
 
 export default class CustomerMdl extends Model {
   queryCreateCustomer = async (firstname, lastname, email, password, phone) => {
     try {
       const hashedPassword = await bcrypt.hash(password, 10)
+      const ID = new ObjectId()
       let customer = new Customer({
+        id: ID,
         firstname: firstname,
         lastname: lastname,
         email: email,
@@ -34,7 +37,7 @@ export default class CustomerMdl extends Model {
   queryUpdateCustomer = async (id, data) => {
     try {
       const customer = await Customer.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         { $set: data },
         { new: true }
       )
@@ -46,7 +49,7 @@ export default class CustomerMdl extends Model {
 
   queryDeleteCustomer = async (id) => {
     try {
-      const customer = await Customer.findOneAndDelete({ _id: id })
+      const customer = await Customer.findOneAndDelete({ id: id })
       return customer
     } catch (error) {
       throw error

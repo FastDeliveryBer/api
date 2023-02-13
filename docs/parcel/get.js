@@ -2,16 +2,16 @@ export default {
   get: {
     tags: ['Parcel'],
     description:
-      "Récupération un ou plusieurs colis, la récupération d'un colis si vide retournera l'ensemble des colis, sinon peut se faire via son _id ou alors son tracking_id",
+      "Récupération un ou plusieurs colis, la récupération d'un colis si vide retournera l'ensemble des colis, sinon peut se faire via son id ou alors son trackingid",
     operationId: 'getParcel',
     parameters: [
       {
-        name: 'tracking_id',
+        name: 'trackingid',
         in: 'path',
         required: false,
       },
       {
-        name: '_id',
+        name: 'id',
         in: 'path',
         required: false,
       },

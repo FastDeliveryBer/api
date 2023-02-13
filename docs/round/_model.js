@@ -2,7 +2,7 @@ export default {
   round: {
     type: 'object',
     properties: {
-      _id: {
+      id: {
         type: 'string',
         description: 'The unique id for the parcel',
         example: 'XYZ123456789',
@@ -24,7 +24,7 @@ export default {
           'The current status of the parcel (e.g. "waiting", "in transit", "delivered")',
         example: 'waiting',
       },
-      deliverer_id: {
+      delivererid: {
         type: 'id',
         description: 'The current id of the deliverer that will make the round',
         example: '123415',
@@ -45,7 +45,7 @@ export default {
           $ref: '#/components/schemas/parcel/properties',
         },
       },
-      deliverer_id: {
+      delivererid: {
         type: 'id',
         description: 'The current deliverer that will make the round',
         example: '123415',
