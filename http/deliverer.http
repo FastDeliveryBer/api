@@ -6,7 +6,7 @@ Content-Type: application/json
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "azertyu@mail.com",
+  "email": "testnicolas@mail.com",
   "password": "azerty",
   "phone": 123,
   "langage": "FR"
@@ -35,3 +35,14 @@ Content-Type: application/json
 # Supprimer un livreur
 DELETE http://localhost:4545/deliverer/63e017835d1719e427da79cf HTTP/1.1
 Content-Type: application/json
+
+###
+# Connexion Livreur
+POST http://localhost:4545/deliverer/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "testnicolas@mail.com",
+    "password": "azerty"
+  
+}

@@ -1,7 +1,9 @@
 import express from 'express'
 import Database from '../mogodb/mongo.connect.js'
+import bcrypt from 'bcrypt'
 import DelivererMdl from './deliverer.model.js'
 import ClassCtrl from '../controller/class.controller.js'
+import Authentication from './../auth/token.validation.js'
 
 const { Request, Response } = express
 export default class DeliveryCtrl extends ClassCtrl {
@@ -13,6 +15,7 @@ export default class DeliveryCtrl extends ClassCtrl {
         { label: 'lastname', type: 'string' },
         { label: 'firstname', type: 'string' },
         { label: 'email', type: 'email' },
+        { label: 'password', type: 'string' },
         { label: 'phone', type: 'number' },
         { label: 'langage', type: 'langage' },
         { label: 'password', type: 'string' },
@@ -185,5 +188,43 @@ export default class DeliveryCtrl extends ClassCtrl {
       }
     }
     res.status(code).send(response)
+  }
+
+  static login = async (req = Request, res = Response) => {
+    let code = 400
+    let response
+    if (Object.keys(req.body).length > 0) {
+      let dataIpt = [
+        { label: 'email', type: 'email' },
+        { label: 'password', type: 'string' },
+      ]
+      let listError = this.verifSecure(dataIpt, req.body)
+
+      if (listError.length === 0) {
+        try {
+          code = 404
+          const db = await new Database()
+          const delivererMdl = new DelivererMdl(db)
+          const { email, password } = req.body
+          const user = await delivererMdl.queryGetDelivererByEmail(email)
+
+          if (user) {
+            let isSamePassword = await bcrypt.compare(password, user.password)
+            if (isSamePassword) {
+              code = 400
+              const { password, ...userWithoutPassword } = user._doc
+              const token = Authentication.generateToken({ email: email })
+              res.header('x-auth-token', token)
+              response = userWithoutPassword
+              code = 200
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(400).send(error)
+        }
+      }
+      res.status(code).send(response)
+    }
   }
 }

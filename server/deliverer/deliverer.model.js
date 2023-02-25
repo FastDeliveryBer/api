@@ -44,6 +44,17 @@ export default class DelivererMdl extends Model {
     }
   }
 
+  queryGetDelivererByEmail = async (email) => {
+    let query = { email: email }
+
+    try {
+      let deliverer = await Deliverer.findOne(query)
+      return deliverer
+    } catch (error) {
+      throw error
+    }
+  }
+
   queryUpdateDeliverer = async (id, data) => {
     try {
       const deliverer = await Deliverer.findOneAndUpdate(
