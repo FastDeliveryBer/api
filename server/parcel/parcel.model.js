@@ -109,4 +109,14 @@ export default class ParcelMdl extends Model {
       throw error
     }
   }
+
+  queryGetParcelLastDelivered = async (filteredData) => {
+    let query = filteredData
+    try {
+      let parcel = await Parcel.find(query)
+      return parcel
+    } catch (error) {
+      throw error
+    }
+  }
 }

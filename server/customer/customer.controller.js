@@ -1,6 +1,7 @@
 import express from 'express'
 import Database from '../mogodb/mongo.connect.js'
 import CustomerMdl from './customer.model.js'
+import bcrypt from 'bcrypt'
 import ClassCtrl from '../controller/class.controller.js'
 
 const { Request, Response } = express
@@ -59,12 +60,21 @@ export default class CustomerCtrl extends ClassCtrl {
       let dataOption = [{ label: 'id', type: 'objectid' }]
       listErrorOption = this.verifWithOption(dataOption, req.query, true)
     }
-    if (listErrorOption === 0) {
+    if (listErrorOption.length === 0) {
       try {
         code = 404
         const db = await new Database()
         const customerMdl = new CustomerMdl(db)
-        const customer = await customerMdl.queryGetCustomer(id)
+        const filteredData = Object.entries(req.query).reduce(
+          (obj, [key, value]) => {
+            if (['id'].includes(key)) {
+              obj[key] = value
+            }
+            return obj
+          },
+          {}
+        )
+        const customer = await customerMdl.queryGetCustomer(filteredData)
         if (customer.length > 0) {
           response = [...customer]
           code = 200
@@ -192,8 +202,6 @@ export default class CustomerCtrl extends ClassCtrl {
             if (isSamePassword) {
               code = 400
               const { password, ...userWithoutPassword } = customer._doc
-              const token = Authentication.generateToken({ email: email })
-              res.header('x-auth-token', token)
               response = userWithoutPassword
               code = 200
             }

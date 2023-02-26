@@ -3,6 +3,7 @@ import Database from '../mogodb/mongo.connect.js'
 import bcrypt from 'bcrypt'
 import DelivererMdl from './deliverer.model.js'
 import RoundMdl from './../round/round.model.js'
+import ParcelMdl from '../parcel/parcel.model.js'
 import ClassCtrl from '../controller/class.controller.js'
 import Authentication from './../auth/token.validation.js'
 
@@ -238,46 +239,32 @@ export default class DeliveryCtrl extends ClassCtrl {
       const db = await new Database()
       const delivererMdl = new DelivererMdl(db)
       const roundMdl = new RoundMdl(db)
+      const parcelMdl = new ParcelMdl(db)
       const deliverer = await delivererMdl.queryGetDeliverer()
       if (deliverer.length > 0) {
         let delivererToSave = []
-        arrayDeliverer = [...deliverer]
+        let arrayDeliverer = [...deliverer]
 
-        const parcelPromises = arrayDeliverer.map(async (deliverer) => {
-          const filteredData = Object.entries(req.query).reduce(
-            (obj, [key, value]) => {
-              if (['id', 'delivererid'].includes(key)) {
-                obj[key] = value
-              }
-              return obj
-            },
-            {}
-          )
+        const delivererPromises = arrayDeliverer.map(async (deliverer) => {
+          const filteredData = { status: 'pending', delivererid: deliverer.id }
 
-          const isDelivererOK = await roundMdl.queryGetRound(
-            'id',
-            deliverer.id,
-            'status',
-            'transit'
-          )
+          console.log(filteredData)
+          const roundFound = await roundMdl.queryGetRound(filteredData)
 
-          if (isDelivererOK) {
-            delivererToSave.push(id)
+          console.log(roundFound)
+          if (roundFound.length > 0) {
+            delivererToSave.push(deliverer)
           }
         })
 
-        await Promise.all(parcelPromises)
-
-        const round = await roundMdl.queryGetRound(filteredData)
-
-        response = [...deliverer]
+        await Promise.all(delivererPromises)
+        response = [...delivererToSave]
         code = 200
       }
     } catch (error) {
       console.log(error)
       res.status(400).send(error)
     }
-
     res.status(code).send(response)
   }
 }
