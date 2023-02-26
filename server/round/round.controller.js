@@ -127,7 +127,7 @@ export default class RoundCtrl extends ClassCtrl {
       const dataIpt = [{ label: 'id', type: 'objectid' }]
       const dataOption = [
         { label: 'parcels', type: 'array' },
-        { label: 'date', type: 'string' },
+        { label: 'schelude_date', type: 'string' },
         { label: 'delivererid', type: 'objectid' },
       ]
       const listError = this.verifSecure(dataIpt, req.params)
@@ -141,7 +141,7 @@ export default class RoundCtrl extends ClassCtrl {
           const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
-              if (['parcels', 'delivererid', 'date'].includes(key)) {
+              if (['parcels', 'delivererid', 'schelude_date'].includes(key)) {
                 obj[key] = value
               }
               return obj
