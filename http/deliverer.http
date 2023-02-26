@@ -47,7 +47,6 @@ Content-Type: application/json
   
 }
  
-
 ###
 # Récupération des livreurs avec leur position
 GET http://localhost:4545/deliverer/position HTTP/1.1

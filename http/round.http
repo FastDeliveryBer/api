@@ -25,6 +25,11 @@ GET http://localhost:4545/round HTTP/1.1
 Content-Type: application/json
 
 ###
+# Récupération des tournées avec details des parcels
+GET http://localhost:4545/round/parcels HTTP/1.1
+Content-Type: application/json
+
+###
 # Récupération une tournée
 GET http://localhost:4545/round?id=63fb73174f63ab564214978a HTTP/1.1
 Content-Type: application/json

@@ -288,4 +288,60 @@ export default class RoundCtrl extends ClassCtrl {
     }
     res.status(code).send(response)
   }
+
+  static getWithParcelsDetails = async (req = Request, res = Response) => {
+    let code = 400
+    let response = {}
+    let listErrorOption = []
+
+    if (
+      req.query['id'] !== undefined ||
+      req.query['delivererid'] !== undefined
+    ) {
+      let dataOption = [
+        { label: 'id', type: 'objectid' },
+        { label: 'delivererid', type: 'objectid' },
+      ]
+      listErrorOption = this.verifWithOption(dataOption, req.query, true)
+    }
+
+    if (listErrorOption.length === 0) {
+      try {
+        code = 404
+        const db = await new Database()
+        const roundMdl = new RoundMdl(db)
+        const parcelMdl = new ParcelMdl(db)
+        const filteredData = Object.entries(req.query).reduce(
+          (obj, [key, value]) => {
+            if (['id', 'delivererid'].includes(key)) {
+              obj[key] = value
+            }
+            return obj
+          },
+          {}
+        )
+        let rounds = await roundMdl.queryGetRound(filteredData)
+        let result = []
+        if (rounds.length > 0) {
+          for (const round of rounds) {
+            let parcelIds = round.parcels
+            let parcels = await parcelMdl.queryGetParcel({
+              id: { $in: parcelIds },
+            })
+            result.push({
+              ...round.toObject(),
+              parcels: parcels.map((parcel) => parcel.toObject()),
+            })
+          }
+
+          response = [...result]
+          code = 200
+        }
+      } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+      }
+    }
+    res.status(code).send(response)
+  }
 }
