@@ -73,6 +73,43 @@ export default class RoundCtrl extends ClassCtrl {
     res.status(code).send(response)
   }
 
+  static createWithoutParcels = async (req = Request, res = Response) => {
+    let code = 400
+    let response
+    if (Object.keys(req.body).length > 0) {
+      let dataIpt = [
+        { label: 'delivererid', type: 'objectid' },
+        { label: 'schedule_date', type: 'string' },
+      ]
+      let listError = this.verifSecure(dataIpt, req.body)
+
+      if (listError.length === 0) {
+        try {
+          const db = await new Database()
+          const roundMdl = new RoundMdl(db)
+          const { delivererid, schedule_date } = req.body
+
+          if (listError.length === 0) {
+            code = 400
+            const round = await roundMdl.queryCreateRound(
+              delivererid,
+              schedule_date,
+              []
+            )
+            if (round) {
+              response = round
+              code = 201
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(400).send(error)
+        }
+      }
+    }
+    res.status(code).send(response)
+  }
+
   static get = async (req = Request, res = Response) => {
     let code = 400
     let response = {}

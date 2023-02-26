@@ -44,6 +44,16 @@ export default class DelivererMdl extends Model {
     }
   }
 
+  queryGetDelivererPosition = async () => {
+    let query = {}
+    try {
+      let deliverer = await Deliverer.find(query)
+      return deliverer
+    } catch (error) {
+      throw error
+    }
+  }
+
   queryGetDelivererByEmail = async (email) => {
     let query = { email: email }
 
