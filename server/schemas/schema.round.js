@@ -8,7 +8,7 @@ const round = new mongoose.Schema({
     unique: true,
   },
   delivererid: { type: mongoose.Schema.Types.ObjectId, required: true },
-  schelude_date: { type: String, required: true },
+  schedule_date: { type: String, required: true },
   status: {
     type: String,
     required: false,

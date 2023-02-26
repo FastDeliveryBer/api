@@ -7,7 +7,7 @@ export default {
         description: 'The unique id for the parcel',
         example: 'XYZ123456789',
       },
-      schelude_date: {
+      schedule_date: {
         type: 'string',
         description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
@@ -34,7 +34,7 @@ export default {
   roundCreation: {
     type: 'object',
     properties: {
-      schelude_date: {
+      schedule_date: {
         type: 'string',
         description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',
@@ -55,7 +55,7 @@ export default {
   roundUpdate: {
     type: 'object',
     properties: {
-      schelude_date: {
+      schedule_date: {
         type: 'string',
         description: 'The date that the parcel is scheduled to be delivered',
         example: '07/07/2023',

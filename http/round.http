@@ -4,7 +4,7 @@ POST http://localhost:4545/round HTTP/1.1
 Content-Type: application/json
 
 {
-  "schelude_date": "13",
+  "schedule_date": "13",
   "delivererid": "63ea67f6bfc21390062c153d",
   "parcels": ["63ea882f9e992593fdeb5310"]
 }
@@ -25,7 +25,7 @@ PATCH http://localhost:4545/round/63ea88399e992593fdeb5316  HTTP/1.1
 Content-Type: application/json
 
 {
-  "schelude_date": "15"
+  "schedule_date": "15"
 }
 
 

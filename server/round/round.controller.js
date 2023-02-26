@@ -14,7 +14,7 @@ export default class RoundCtrl extends ClassCtrl {
     if (Object.keys(req.body).length > 0) {
       let dataIpt = [
         { label: 'delivererid', type: 'objectid' },
-        { label: 'schelude_date', type: 'string' },
+        { label: 'schedule_date', type: 'string' },
         { label: 'parcels', type: 'array' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
@@ -25,7 +25,7 @@ export default class RoundCtrl extends ClassCtrl {
           const roundMdl = new RoundMdl(db)
           const parcelMdl = new ParcelMdl(db)
           const delivererMdl = new DelivererMdl(db)
-          const { delivererid, schelude_date, parcels } = req.body
+          const { delivererid, schedule_date, parcels } = req.body
           let parcelsToSave = []
 
           const parcelPromises = parcels.map(async (id) => {
@@ -56,7 +56,7 @@ export default class RoundCtrl extends ClassCtrl {
             code = 400
             const round = await roundMdl.queryCreateRound(
               delivererid,
-              schelude_date,
+              schedule_date,
               parcelsToSave
             )
             if (round) {
@@ -127,7 +127,7 @@ export default class RoundCtrl extends ClassCtrl {
       const dataIpt = [{ label: 'id', type: 'objectid' }]
       const dataOption = [
         { label: 'parcels', type: 'array' },
-        { label: 'schelude_date', type: 'string' },
+        { label: 'schedule_date', type: 'string' },
         { label: 'delivererid', type: 'objectid' },
       ]
       const listError = this.verifSecure(dataIpt, req.params)
@@ -141,7 +141,7 @@ export default class RoundCtrl extends ClassCtrl {
           const { id } = req.params
           const filteredData = Object.entries(req.body).reduce(
             (obj, [key, value]) => {
-              if (['parcels', 'delivererid', 'schelude_date'].includes(key)) {
+              if (['parcels', 'delivererid', 'schedule_date'].includes(key)) {
                 obj[key] = value
               }
               return obj
