@@ -53,7 +53,7 @@ export default class AuthController extends ClassCtrl {
       let dataIpt = [
         { label: 'lastname', type: 'string' },
         { label: 'firstname', type: 'string' },
-        { label: 'email', type: 'string' },
+        { label: 'email', type: 'email' },
         { label: 'phone', type: 'number' },
         { label: 'langage', type: 'string' },
         { label: 'password', type: 'string' },
@@ -68,7 +68,6 @@ export default class AuthController extends ClassCtrl {
             req.body
 
           const userAlreadyExist = await userMdl.didUserAlreadyExiste(email)
-          response.message = 'Cet utilisateur existe déjà'
           if (!userAlreadyExist) {
             const user = await userMdl.queryCreateUser(
               firstname,
@@ -79,10 +78,7 @@ export default class AuthController extends ClassCtrl {
               langage
             )
             if (user) {
-              const token = Authentication.generateToken({ email: email })
-              const { password, ...userWithoutPassword } = user._doc
               response = userWithoutPassword
-              res.header('x-auth-token', token)
               code = 201
             }
           }

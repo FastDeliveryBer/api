@@ -6,10 +6,9 @@ Content-Type: application/json
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "ab@mail.com",
-  "password": "azerty",
-  "phone": "0123457898",
-  "langage": "FR"
+  "email": "abssdsdsa@mail.com",
+  "phone": "2123457898",
+  "password": "azerty"
 }
 
 ###

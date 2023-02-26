@@ -17,8 +17,7 @@ const round = new mongoose.Schema({
   parcels: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      unique: true,
+      required: false,
     },
   ],
 })

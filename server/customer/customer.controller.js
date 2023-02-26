@@ -14,7 +14,7 @@ export default class CustomerCtrl extends ClassCtrl {
         { label: 'lastname', type: 'string' },
         { label: 'firstname', type: 'string' },
         { label: 'email', type: 'email' },
-        { label: 'phone', type: 'phone' },
+        { label: 'phone', type: 'string' },
         { label: 'password', type: 'string' },
       ]
       let listError = this.verifSecure(dataIpt, req.body)
@@ -36,7 +36,8 @@ export default class CustomerCtrl extends ClassCtrl {
               phone
             )
             if (customer) {
-              response = customer
+              const { password, ...customerWithoutPassword } = customer._doc
+              response = customerWithoutPassword
               code = 201
             }
           }
