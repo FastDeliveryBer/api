@@ -6,7 +6,7 @@ Content-Type: application/json
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "abssdsdsa@mail.com",
+  "email": "absdsdsa@mail.com",
   "phone": "2123457898",
   "password": "azerty"
 }
@@ -34,3 +34,14 @@ Content-Type: application/json
 # Supprimer un client
 DELETE http://localhost:4545/customer/63e2390a6fbf120931a73a53 HTTP/1.1
 Content-Type: application/json
+
+###
+# Connexion d'un client
+POST http://localhost:4545/customer/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "testnicolas@mail.com",
+    "password": "azerty"
+  
+}

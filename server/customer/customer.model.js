@@ -24,6 +24,17 @@ export default class CustomerMdl extends Model {
     }
   }
 
+  queryGetCustomerByEmail = async (email) => {
+    let query = { email: email }
+
+    try {
+      let customer = await Customer.findOne(query)
+      return customer
+    } catch (error) {
+      throw error
+    }
+  }
+
   queryGetCustomer = async (filteredData) => {
     let query = filteredData
     try {

@@ -192,11 +192,6 @@ export default class RoundCtrl extends ClassCtrl {
               response = round
               code = 200
             }
-
-            if (round.parcels.length == 0) {
-              round = await roundMdl.queryDeleteRound(id)
-              code = 204
-            }
           }
         } catch (error) {
           console.log(error)

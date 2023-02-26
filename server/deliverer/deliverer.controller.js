@@ -244,9 +244,9 @@ export default class DeliveryCtrl extends ClassCtrl {
         arrayDeliverer = [...deliverer]
 
         const parcelPromises = arrayDeliverer.map(async (deliverer) => {
-          const filteredData = Object.entries(deliverer).reduce(
+          const filteredData = Object.entries(req.query).reduce(
             (obj, [key, value]) => {
-              if (['id'].includes(key)) {
+              if (['id', 'delivererid'].includes(key)) {
                 obj[key] = value
               }
               return obj
