@@ -6,7 +6,7 @@ Content-Type: application/json
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "testnicolas@mail.com",
+  "email": "test@gmail.com",
   "password": "azerty",
   "phone": 123,
   "langage": "FR"
@@ -44,7 +44,6 @@ Content-Type: application/json
 {
     "email": "testnicolas@mail.com",
     "password": "azerty"
-  
 }
  
 ###

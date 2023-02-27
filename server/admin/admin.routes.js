@@ -6,5 +6,6 @@ router.get('', AdminCtrl.get) //Récupérer les admins
 router.post('', AdminCtrl.create) //Créer un admin
 router.patch('/:id', AdminCtrl.update) //Modifier un admin
 router.delete('/:id', AdminCtrl.delete) //Supprimer un admin
+router.post('/login', AdminCtrl.login) // Connexion d'un livreur
 
 export default router

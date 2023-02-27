@@ -1,7 +1,9 @@
 import express from 'express'
 import Database from '../mogodb/mongo.connect.js'
 import AdminMdl from './admin.model.js'
+import bcrypt from 'bcrypt'
 import ClassCtrl from '../controller/class.controller.js'
+import Authentication from './../auth/token.validation.js'
 
 const { Request, Response } = express
 export default class AdminCtrl extends ClassCtrl {
@@ -168,5 +170,43 @@ export default class AdminCtrl extends ClassCtrl {
       }
     }
     res.status(code).send(response)
+  }
+
+  static login = async (req = Request, res = Response) => {
+    let code = 400
+    let response
+    if (Object.keys(req.body).length > 0) {
+      let dataIpt = [
+        { label: 'email', type: 'email' },
+        { label: 'password', type: 'string' },
+      ]
+      let listError = this.verifSecure(dataIpt, req.body)
+
+      if (listError.length === 0) {
+        try {
+          code = 404
+          const db = await new Database()
+          const adminMdl = new AdminMdl(db)
+          const { email, password } = req.body
+          const admin = await adminMdl.queryGetAdminByEmail(email)
+          console.log(password)
+          console.log(admin)
+
+          if (admin) {
+            let isSamePassword = await bcrypt.compare(password, admin.password)
+            if (isSamePassword) {
+              code = 400
+              const { password, ...userWithoutPassword } = admin._doc
+              response = userWithoutPassword
+              code = 200
+            }
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(400).send(error)
+        }
+      }
+      res.status(code).send(response)
+    }
   }
 }

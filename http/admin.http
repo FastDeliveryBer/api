@@ -6,7 +6,7 @@ Content-Type: application/json
 {
   "lastname": "test",
   "firstname": "test",
-  "email": "aze@mail.com",
+  "email": "raf@mail.com",
   "password": "azerty",
   "phone": 123
 }
@@ -34,3 +34,14 @@ Content-Type: application/json
 # Supprimer un admin
 DELETE http://localhost:4545/admin/63def78ce599dc07aa81eb5d HTTP/1.1
 Content-Type: application/json
+
+###
+# Connexion Admin
+POST http://localhost:4545/admin/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "raf@mail.com",
+    "password": "aerty"
+}
+ 

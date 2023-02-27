@@ -23,6 +23,17 @@ export default class AdminMdl extends Model {
     }
   }
 
+  queryGetAdminByEmail = async (email) => {
+    let query = { email: email }
+
+    try {
+      let admin = await Admin.findOne(query)
+      return admin
+    } catch (error) {
+      throw error
+    }
+  }
+
   queryGetAdmin = async (id) => {
     let query = {}
     if (id !== undefined) query = { id: id }
